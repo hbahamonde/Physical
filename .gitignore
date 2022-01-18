@@ -276,3 +276,5 @@ TSWLatexianTemp*
 *.lpz
 
 data/.DS_Store
+
+data/electoral_data.csv
