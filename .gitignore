@@ -278,3 +278,5 @@ TSWLatexianTemp*
 data/.DS_Store
 
 data/electoral_data.csv
+
+.Rhistory
