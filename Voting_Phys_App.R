@@ -37,6 +37,31 @@ dat = merge(dat.temp, electoral.d, by=c("lastname", "party", "city"), all.x = FA
 dat$party = as.factor(dat$party)
 dat$gender = recode(dat$gender, Mies = "Man", Nainen = "Woman")
 
+# 
+dat$municipality = ifelse(is.na(dat$municipality.x), dat$municipality.y, dat$municipality.y)
+
+# 
+p_load(dplyr)
+dat = dat %>% dplyr::select(id,
+                            city,
+                            municipality,
+                            municipality.x,
+                            municipality.y,
+                            firstname,
+                            lastname,
+                            gender,
+                            age,
+                            party,
+                            candidate.number,
+                            turnout,
+                            ISO_occupation,
+                            occupation_phys_cong_data,
+                            everything()
+                            )
+# table(dat$municipality.y==dat$municipality) # municipalities match 100%
+## I was getting duplicated municipality columns because of the NA's. Delete redundant columns.
+dat = dat %>% select(c(-municipality.x,-municipality.y))
+
 # Models
 options(scipen=999)
 m1 = glm(turnout ~ phys_occ_cong + attractiveness*gender + party + city, family="poisson", data=dat)
