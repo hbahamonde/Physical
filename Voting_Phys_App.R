@@ -37,6 +37,7 @@ isco.d$ISCO_group = recode_factor(isco.d$ISCO_group,
                                   `8` = "Machine Operators",
                                   `9` = "Elementary Occupations")
 # https://en.wikipedia.org/wiki/International_Standard_Classification_of_Occupations
+# http://www.ilo.org/public/english/bureau/stat/isco/docs/index08-draft.xlsx
 phys.cong.d = merge(phys.cong.d,isco.d, by = "ISCO_code")
 
 #
@@ -118,16 +119,39 @@ dat = dat %>% dplyr::select(id,
 ## I was getting duplicated municipality columns because of the NA's. Delete redundant columns.
 dat = dat %>% select(c(-municipality.x,-municipality.y))
 
+## I was getting udplicated rows because the occupation character vector was different. Will select distinct based on the evaluation columns.
+p_load(dplyr)
+dat = dat %>% dplyr::distinct(city,party,firstname,lastname,phys_occ_cong,femininity,masculinity,attractiveness, fem_dom_job, .keep_all = TRUE)
+
+############################## 
 # Models
+##############################
+
+
+
+
+
+##############################
+# m0
+options(scipen=999)
+m0 = glm(turnout ~ phys_occ_cong*attractiveness + gender + party + city, family="poisson", data=dat)
+
+# p_load(effects)
+# plot(predictorEffects(m0))
+p_load(sjPlot, sjmisc, ggplot2)
+plot_model(m0, type = "int") 
+## Congruence matters, but ONLY AT HIGHER LEVELS OF ATTRACTINESS
+##############################
+# m1
+
 options(scipen=999)
 m1 = glm(turnout ~ phys_occ_cong + attractiveness*gender + party + city, family="poisson", data=dat)
 
 p_load(effects)
 plot(predictorEffects(m1))
-
-
-
-
+# Attractiveness matters, but it does so more for man than woman.
+##############################
+# m2
 
 # ARE RIGHT-WING CANDIDATES MORE ATTRACTIVE? Well, kind of, but not really.
 m2.a = lm(attractiveness  ~ ideology, dat)
@@ -135,7 +159,7 @@ m2.a = lm(attractiveness  ~ ideology, dat)
 p_load(effects)
 plot(predictorEffects(m2.a))
 # RIGHT-WING CANDIDATES ARE *NOT* MORE ATTRACTIVE THAN CANDIDATES ON THE LEFT (CONTRARY TO Berggren2017).
-## REally what's happening is that the effect vary by gender
+## Really what's happening is that the effect vary by gender.  Woman in politics are always considered more attractive than men, but more so "centered" woman.
 m2.b = lm(attractiveness  ~ ideology*gender, dat)
 #summary(m2.b)
 #p_load(effects)
@@ -143,12 +167,11 @@ m2.b = lm(attractiveness  ~ ideology*gender, dat)
 p_load(sjPlot, sjmisc, ggplot2)
 plot_model(m2.b, type = "int")
 
-
-
-
+##############################
+# m3
 m3 = glm(turnout ~ attractiveness*ideology*gender + city, family="poisson", data=dat)
-p_load(effects,sjmisc)
-plot(predictorEffects(m3))
+# p_load(effects,sjmisc)
+# plot(predictorEffects(m3))
 
 sjPlot::plot_model(
   m3,
@@ -170,15 +193,27 @@ sjPlot::plot_model(
     return(plot)
   })
 
+# While woman in politics are considered more attractive (as per m2.b), that doesn't translete into more votes. Attractive man do better electorally than attractive woman, particularly center-left candidates. 
 
-# fuzzy 
-p_load(rdd)
-dat = dat[!is.na(dat$attractiveness), ]
-dat = dat[!is.na(dat$turnout), ]
-band <- IKbandwidth(dat$attractiveness, dat$turnout, cutpoint = mean(dat$attractiveness, na.rm = T))
-d_rdd  <- dat[dat$attractiveness < band & dat$attractiveness > -band, ] 
-d_rdd  <- dat[dat$attractiveness < mean(dat$attractiveness, na.rm = T)+band & dat$attractiveness > mean(dat$attractiveness, na.rm = T)-band, ] 
-linear_rdd_model <- lm(turnout ~ party, data=d_rdd)
-plot(predictorEffects(linear_rdd_model))
+##############################
+# m4
+m4 = glm(turnout ~ phys_occ_cong*ISCO_group + party + age + city, family="poisson", data=dat)
 
+p_load(sjPlot, sjmisc, ggplot2)
+plot_model(m4, type = "int", palette = c("Set1", "Set2")) 
+# Congruence matters, but it matters more if you're a boss ("Managers") or an Army person ("Army"). Actually, the less you look like a "Machine Operator," the better.
+# This is kinda the "discrimination" model.
+
+##############################
+# m5
+m5.m = glm(turnout ~ phys_occ_cong*masculinity + party + age + city, family="poisson", data=dat)
+
+p_load(sjPlot, sjmisc, ggplot2)
+plot_model(m5.m, type = "int") 
+
+
+m5.f = glm(turnout ~ phys_occ_cong*femininity + party + age + city, family="poisson", data=dat)
+
+p_load(sjPlot, sjmisc, ggplot2)
+plot_model(m5.f, type = "int") 
 
