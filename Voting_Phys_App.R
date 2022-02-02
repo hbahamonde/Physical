@@ -140,16 +140,25 @@ m0 = glm(turnout ~ phys_occ_cong*attractiveness + gender + party + city, family=
 # plot(predictorEffects(m0))
 p_load(sjPlot, sjmisc, ggplot2)
 plot_model(m0, type = "int") 
-## Congruence matters, but ONLY AT HIGHER LEVELS OF ATTRACTINESS
+## Congruence matters, but ONLY AT HIGHER LEVELS OF ATTRACTIVENESS
 ##############################
 # m1
 
 options(scipen=999)
-m1 = glm(turnout ~ phys_occ_cong + attractiveness*gender + party + city, family="poisson", data=dat)
+m1 = glm(turnout ~ attractiveness*gender + party + city, family="poisson", data=dat)
 
 p_load(effects)
 plot(predictorEffects(m1))
 # Attractiveness matters, but it does so more for man than woman.
+## A. At similar levels of "ugliness" woman do better.
+## B. At similar levels of "beauty" man do better.
+
+# p_load(sjPlot, sjmisc, ggplot2)
+# plot_model(m1, type = "int")
+
+# p_load(DAMisc)
+# intQualQuant(m1, c("attractiveness", "gender"), type="slopes", ci = TRUE,plot=TRUE)
+
 ##############################
 # m2
 
@@ -193,16 +202,20 @@ sjPlot::plot_model(
     return(plot)
   })
 
-# While woman in politics are considered more attractive (as per m2.b), that doesn't translete into more votes. Attractive man do better electorally than attractive woman, particularly center-left candidates. 
+# While woman in politics are considered more attractive (as per m2.b), that doesn't translate into more votes. Attractive man do better electorally than attractive woman, particularly center-left candidates. 
 
 ##############################
 # m4
 m4 = glm(turnout ~ phys_occ_cong*ISCO_group + party + age + city, family="poisson", data=dat)
 
 p_load(sjPlot, sjmisc, ggplot2)
-plot_model(m4, type = "int", palette = c("Set1", "Set2")) 
+plot_model(m4, type = "int")
 # Congruence matters, but it matters more if you're a boss ("Managers") or an Army person ("Army"). Actually, the less you look like a "Machine Operator," the better.
 # This is kinda the "discrimination" model.
+
+
+
+
 
 ##############################
 # m5
