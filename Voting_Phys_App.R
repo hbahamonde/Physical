@@ -206,7 +206,7 @@ sjPlot::plot_model(
 
 ##############################
 # m4
-m4 = glm(turnout ~ phys_occ_cong*ISCO_group + party + age + city, family="poisson", data=dat)
+m4 = glm(turnout ~ phys_occ_cong*ISCO_group + party + age + attractiveness + city, family="poisson", data=dat)
 
 p_load(sjPlot, sjmisc, ggplot2)
 plot_model(m4, type = "int")
