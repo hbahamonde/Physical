@@ -125,16 +125,26 @@ dat = dat %>% dplyr::distinct(city,party,firstname,lastname,phys_occ_cong,femini
 
 ############################## 
 # Models
-##############################
 
-
-
-
-
-##############################
+#####
 # m0
+#####
+
 options(scipen=999)
-m0 = glm(turnout ~ phys_occ_cong*attractiveness + gender + party + city, family="poisson", data=dat)
+m0 = glm(turnout ~ phys_occ_cong*gender + party + city, family="poisson", data=dat)
+
+p_load(effects)
+plot(predictorEffects(m0))
+# At low levels of congruence: women base their vote more on job-phys cong.
+# At high levels of congruence: men base their vote more on job-phys cong.
+# Interpretation: women are punished less for the lack of job-phys cong. (Women will be forgiven more?).
+# Banducci2008: "female counterparts are described as warm, compassionate, people-oriented, gentle, kind, passive, caring, and sensitive"
+
+#####
+# m1
+#####
+
+m1 = glm(turnout ~ phys_occ_cong + attractiveness*gender + party + city, family="poisson", data=dat)
 
 # p_load(effects)
 # plot(predictorEffects(m0))
@@ -156,8 +166,9 @@ plot(predictorEffects(m1))
 # p_load(sjPlot, sjmisc, ggplot2)
 # plot_model(m1, type = "int")
 
-# p_load(DAMisc)
-# intQualQuant(m1, c("attractiveness", "gender"), type="slopes", ci = TRUE,plot=TRUE)
+#####
+# m2
+#####
 
 ##############################
 # m2
