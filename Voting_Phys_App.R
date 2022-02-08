@@ -187,6 +187,11 @@ m2.b = lm(attractiveness  ~ ideology*gender, dat)
 p_load(sjPlot, sjmisc, ggplot2)
 plot_model(m2.b, type = "int")
 
+m2.c = lm(attractiveness  ~ ISCO_group, dat)
+p_load(effects)
+plot(predictorEffects(m2.c))
+
+
 ##############################
 # m3
 m3 = glm(turnout ~ attractiveness*ideology*gender + city, family="poisson", data=dat)
