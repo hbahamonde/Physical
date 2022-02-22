@@ -280,3 +280,9 @@ data/.DS_Store
 data/electoral_data.csv
 
 .Rhistory
+
+.DS_Store
+
+dat.dta
+
+data.dta
