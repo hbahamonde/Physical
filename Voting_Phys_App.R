@@ -119,7 +119,7 @@ dat = dat %>% dplyr::select(id,
 ## I was getting duplicated municipality columns because of the NA's. Delete redundant columns.
 dat = dat %>% select(c(-municipality.x,-municipality.y))
 
-## I was getting udplicated rows because the occupation character vector was different. Will select distinct based on the evaluation columns.
+## I was getting duplicated rows because the occupation character vector was different. Will select distinct based on the evaluation columns.
 p_load(dplyr)
 dat = dat %>% dplyr::distinct(city,party,firstname,lastname,phys_occ_cong,femininity,masculinity,attractiveness, fem_dom_job, .keep_all = TRUE)
 
