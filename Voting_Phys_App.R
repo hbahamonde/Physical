@@ -12,7 +12,9 @@ if (!require("pacman")) install.packages("pacman"); library(pacman)
 p_load(foreign,readxl,data.table)
 #
 phys.cong.d <- read.dta("/Users/hectorbahamonde/research/Physical/data/phys_cong.dta") 
+dat.temp = phys.cong.d
 
+########################################################
 p_load(rio,tibble)
 isco.d <- rio::import("https://raw.githubusercontent.com/hbahamonde/Physical/main/data/isco_data.csv")
 p_load(dplyr,tidyverse)
@@ -39,6 +41,8 @@ isco.d$ISCO_group = recode_factor(isco.d$ISCO_group,
 # https://en.wikipedia.org/wiki/International_Standard_Classification_of_Occupations
 # http://www.ilo.org/public/english/bureau/stat/isco/docs/index08-draft.xlsx
 phys.cong.d = merge(phys.cong.d,isco.d, by = "ISCO_code")
+########################################################
+
 
 #
 id.1.d <- read_excel("/Users/hectorbahamonde/research/Physical/data/id.xls", sheet = 1)
@@ -48,6 +52,8 @@ id.4.d <- read_excel("/Users/hectorbahamonde/research/Physical/data/id.xls", she
 id.5.d <- read_excel("/Users/hectorbahamonde/research/Physical/data/id.xls", sheet = 5)
 id.6.d <- read_excel("/Users/hectorbahamonde/research/Physical/data/id.xls", sheet = 6)
 id.d = data.frame(rbind(id.1.d, id.2.d, id.3.d, id.4.d, id.5.d, id.6.d))
+
+
 #
 p_load(rio,tibble)
 electoral.d <- rio::import("https://seafile.utu.fi/f/295e920af4084e0c8102/?dl=1")
@@ -111,8 +117,6 @@ dat = dat %>% dplyr::select(id,
                             occupation_phys_cong_data,
                             occup.elect.off,
                             ISCO_code,
-                            ISCO_group,
-                            ISCO_job_desc_collaps,
                             everything()
                             )
 # table(dat$municipality.y==dat$municipality) # municipalities match 100%
@@ -121,7 +125,7 @@ dat = dat %>% select(c(-municipality.x,-municipality.y))
 
 ## I was getting duplicated rows because the occupation character vector was different. Will select distinct based on the evaluation columns.
 p_load(dplyr)
-dat = dat %>% dplyr::distinct(city,party,firstname,lastname,phys_occ_cong,femininity,masculinity,attractiveness, fem_dom_job, .keep_all = TRUE)
+dat = dat %>% dplyr::distinct(candidate.number,ideology,age,masculinity,attractiveness,femininity, .keep_all = TRUE)
 
 # save as STATA file
 p_load(foreign)
