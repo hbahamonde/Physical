@@ -123,6 +123,22 @@ dat = dat %>% select(c(-municipality.x,-municipality.y))
 p_load(dplyr)
 dat = dat %>% dplyr::distinct(city,party,firstname,lastname,phys_occ_cong,femininity,masculinity,attractiveness, fem_dom_job, .keep_all = TRUE)
 
+# save as STATA file
+p_load(foreign)
+dat.stata = subset(dat, select = -c(ISCO_job_desc_collaps,occup.elect.off,occupation_phys_cong_data))
+write.dta(dat.stata, paste0(getwd(),"/data.dta",""))
+# load Stata DO file with code below
+p_load(RStata)
+options("RStata.StataPath" = "/Applications/Stata/StataIC.app/Contents/MacOS/StataIC") 
+# this will cause an error, but it's just because it's calling the app, not the Terminal. I couldn't get to open the Terminal instead.
+## https://github.com/lbraglia/RStata/issues/11
+## I also put a ticket.
+options("RStata.StataVersion" = 15)
+stata("Occupation_Conv.do")
+#### OR ALTERNATIVELY GO TO STATA
+dat <- read.dta(paste0(getwd(),"/dat.dta",""))
+
+
 ############################## 
 # Models
 
