@@ -123,6 +123,23 @@ dat = dat %>% dplyr::select(id,
 ## I was getting duplicated municipality columns because of the NA's. Delete redundant columns.
 dat = dat %>% select(c(-municipality.x,-municipality.y))
 
+
+# recode 
+
+dat$esec.r = recode_factor(dat$esec, 
+                           "Large employers, higher mgrs/professionals" = "Upper Class", 
+                           "Lower mgrs/professionals, higher supervisory/technicians" = "Upper Class", 
+                           # Intermediate
+                           "Intermediate occupations" = "Middle Class", 
+                           "Small employers and self-employed (non-agriculture)" = "Middle Class",
+                           "Small employers and self-employed (agriculture)" = "Middle Class",
+                           "Lower supervisors and technicians" = "Middle Class",
+                           # Working Class
+                           "Lower sales and service" = "Working Class",
+                           "Lower technical" = "Working Class",
+                           "Routine" = "Working Class"
+                           )
+
 ## I was getting duplicated rows because the occupation character vector was different. Will select distinct based on the evaluation columns.
 p_load(dplyr)
 dat = dat %>% dplyr::distinct(candidate.number,ideology,age,masculinity,attractiveness,femininity, .keep_all = TRUE)
@@ -145,141 +162,62 @@ dat <- read.dta(paste0(getwd(),"/dat.dta",""))
 
 ############################## 
 # Models
-
-#####
-# m0
-#####
-
+############################## 
 options(scipen=999)
-m0 = glm(turnout ~ attractiveness + party + city, family="poisson", data=dat)
-m0.m = glm(turnout ~ attractiveness + party + city, family="poisson", data=dat[dat$gender=="Man",])
-m0.w = glm(turnout ~ attractiveness + party + city, family="poisson", data=dat[dat$gender=="Woman",])
+
+# base models
+m0 = glm(turnout ~ phys_occ_cong*esec.r + party + age + city + city, family="poisson", data=dat)
+m1.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + city, family="poisson", data=dat[dat$gender=="Man",])
+m1.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + city, family="poisson", data=dat[dat$gender=="Woman",])
+
+
+# robustness checks
+m2 = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat)
+m3 = glm(turnout ~ phys_occ_cong*esec.r + party + age + masculinity + city, family="poisson", data=dat)
+m4 = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat)
+
+m2.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Man",])
+m2.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Woman",])
+
+m3.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Man",])
+m3.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Woman",])
+
+m4.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + masculinity + city, family="poisson", data=dat[dat$gender=="Man",])
+m4.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat[dat$gender=="Woman",])
+
+
+
+p_load(texreg)
+screenreg( # screenreg texreg
+  list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
+  custom.model.names = c("Full", "Man", "Woman", "Full","Full","Full",  "Man", "Woman", "Man", "Woman", "Man", "Woman"),
+  #custom.coef.names = NULL,
+  omit.coef = "city",
+  #custom.coef.names = c("Intercept", "Vote Share (%)", "Points Accumulated (delta)", "Ideological Distance", "Party Budget", "Pivotal Voter"),
+  # custom.header = list( "Poisson" = 1),
+  stars = c(0.001, 0.01, 0.05, 0.1),
+  include.adjrs = FALSE,
+  symbol = "\\cdot",
+  label = "reg:t",
+  caption = "Statistical Model (OLS): Amount of Vote-Buying Offer.",
+  float.pos="H",
+  use.packages = FALSE,
+  threeparttable = TRUE,
+  custom.note = "\\item %stars. \\item City fixed effects omitted. Dependent variable is Turnout. Functional form is Poisson regression for all models."
+)
+
+
+p_load(sjPlot)
+
+p1 = plot_model(m0, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot()
+p2 = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Man Data") + theme_sjplot() + theme(legend.position = "bottom")
+p3 = plot_model(m1.w, type = "int", show.legend = F, title = "Woman Data") + theme_sjplot()
+
+p_load(gridExtra)
+grid.arrange(p1, p2, p3, nrow = 1, ncol= 3)
 
 
 
 
 
-p_load(effects)
-plot(predictorEffects(m0))
-plot(predictorEffects(m0.m))
-plot(predictorEffects(m0.w))
-
-# The "beauty prime" can also be found in Finland.
-# Banducci2008: "female counterparts are described as warm, compassionate, people-oriented, gentle, kind, passive, caring, and sensitive"
-
-#####
-# m1
-#####
-
-m1 = glm(turnout ~ phys_occ_cong + attractiveness*gender + party + city, family="poisson", data=dat)
-
-# p_load(effects)
-# plot(predictorEffects(m0))
-p_load(sjPlot, sjmisc, ggplot2)
-plot_model(m0, type = "int") 
-## Congruence matters, but ONLY AT HIGHER LEVELS OF ATTRACTIVENESS
-##############################
-# m1
-
-options(scipen=999)
-m1 = glm(turnout ~ attractiveness*gender + party + city, family="poisson", data=dat)
-
-p_load(effects)
-plot(predictorEffects(m1))
-# Attractiveness matters, but it does so more for man than woman.
-## A. At similar levels of "ugliness" woman do better.
-## B. At similar levels of "beauty" man do better.
-
-# p_load(sjPlot, sjmisc, ggplot2)
-# plot_model(m1, type = "int")
-
-#####
-# m2
-#####
-
-##############################
-# m2
-
-# ARE RIGHT-WING CANDIDATES MORE ATTRACTIVE? Well, kind of, but not really.
-m2.a = lm(attractiveness  ~ ideology, dat)
-#summary(m2.a)
-p_load(effects)
-plot(predictorEffects(m2.a))
-# RIGHT-WING CANDIDATES ARE *NOT* MORE ATTRACTIVE THAN CANDIDATES ON THE LEFT (CONTRARY TO Berggren2017).
-## Really what's happening is that the effect vary by gender.  Woman in politics are always considered more attractive than men, but more so "centered" woman.
-m2.b = lm(attractiveness  ~ ideology*gender, dat)
-#summary(m2.b)
-#p_load(effects)
-#plot(predictorEffects(m2.b))
-p_load(sjPlot, sjmisc, ggplot2)
-plot_model(m2.b, type = "int")
-
-m2.c = lm(attractiveness  ~ ISCO_group, dat)
-p_load(effects)
-plot(predictorEffects(m2.c))
-
-
-##############################
-# m3
-m3 = glm(turnout ~ attractiveness*ideology*gender + city, family="poisson", data=dat)
-# p_load(effects,sjmisc)
-# plot(predictorEffects(m3))
-
-sjPlot::plot_model(
-  m3,
-  type = "int",
-  colors = "bw"
-) %>% 
-  purrr::map(function(plot) {
-    # You can also use scale_color_manual/scale_fill_manual or other variants here
-    plot <- plot + scale_color_brewer(palette = "Set1") + scale_fill_brewer(palette = "Set1")
-    if (!is.null(plot[["labels"]][["linetype"]])) {
-      plot[["labels"]][["colour"]] <- plot[["labels"]][["linetype"]]
-      plot[["labels"]][["fill"]] <- plot[["labels"]][["linetype"]]
-    } else {
-      plot[["labels"]][["colour"]] <- plot[["labels"]][["shape"]]
-      plot[["labels"]][["fill"]] <- plot[["labels"]][["shape"]]
-    }
-    plot[["guides"]][["colour"]] <- NULL
-    plot[["guides"]][["fill"]] <- NULL
-    return(plot)
-  })
-
-# While woman in politics are considered more attractive (as per m2.b), that doesn't translate into more votes. Attractive man do better electorally than attractive woman, particularly center-left candidates. 
-
-##############################
-# m4
-m4 = glm(turnout ~ phys_occ_cong + party + age + city, family="poisson", data=dat) # without interaction
-
-
-# Congruence matters, but it matters more if you're a "boss." Actually, the less you look like a "Lowe supervisor and technisian," the better.
-# This is kinda the "discrimination" model.
-
-
-m4.m = glm(turnout ~ phys_occ_cong*esec + party + age + city, family="poisson", data=dat[dat$gender=="Man",])
-m4.w = glm(turnout ~ phys_occ_cong*esec + party + age + city, family="poisson", data=dat[dat$gender=="Woman",])
-
-
-p_load(sjPlot, sjmisc, ggplot2)
-plot(predictorEffects(m4, "phys_occ_cong"))
-plot_model(m4.m, type = "int")
-plot_model(m4.w, type = "int")
-
-p_load(coefplot)
-coefplot(m4,m4.m,m4.w, coefficients = c("age", "party", "phys_occ_cong*esec", "phys_occ_cong", "esec"))
-
-
-
-##############################
-# m5
-m5.m = glm(turnout ~ phys_occ_cong*masculinity + party + age + city, family="poisson", data=dat)
-
-p_load(sjPlot, sjmisc, ggplot2)
-plot_model(m5.m, type = "int") 
-
-
-m5.f = glm(turnout ~ phys_occ_cong*femininity + party + age + city, family="poisson", data=dat)
-
-p_load(sjPlot, sjmisc, ggplot2)
-plot_model(m5.f, type = "int") 
 
