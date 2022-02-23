@@ -15,32 +15,32 @@ phys.cong.d <- read.dta("/Users/hectorbahamonde/research/Physical/data/phys_cong
 dat.temp = phys.cong.d
 
 ########################################################
-p_load(rio,tibble)
-isco.d <- rio::import("https://raw.githubusercontent.com/hbahamonde/Physical/main/data/isco_data.csv")
-p_load(dplyr,tidyverse)
-isco.d = isco.d %>% 
-  group_by(ISCO_code) %>% 
-  mutate(ISCO_job_desc_collaps = paste0(ISCO_job_description, collapse = " ")) %>% 
-  distinct(ISCO_code, ISCO_job_desc_collaps)
-isco.d$ISCO_code = ifelse(isco.d$ISCO_code<1000,0, isco.d$ISCO_code)
-isco.d$ISCO_group = as.factor(gsub("(^\\d{1}).*", "\\1", isco.d$ISCO_code))
+# p_load(rio,tibble)
+# isco.d <- rio::import("https://raw.githubusercontent.com/hbahamonde/Physical/main/data/isco_data.csv")
+# p_load(dplyr,tidyverse)
+# isco.d = isco.d %>% 
+#  group_by(ISCO_code) %>% 
+#  mutate(ISCO_job_desc_collaps = paste0(ISCO_job_description, collapse = " ")) %>% 
+#  distinct(ISCO_code, ISCO_job_desc_collaps)
+# isco.d$ISCO_code = ifelse(isco.d$ISCO_code<1000,0, isco.d$ISCO_code)
+# isco.d$ISCO_group = as.factor(gsub("(^\\d{1}).*", "\\1", isco.d$ISCO_code))
 
 
 
-isco.d$ISCO_group = recode_factor(isco.d$ISCO_group, 
-                                  `0` = "Army", 
-                                  `1` = "Managers", 
-                                  `2` = "Professional", 
-                                  `3` = "Technicians",
-                                  `4` = "Clerical",
-                                  `5` = "Service",
-                                  `6` = "Skilled Agricultural",
-                                  `7` = "Craft",
-                                  `8` = "Machine Operators",
-                                  `9` = "Elementary Occupations")
+# isco.d$ISCO_group = recode_factor(isco.d$ISCO_group, 
+#                                  `0` = "Army", 
+#                                  `1` = "Managers", 
+#                                  `2` = "Professional", 
+#                                  `3` = "Technicians",
+#                                  `4` = "Clerical",
+#                                  `5` = "Service",
+#                                  `6` = "Skilled Agricultural",
+#                                  `7` = "Craft",
+#                                  `8` = "Machine Operators",
+#                                  `9` = "Elementary Occupations")
 # https://en.wikipedia.org/wiki/International_Standard_Classification_of_Occupations
 # http://www.ilo.org/public/english/bureau/stat/isco/docs/index08-draft.xlsx
-phys.cong.d = merge(phys.cong.d,isco.d, by = "ISCO_code")
+# phys.cong.d = merge(phys.cong.d,isco.d, by = "ISCO_code")
 ########################################################
 
 
@@ -129,7 +129,7 @@ dat = dat %>% dplyr::distinct(candidate.number,ideology,age,masculinity,attracti
 
 # save as STATA file
 p_load(foreign)
-dat.stata = subset(dat, select = -c(ISCO_job_desc_collaps,occup.elect.off,occupation_phys_cong_data))
+dat.stata = subset(dat, select = -c(occup.elect.off,occupation_phys_cong_data))
 write.dta(dat.stata, paste0(getwd(),"/data.dta",""))
 # load Stata DO file with code below
 p_load(RStata)
@@ -151,13 +151,20 @@ dat <- read.dta(paste0(getwd(),"/dat.dta",""))
 #####
 
 options(scipen=999)
-m0 = glm(turnout ~ phys_occ_cong*gender + party + city, family="poisson", data=dat)
+m0 = glm(turnout ~ attractiveness + party + city, family="poisson", data=dat)
+m0.m = glm(turnout ~ attractiveness + party + city, family="poisson", data=dat[dat$gender=="Man",])
+m0.w = glm(turnout ~ attractiveness + party + city, family="poisson", data=dat[dat$gender=="Woman",])
+
+
+
+
 
 p_load(effects)
 plot(predictorEffects(m0))
-# At low levels of congruence: women base their vote more on job-phys cong.
-# At high levels of congruence: men base their vote more on job-phys cong.
-# Interpretation: women are punished less for the lack of job-phys cong. (Women will be forgiven more?).
+plot(predictorEffects(m0.m))
+plot(predictorEffects(m0.w))
+
+# The "beauty prime" can also be found in Finland.
 # Banducci2008: "female counterparts are described as warm, compassionate, people-oriented, gentle, kind, passive, caring, and sensitive"
 
 #####
@@ -242,14 +249,24 @@ sjPlot::plot_model(
 
 ##############################
 # m4
-m4 = glm(turnout ~ phys_occ_cong*ISCO_group + party + age + attractiveness + city, family="poisson", data=dat)
+m4 = glm(turnout ~ phys_occ_cong + party + age + city, family="poisson", data=dat) # without interaction
 
-p_load(sjPlot, sjmisc, ggplot2)
-plot_model(m4, type = "int")
-# Congruence matters, but it matters more if you're a boss ("Managers") or an Army person ("Army"). Actually, the less you look like a "Machine Operator," the better.
+
+# Congruence matters, but it matters more if you're a "boss." Actually, the less you look like a "Lowe supervisor and technisian," the better.
 # This is kinda the "discrimination" model.
 
 
+m4.m = glm(turnout ~ phys_occ_cong*esec + party + age + city, family="poisson", data=dat[dat$gender=="Man",])
+m4.w = glm(turnout ~ phys_occ_cong*esec + party + age + city, family="poisson", data=dat[dat$gender=="Woman",])
+
+
+p_load(sjPlot, sjmisc, ggplot2)
+plot(predictorEffects(m4, "phys_occ_cong"))
+plot_model(m4.m, type = "int")
+plot_model(m4.w, type = "int")
+
+p_load(coefplot)
+coefplot(m4,m4.m,m4.w, coefficients = c("age", "party", "phys_occ_cong*esec", "phys_occ_cong", "esec"))
 
 
 
