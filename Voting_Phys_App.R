@@ -124,22 +124,6 @@ dat = dat %>% dplyr::select(id,
 dat = dat %>% select(c(-municipality.x,-municipality.y))
 
 
-# recode 
-
-dat$esec.r = recode_factor(dat$esec, 
-                           "Large employers, higher mgrs/professionals" = "Upper Class", 
-                           "Lower mgrs/professionals, higher supervisory/technicians" = "Upper Class", 
-                           # Intermediate
-                           "Intermediate occupations" = "Middle Class", 
-                           "Small employers and self-employed (non-agriculture)" = "Middle Class",
-                           "Small employers and self-employed (agriculture)" = "Middle Class",
-                           "Lower supervisors and technicians" = "Middle Class",
-                           # Working Class
-                           "Lower sales and service" = "Working Class",
-                           "Lower technical" = "Working Class",
-                           "Routine" = "Working Class"
-                           )
-
 ## I was getting duplicated rows because the occupation character vector was different. Will select distinct based on the evaluation columns.
 p_load(dplyr)
 dat = dat %>% dplyr::distinct(candidate.number,ideology,age,masculinity,attractiveness,femininity, .keep_all = TRUE)
@@ -158,6 +142,23 @@ options("RStata.StataVersion" = 15)
 stata("Occupation_Conv.do")
 #### OR ALTERNATIVELY GO TO STATA
 dat <- read.dta(paste0(getwd(),"/dat.dta",""))
+
+
+# recode 
+dat$esec.r = recode_factor(dat$esec, 
+                           "Large employers, higher mgrs/professionals" = "Upper Class", 
+                           "Lower mgrs/professionals, higher supervisory/technicians" = "Upper Class", 
+                           # Intermediate
+                           "Intermediate occupations" = "Middle Class", 
+                           "Small employers and self-employed (non-agriculture)" = "Middle Class",
+                           "Small employers and self-employed (agriculture)" = "Middle Class",
+                           "Lower supervisors and technicians" = "Middle Class",
+                           # Working Class
+                           "Lower sales and service" = "Working Class",
+                           "Lower technical" = "Working Class",
+                           "Routine" = "Working Class"
+)
+
 
 
 ############################## 
