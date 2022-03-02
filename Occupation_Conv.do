@@ -6,6 +6,7 @@
 clear all
 use "/Users/hectorbahamonde/research/Physical/data.dta" /*load data*/
 
+* net install iscogen /* make sure package is installed */
 iscogen oesch5 = oesch5(ISCO_code), replace
 iscogen oesch8 = oesch8(ISCO_code), replace
 iscogen oesch = oesch(ISCO_code), replace
