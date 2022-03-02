@@ -160,6 +160,55 @@ dat$esec.r = recode_factor(dat$esec,
 )
 
 
+############################## 
+# Descriptive Plots
+############################## 
+
+p_load(ggplot2,gridExtra)
+
+# Attractiveness
+##
+d.p1.a = ggplot(dat, aes(x = attractiveness, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "bottom")
+##
+d.p2.a = ggplot(dat, aes(x = attractiveness, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+##
+d.p3.a = ggplot(dat, aes(x = attractiveness, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+##
+grid.arrange(d.p1.a, d.p2.a, d.p3.a, nrow = 1, ncol= 3)
+
+
+# Physical-Occupation Congruence
+##
+d.p1.p = ggplot(dat, aes(x = phys_occ_cong, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "bottom")
+##
+d.p2.p = ggplot(dat, aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+##
+d.p3.p = ggplot(dat, aes(x = phys_occ_cong, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+##
+grid.arrange(d.p1.p, d.p2.p, d.p3.p, nrow = 1, ncol= 3)
+
+
+# Masculinity
+##
+d.p1.m = ggplot(dat, aes(x = masculinity, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "bottom")
+##
+d.p2.m = ggplot(dat, aes(x = masculinity, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+##
+d.p3.m = ggplot(dat, aes(x = masculinity, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+##
+grid.arrange(d.p1.m, d.p2.m, d.p3.m, nrow = 1, ncol= 3)
+
+
+# Femininity
+##
+d.p1.f = ggplot(dat, aes(x = femininity, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "bottom")
+##
+d.p2.f = ggplot(dat, aes(x = femininity, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+##
+d.p3.f = ggplot(dat, aes(x = femininity, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+##
+grid.arrange(d.p1.f, d.p2.f, d.p3.f, nrow = 1, ncol= 3)
+
 
 ############################## 
 # Models
