@@ -213,15 +213,75 @@ grid.arrange(d.p1.f, d.p2.f, d.p3.f, nrow = 1, ncol= 3)
 ############################## 
 # Models
 ############################## 
-options(scipen=999)
-
 # base models
-m0 = glm(turnout ~ phys_occ_cong*esec.r + party + age + city + city, family="poisson", data=dat)
-m1.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + city, family="poisson", data=dat[dat$gender=="Man",])
-m1.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + city, family="poisson", data=dat[dat$gender=="Woman",])
+main.model.formula = as.formula(turnout ~ phys_occ_cong*esec.r + party + age + city)
+
+# Poisson
+options(scipen=999)
+m0 = glm(main.model.formula, family="poisson", data=dat)
+m1.m = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Man",])
+m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
 
 
+# Quasi Poisson
+# Quasi-Poisson regression is useful since it has a variable dispersion parameter, so that it can model over-dispersed data.   It may be better than negative binomial regression in some circumstances (Verhoef and Boveng. 2007).
+# https://rcompanion.org/handbook/J_01.html
+
+options(scipen=999)
+m0.quasi.poisson = glm(main.model.formula, family="quasipoisson", data=dat)
+m1.m.quasi.poisson = glm(main.model.formula, family="quasipoisson", data=dat[dat$gender=="Man",])
+m1.w.quasi.poisson = glm(main.model.formula, family="quasipoisson", data=dat[dat$gender=="Woman",])
+
+p_load(effects)
+plot(effect("phys_occ_cong*esec.r", m0.quasi.poisson))
+plot(effect("phys_occ_cong*esec.r", m1.m.quasi.poisson))
+plot(effect("phys_occ_cong*esec.r", m1.w.quasi.poisson))
+
+# p_load(DAMisc)
+# install.packages("DAMisc")
+# library(DAMisc)
+# m0.plot <- intQualQuant(m0, c("esec.r","phys_occ_cong"), type="slopes", n=25, plot=T);update(m0.plot, layout=c(3,1), as.table=TRUE)
+# m1.m.plot <- intQualQuant(m1.m, c("esec.r","phys_occ_cong"), type="slopes", n=25, plot=T);update(m1.m.plot, layout=c(3,1), as.table=TRUE)
+# m1.w.plot <- intQualQuant(m1.w, c("esec.r","phys_occ_cong"), type="slopes", n=25, plot=T);update(m1.w.plot, layout=c(3,1), as.table=TRUE)
+
+# p_load(ggeffects,ggplot2)
+# e1 = ggpredict(m1.w, terms=c("phys_occ_cong", "esec.r"))
+# ggplot(e1) + geom_pointrange(aes(x=x, y=predicted, ymin=conf.low, ymax=conf.high)) + facet_wrap(~group, ncol=3) 
+
+## overdispersion test
+# m0 = glm(main.model.formula, family="poisson", data=dat)
+# m1.m = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Man",])
+# m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
+##
+# p_load(AER)
+# options(scipen=999)
+# dispersiontest(m0)
+# dispersiontest(m1.m)
+# dispersiontest(m1.w)
+# null: equidispersion
+# alternative: overdispersion
+# sign equals overdispersion
+##
+# other package also suggests overdispersion
+# p_load(performance)
+# check_overdispersion(m0)
+# check_overdispersion(m1.m)
+# check_overdispersion(m1.w)
+
+
+# Negative Binomial
+# p_load(MASS)
+# m0.nb <- glm.nb(turnout ~ phys_occ_cong*esec.r + party + age + city + city, data = dat)
+# m1.m.nb <- glm.nb(turnout ~ phys_occ_cong*esec.r + party + age + city + city, data=dat[dat$gender=="Man",])
+# m1.w.nb <- glm.nb(turnout ~ phys_occ_cong*esec.r + party + age + city + city, data=dat[dat$gender=="Woman",])
+
+
+
+
+############################## 
 # robustness checks
+############################## 
+
 m2 = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat)
 m3 = glm(turnout ~ phys_occ_cong*esec.r + party + age + masculinity + city, family="poisson", data=dat)
 m4 = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat)
@@ -239,8 +299,8 @@ m4.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femin
 
 p_load(texreg)
 screenreg( # screenreg texreg
-  list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
-  custom.model.names = c("Full", "Man", "Woman", "Full","Full","Full",  "Man", "Woman", "Man", "Woman", "Man", "Woman"),
+  list(m0, m1.m, m1.w),
+  #custom.model.names = c("Full", "Man", "Woman", "Full","Full","Full",  "Man", "Woman", "Man", "Woman", "Man", "Woman"),
   #custom.coef.names = NULL,
   omit.coef = "city",
   #custom.coef.names = c("Intercept", "Vote Share (%)", "Points Accumulated (delta)", "Ideological Distance", "Party Budget", "Pivotal Voter"),
@@ -257,17 +317,38 @@ screenreg( # screenreg texreg
 )
 
 
-p_load(sjPlot)
+############################## 
+# Predicted Probabilities Plot
+############################## 
+p_load(sjPlot,ggplot2)
 
-p1 = plot_model(m0, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot()
-p2 = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Man Data") + theme_sjplot() + theme(legend.position = "bottom")
-p3 = plot_model(m1.w, type = "int", show.legend = F, title = "Woman Data") + theme_sjplot()
+# Poisson
+p1.poisson = plot_model(m0, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot()
+p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Man Data") + theme_sjplot() + theme(legend.position = "bottom")
+p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Woman Data") + theme_sjplot()
 
 p_load(gridExtra)
-grid.arrange(p1, p2, p3, nrow = 1, ncol= 3)
+grid.arrange(p1.poisson, p2.poisson, p3.poisson, nrow = 1, ncol= 3)
 
 
+## Neg Binomial
+# p1.neg.bin = plot_model(m0.nb, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot()
+# p2.neg.bin = plot_model(m1.m.nb, type = "int", show.legend = TRUE, title = "Man Data") + theme_sjplot() + theme(legend.position = "bottom")
+# p3.neg.bin = plot_model(m1.w.nb, type = "int", show.legend = F, title = "Woman Data") + theme_sjplot()
+##
+# p_load(gridExtra)
+# grid.arrange(p1.neg.bin, p2.neg.bin, p3.neg.bin, nrow = 1, ncol= 3)
 
-
-
-
+## OLS
+# m0.ols = lm(main.model.formula, data=dat)
+# m1.m.ols = lm(main.model.formula, data=dat[dat$gender=="Man",])
+# m1.w.ols = lm(main.model.formula, data=dat[dat$gender=="Woman",])
+##
+# p_load(sjPlot,ggplot2)
+##
+# plot_model(m0.nb, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot()
+# plot_model(m1.m.nb, type = "int", show.legend = TRUE, title = "Man Data") + theme_sjplot() + theme(legend.position = "bottom")
+# plot_model(m1.w.nb, type = "int", show.legend = F, title = "Woman Data") + theme_sjplot()
+##
+# p_load(gridExtra)
+# grid.arrange(m0.ols, m1.m.ols, m1.w.ols, nrow = 1, ncol= 3)
