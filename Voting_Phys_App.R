@@ -222,6 +222,13 @@ m0 = glm(main.model.formula, family="poisson", data=dat)
 m1.m = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Man",])
 m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
 
+# individual predictions: Predicted Probabilities
+p_load(ggeffects)
+ggpredict(m1.w, terms = "phys_occ_cong", 
+          condition = c(phys_occ_cong = min(dat$phys_occ_cong), dat$esec.r="Working Class")
+          )
+
+
 
 # Quasi Poisson
 # Quasi-Poisson regression is useful since it has a variable dispersion parameter, so that it can model over-dispersed data.   It may be better than negative binomial regression in some circumstances (Verhoef and Boveng. 2007).
