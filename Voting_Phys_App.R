@@ -224,9 +224,8 @@ m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
 
 # individual predictions: Predicted Probabilities
 p_load(ggeffects)
-ggpredict(m1.w, terms = "phys_occ_cong", 
-          condition = c(phys_occ_cong = min(dat$phys_occ_cong), dat$esec.r="Working Class")
-          )
+ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working Class"))
+ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working Class"))
 
 
 
@@ -306,10 +305,32 @@ m4.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femin
 
 p_load(texreg)
 screenreg( # screenreg texreg
-  list(m0, m1.m, m1.w),
-  #custom.model.names = c("Full", "Man", "Woman", "Full","Full","Full",  "Man", "Woman", "Man", "Woman", "Man", "Woman"),
+  list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
+  custom.header = list("1" = 1,
+                       "2" = 2,
+                       "3" = 3, 
+                       "4" = 4,  
+                       "5" = 5, 
+                       "6" = 6, 
+                       "7" = 7,
+                       "8" = 8,
+                       "9" = 9, 
+                       "10" = 10, 
+                       "11" = 11, 
+                       "12" = 12),
+  custom.model.names = c(
+    # m0, m1.m, m1.w
+    "Full", "Man", "Woman", 
+    # m2, m3, m4 
+    "Full","Full","Full",  
+    # m2.m, m2.w,
+    "Man", "Woman", 
+    # m3.m, m3.w
+    "Man", "Woman", 
+    # m4.m, m4.w
+    "Man", "Woman"),
   #custom.coef.names = NULL,
-  omit.coef = "city",
+  omit.coef = "(city)|(party)",
   #custom.coef.names = c("Intercept", "Vote Share (%)", "Points Accumulated (delta)", "Ideological Distance", "Party Budget", "Pivotal Voter"),
   # custom.header = list( "Poisson" = 1),
   stars = c(0.001, 0.01, 0.05, 0.1),
@@ -320,8 +341,9 @@ screenreg( # screenreg texreg
   float.pos="H",
   use.packages = FALSE,
   threeparttable = TRUE,
-  custom.note = "\\item %stars. \\item City fixed effects omitted. Dependent variable is Turnout. Functional form is Poisson regression for all models."
+  custom.note = "\\item %stars. \\item Dependent variable is Turnout. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the simetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
 )
+
 
 
 ############################## 
