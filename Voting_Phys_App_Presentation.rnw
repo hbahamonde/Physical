@@ -1,0 +1,1286 @@
+\RequirePackage{atbegshi}
+\documentclass[compress,aspectratio=169]{beamer} % aspectratio=169
+
+
+% % % % % % % % % % % % % % %
+%             MY PACKAGES 
+% % % % % % % % % % % % % % %
+\usepackage{graphicx}       % Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
+\usepackage{dcolumn} % this pack is neccesary to build nicer columns with texreg--dont remove it.
+\usepackage[export]{adjustbox}
+\usepackage{xcolor}[dvipsnames]
+\usepackage{amssymb,amsmath}
+\usepackage{threeparttable} % package to have long notes in reg tables in texreg. 
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+\usepgfplotslibrary{fillbetween}
+
+%\usepackage{tipx}
+%\usepackage{tikz}
+%\usetikzlibrary{arrows,shapes,decorations.pathmorphing,backgrounds,positioning,fit,petri}
+\usepackage{rotating}
+%\usepackage{scalerel} % for inline images
+\usepackage{import}
+%\usepackage{times}
+\usepackage{array}
+\usepackage{tabularx}
+%\usepackage{booktabs}
+%\usepackage{textcomp}
+\usepackage{float}
+%\usepackage{setspace}      % \doublespacing \singlespacing \onehalfspacing %doble espacio
+%\label{x:y}                          %ocupar para autoref.
+%\autoref{x:y}                        %ocupar para autoref.
+%\usepackage{nopageno}      %desactivar para p�ginas
+\usepackage{pifont}
+%\usepackage{marvosym} %faces
+\usepackage{hyperref}
+\usepackage{multirow}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathreplacing}
+
+
+
+\usepackage{listings}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  language=R,                     % the language of the code
+  basicstyle=\TINY,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=1,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  keywordstyle=\color{blue},      % keyword style
+  commentstyle=\color{dkgreen},   % comment style
+  stringstyle=\color{mauve},      % string literal style
+  escapeinside={\%*}{*)},         % if you want to add a comment within your code
+  morekeywords={*,...}            % if you want to add more keywords to the set
+} 
+
+% % % % % % % % % % % % % % %
+%           PACKAGE CUSTOMIZATION
+% % % % % % % % % % % % % % %
+
+% GENERAL CUSTOMIZATION
+\usepackage[math]{iwona}% font
+\usetheme{Singapore}  % template I should use
+%\usetheme{Szeged}  % alternative template
+\usecolortheme{rose}  % color template
+\makeatletter     % to show subsection/section title (1/3)
+\beamer@theme@subsectiontrue % to show subsection/section title (2/3)
+\makeatother      % to show subsection/section title (3/3)
+
+
+
+% THIS BELOW IS TO MAKE NAVIGATION DOTS MARKED DURING PRESENTATION
+\makeatletter
+\def\slideentry#1#2#3#4#5#6{%
+  %section number, subsection number, slide number, first/last frame, page number, part number
+  \ifnum#6=\c@part\ifnum#2>0\ifnum#3>0%
+    \ifbeamer@compress%
+      \advance\beamer@xpos by1\relax%
+    \else%
+      \beamer@xpos=#3\relax%
+      \beamer@ypos=#2\relax%
+    \fi%
+  \hbox to 0pt{%
+    \beamer@tempdim=-\beamer@vboxoffset%
+    \advance\beamer@tempdim by-\beamer@boxsize%
+    \multiply\beamer@tempdim by\beamer@ypos%
+    \advance\beamer@tempdim by -.05cm%
+    \raise\beamer@tempdim\hbox{%
+      \beamer@tempdim=\beamer@boxsize%
+      \multiply\beamer@tempdim by\beamer@xpos%
+      \advance\beamer@tempdim by -\beamer@boxsize%
+      \advance\beamer@tempdim by 1pt%
+      \kern\beamer@tempdim
+      \global\beamer@section@min@dim\beamer@tempdim
+      \hbox{\beamer@link(#4){%
+          \usebeamerfont{mini frame}%
+          \ifnum\c@section>#1%
+            %\usebeamercolor[fg]{mini frame}%
+            %\usebeamertemplate{mini frame}%
+            \usebeamercolor{mini frame}%
+            \usebeamertemplate{mini frame in other subsection}%
+          \else%
+            \ifnum\c@section=#1%
+              \ifnum\c@subsection>#2%
+                \usebeamercolor[fg]{mini frame}%
+                \usebeamertemplate{mini frame}%
+              \else%
+                \ifnum\c@subsection=#2%
+                  \usebeamercolor[fg]{mini frame}%
+                  \ifnum\c@subsectionslide<#3%
+                    \usebeamertemplate{mini frame in current subsection}%
+                  \else%
+                    \usebeamertemplate{mini frame}%
+                  \fi%
+                \else%
+                  \usebeamercolor{mini frame}%
+                  \usebeamertemplate{mini frame in other subsection}%
+                \fi%
+              \fi%
+            \else%
+              \usebeamercolor{mini frame}%
+              \usebeamertemplate{mini frame in other subsection}%
+            \fi%
+          \fi%
+        }}}\hskip-10cm plus 1fil%
+  }\fi\fi%
+  \else%
+  \fakeslideentry{#1}{#2}{#3}{#4}{#5}{#6}%
+  \fi\ignorespaces
+  }
+\makeatother
+
+
+% % % % % % % % % % % % % % %
+%       To show the TITLE at the Bottom of each slide
+% % % % % % % % % % % % % % %
+
+\beamertemplatenavigationsymbolsempty 
+\makeatletter
+\setbeamertemplate{footline}
+{
+\leavevmode%
+\hbox{%
+\begin{beamercolorbox}[wd=1\paperwidth,ht=2.25ex,dp=2ex,center]{title in head/foot}%
+\usebeamerfont{title in head/foot}\insertshorttitle
+\end{beamercolorbox}%
+\begin{beamercolorbox}[wd=1
+\paperwidth,ht=2.25ex,dp=2ex,center]{date in head/foot}%
+\end{beamercolorbox}}%
+}
+\makeatother
+
+
+
+% to switch off navigation bullets
+%% using \miniframeson or \miniframesoff
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+% Image full size: use 
+%%\begin{frame}
+  %%\fullsizegraphic{monogram.jpg}
+%%\end{frame}
+\newcommand<>{\fullsizegraphic}[1]{
+  \begin{textblock*}{0cm}(-1cm,-3.78cm)
+  \includegraphics[width=\paperwidth]{#1}
+  \end{textblock*}
+}
+
+
+% hyperlinks
+\hypersetup{colorlinks,
+            urlcolor=[rgb]{0.01, 0.28, 1.0},
+            linkcolor=[rgb]{0.01, 0.28, 1.0}}
+
+
+
+%\newcommand{\vitem}[]{\vfill \item}
+
+% % % % % % % % % % % % % % %
+%           DOCUMENT ID
+% % % % % % % % % % % % % % %
+
+\title{\input{title.txt}\unskip} % 
+
+
+\author[shortname]{Hector Bahamonde \inst{1} \and Andrea Canales \inst{2}}
+
+\institute[shortinst]{\inst{1} University of Turku, Finland \and %
+                      \inst{2} O$'$Higgins University, Chile
+                      }
+
+\date{Oct. 26th 2021}
+
+%to to see shadows of previous blocks
+%\setbeamercovered{dynamic}
+
+
+
+
+
+\begin{document}
+
+<<echo=FALSE, cache=FALSE, warning = FALSE, message = F>>=
+read_chunk('/Users/hectorbahamonde/research/Physical/Voting_Phys_App.R') # Hector path // MAC
+
+@
+
+
+<<rsetup, include=FALSE>>=
+chooseCRANmirror(graphics=FALSE, ind=1)
+if (!require("pacman")) install.packages("pacman"); library(pacman)
+p_load(knitr)
+options(scipen = 99999999999)
+
+@
+
+<<loadings:d, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+
+@
+
+<<summary:stats:d, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+
+@
+
+<<models-d, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = TRUE, cache=FALSE, eval=TRUE>>=
+
+@
+
+
+% % % % % % % % % % % % % % %
+%           CONTENT
+% % % % % % % % % % % % % % %
+
+%% title frame
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\section{Introduction}
+\subsection{First things first...}
+
+\begin{frame}[c]{}
+
+{\bf Vote buying}: distribution of private rewards to individuals during elections in exchange for electoral support {\scriptsize(Nichter, 2014)}.
+\vspace{1cm}
+
+  \includegraphics[scale=0.3, center]{Resources_Presentation/vote_buying.jpg}
+
+\end{frame}
+
+
+\subsection{Motivation}
+\begin{frame}[c]{Vote-Buying Literature Builds on the Wrong Framework}
+
+\begin{itemize}
+    \item {\bf Say you're a \underline{clientelist} political party campaigning}\pause:
+        \begin{enumerate}
+            \item When do you buy votes? {\scriptsize\color{gray} Winning/losing the election?}\pause
+            \item Who do you target? {\scriptsize\color{gray} Your own supporters (``core'') or the ones who are more likely to flip (``swing'')?}\pause
+            \item Should your past ``haunt'' you? {\scriptsize\color{gray} Do prior electoral losses matter?}\pause
+        \end{enumerate}
+    \item {\bf If we follow what the literature says...the answers are mixed}:
+        \begin{enumerate}
+            \item[\checkmark] When losing the elections: {\bf risk}.\pause
+            \item[\checkmark] To both core and swing voters  (targeting core supporters is not a {\bf waste}).\pause
+            \item[\checkmark] It shouldn't: {\bf ``sunk costs''} should not affect current decisions.\pause
+        \end{enumerate}
+   \item {\bf We contest these answers}. \pause Explain: {\color{blue}traditional clientelism research has failed to answer these questions because it has a wrong understanding about the party's decision-making process under risk}.
+   \end{itemize}
+\end{frame}
+
+
+
+\miniframesoff
+\begin{frame}[c]{Milestones}
+    \begin{itemize}
+      \item {\bf Motivate the problem}: vote buying literature is purely based on the Expected Utility Theory (EUT) {\tiny (von Neumann and Morgenstern)}.\pause
+      \item {\bf Problem}: as a consequence, there are too many important loose ends.\pause
+      \item {\bf Propose a possible solution}: re-think about how parties make decisions under risk (Prospect Theory).\pause
+      \item {\bf Empirics}: we formalized a vote buying game, and then test it in an economic lab experiment.\pause
+      \item {\bf Results}: we find strong support in favor of Prospect Theory.\pause
+      \item {\bf Feedback wanted!}
+    \end{itemize}
+\end{frame}
+
+\subsection{Argument}
+
+\miniframeson
+\begin{frame}[c]{Argument}
+   \huge {\bf Vote-buying will be higher when parties},
+   \centering
+    \begin{itemize}
+      \item[\checkmark] {\color{blue} Are probable winners}---{\color{gray}risk-averse in the domain of gains}.\pause
+      \item[\checkmark] {\color{blue} Have experienced losses in the past} ({\color{blue}sunk costs})---{\color{gray}risk-seeking in the domain of losses}.
+    \end{itemize}
+\end{frame}
+
+
+\section{The problem}
+
+\subsection{The Problem}
+
+\miniframeson
+\begin{frame}[c]{Clientelism and the Expected Utility Theory}
+  \begin{itemize}
+    \item The EUT was one of the first theories of decision making under risk.\pause
+    \item Since its introduction, it has \emph{dominated} political science as a field (including the vote-buying lit.).\pause
+    \item {\bf The problem}: the (whole!) literature assumes that in the party's decision-making process:\pause
+              \begin{enumerate}
+                  \item {\color{blue}Losses and gains affect in a {\bf comparable} way}.\\
+                  {\scriptsize\color{gray}Winning elections {\bf feels good as} losing one hurts.}\pause
+                  \item {\color{blue}Parties focus only on {\bf absolute} levels of utilities}.\\
+                  {\scriptsize\color{gray}Overlooking {\bf changes} in outcomes respect to a reference point (``sunk costs'').}\pause
+              \end{enumerate}
+        \item These assumptions have led to several empirical inconsistencies.\pause
+          \begin{enumerate}
+            \item Clientelist Targeting.
+            \item Political Contestation.
+          \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+\subsection{The Problem: Clientelist Targeting}
+
+\miniframeson
+\begin{frame}{Not Clear Who Clientelist Parties Target}
+  \begin{itemize}
+    \item Since constituencies are well known to clientelist parties, they allocate resources to {\bf core voters}.\\
+    {\tiny\color{gray}Cox and Mccubbins (1986).}\pause
+    \item Since allocating resources to individuals who ex-ante vote for the party is a waste, parties target {\bf swing voters}.\\
+    {\tiny\color{gray} Dixit and Londregan (1996) and Stokes (2005).}\pause
+    \item Some state ``that our knowledge of who parties target remains incomplete.''\\
+    {\tiny\color{gray} Carlin and Moseley (2015).}\pause
+    \item {\color{blue}We contend that this is a \emph{very} important question, yet one that the literature has \emph{failed} to answer}.
+  \end{itemize}
+\end{frame}
+
+\subsection{The Problem: Political Contestation}
+
+\miniframeson
+\begin{frame}{Not Clear The Role of Political Contestation on Vote Buying}
+  \begin{itemize}
+    \item The more contested an election, the more risks of losing the election, the more vote buying.\\
+    {\tiny\color{gray} Scott (1972), Shefter (1977), Diaz-Cayeros (2008), Corstange (2018).}\pause
+    \item However, some find very high levels of vote-buying in {\bf uncontested} elections.\\
+    {\tiny\color{gray} Gonzalez-Ocantos, Jonge, et al. (2012).} \pause
+    \item {\color{blue}Why would a party buy such a massive amount of votes in a safe and uncontested election?}
+  \end{itemize}
+\end{frame}
+
+\section{Theory}
+
+\subsection{Changing the starting point}
+
+
+\miniframeson
+\begin{frame}{Wrong Understanding of Decision-Making Process under Risk}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+
+    \begin{itemize} 
+      \item[] \underline{Change from traditional focus (EUT)}:
+        \begin{itemize}
+          \item Losses and gains affect in a {\bf comparable} way.
+          \item Parties focus only on {\bf absolute} levels of utilities.
+        \end{itemize}
+    \end{itemize}
+
+
+    \begin{itemize} 
+      \item[] {\color{white}\underline{To one based on Prospect Theory} {\color{white}\tiny{(Kahneman and Tversky, 1979)}}:}
+        \begin{itemize}
+          \item[] {\color{white}{\bf Reference dependence}.}
+          \item[] {\color{white}{\bf Likelihood dependence}.}
+        \end{itemize}
+    \end{itemize}
+
+\end{column}
+
+
+\hfill%
+\begin{column}{.48\textwidth}
+
+
+\includegraphics[scale=0.25, center]{Resources_Presentation/eut.jpg}
+
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+
+\miniframesoff
+\begin{frame}{Wrong Understanding of Decision-Making Process under Risk}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+
+    \begin{itemize} 
+      \item[] \underline{Change from traditional focus (EUT)}:
+        \begin{itemize}
+          \item Losses and gains affect in a {\bf comparable} way.
+          \item Parties focus only on {\bf absolute} levels of utilities.
+        \end{itemize}
+    \end{itemize}
+
+
+    \begin{itemize} 
+      \item[] \underline{To one based on Prospect Theory} {\color{gray}\tiny{(Kahneman and Tversky, 1979)}}:
+        \begin{itemize}
+          \item[1.] {\bf Reference dependence}.
+          \item[2.] {\bf Likelihood dependence}.
+        \end{itemize}
+    \end{itemize}
+
+\end{column}
+
+
+\hfill%
+\begin{column}{.48\textwidth}
+
+
+\includegraphics[scale=0.25, center]{Resources_Presentation/prospect_theory.png}
+
+  \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{Theory}
+
+\miniframeson
+\begin{frame}[c]{Prospect Theory}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+
+\begin{itemize}[<+->]
+      \item[1.] {\bf Reference dependence}. Elements that influence decisions,
+          \begin{itemize}
+            \item[\checkmark] {\color{blue}context} in which the decision-making processes take place.
+            \item[\checkmark] {\color{blue}changes of wealth}, rather than final asset positions.
+            \item[\checkmark] {\color{blue}sunk costs} do matter.
+          \end{itemize}
+\end{itemize}
+
+\end{column}
+
+
+\hfill%
+\begin{column}{.48\textwidth}
+
+
+\includegraphics[scale=0.25, center]{Resources_Presentation/prospect_theory.png}
+
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+
+\miniframesoff
+\begin{frame}{Prospect Theory}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+
+\begin{itemize}[<+->]
+      \item[2.] {\bf Likelihood dependence}. The asymmetrical curvature of the likelihood does influence decisions,
+          \begin{itemize}
+            \item[\checkmark] Individuals are {\color{blue}risk-averse} in the domain of {\color{blue}gains}.
+            \item[\checkmark] Individuals are {\color{blue}risk-acceptant} in the domain of {\color{blue}losses}. 
+          \end{itemize}
+\end{itemize}
+
+\end{column}
+
+
+\hfill%
+\begin{column}{.48\textwidth}
+
+
+\includegraphics[scale=0.25, center]{Resources_Presentation/prospect_theory.png}
+
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+
+
+
+\subsection{Theoretical Expectations}
+
+\miniframeson
+\begin{frame}{Prospect Theory: Implications for Decision-Making}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+
+\begin{itemize}[<+->]
+      \item {\bf Overweighting}: in the domain of {\color{blue}losses}, the convexity of the function encourages {\color{blue}risk-seeking} behaviors by {\bf exaggerating the probabilities of unlikely losses}.
+      \item {\bf Underweighting}: in the domain of {\color{blue}gains}, the concavity of the function encourages {\color{blue}risk aversion} by {\bf undervaluing the probability of success}.
+\end{itemize}
+
+\end{column}
+
+
+\hfill%
+\begin{column}{.48\textwidth}
+
+
+\includegraphics[scale=0.25, center]{Resources_Presentation/prospect_theory.png}
+
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+
+\miniframesoff
+\begin{frame}{Prospect Theory: Implications for Vote-Buying}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+
+  \underline{Vote-buying will be higher when parties},
+
+\begin{enumerate}[<+->]
+      \item {\bf Are probable winners}: parties will exaggerate the small probability of losing the election ({\color{blue}risk aversion}).
+      \item {\bf Have experienced losses in the past} (sunk costs): alter the  reference point, making vote-buying an attractive strategy ({\color{blue}risk-seeking}).
+      %\item in the domain of gains, risk-averted decision-makers are excessively eager to secure gains, while risk-seeking decision-makers take disproportionate risks to avoid certain losses.
+\end{enumerate}
+
+\end{column}
+
+
+\hfill%
+\begin{column}{.48\textwidth}
+
+
+\includegraphics[scale=0.25, center]{Resources_Presentation/prospect_theory.png}
+
+  \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Formal Model}
+
+\subsection{Formal Model}
+
+
+\miniframeson
+\begin{frame}{A Formal Model of Vote-Buying}
+  \begin{itemize} 
+        \item Formal models can help experimentalists determine which theoretical settings and equilibria are most relevant to a particular causal hypothesis.\\
+        {\tiny\color{gray}McDermott (2002), Aldrich and Lupia (2011), Barberis (2013).} \pause
+        \item We developed a vote-buying game within the Downsian-``spatial'' paradigms (EUT).\\\pause
+         {\tiny\color{gray}Downs (1957), Enelow and Hinich (1990), Plott (1991).} 
+        \item The idea is to test the descriptive accuracy of the game-theory model in an experimental setting.\\
+{\tiny\color{gray}Lupia and McCubbins (1998), Bassi, Morton, and Williams (2011), Dickson (2011), Tyszler and Schram (2016), Vieider and Vis (2019).} 
+  \end{itemize}
+\end{frame}
+
+
+
+
+
+\begin{frame}<presentation:0>{Downs (1957)}
+\centering
+%\pgfmathdeclarefunction{gauss}{2}{%
+  %\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+ % }
+\begin{tikzpicture}
+   \draw (0,0) -- (10,0);
+   \draw (0,2pt)--(0,-2pt)node[below]{$0$};
+   \draw (10,2pt)--(10,-2pt)node[below]{$1$};
+   
+   \onslide<2->{ 
+   \draw (3,2pt)--(3,-2pt)node[below]{$p_L$};
+   \draw (8,2pt)--(8,-2pt)node[below]{$p_R$};}
+   \onslide<3>
+   {\draw (4,2pt)--(4,-2pt)node[below]{$x$};
+   }
+   \onslide<4>
+   {\draw (9,2pt)--(9,-2pt)node[below]{$x$};
+   }
+   % \onslide<5> 
+    %{
+%}; 
+\end{tikzpicture}    
+\end{frame}
+
+\begin{frame}<presentation:0>{Downs (1957)}
+\centering
+\begin{tikzpicture}[scale=1.5]
+\begin{axis}[axis lines=none, xtick=\empty, ytick=\empty,xmin=0,xmax=10,ymax=1,domain=0:10,
+          restrict y to domain=0:1]
+\addplot[blue,samples=100,domain=0:6]  {1/2*exp((-(x-5)^2)/2)} ;
+\addplot[blue,fill=blue,fill opacity=0.05,samples=100,domain=2:6]  {1/2*exp((-(x-5)^2)/2)} \closedcycle;
+\addplot[red,fill=red,fill opacity=0.05,samples=100,domain=6:10]  {1/2*exp((-(x-5)^2)/2)} \closedcycle;;
+\addplot[black,samples=100,domain=0:10]  {0} node[above]{};
+\node  at (axis cs: 4, -0.025) {\small{$p_L$}};
+\node  at (axis cs: 8, -0.025) {\small{$p_R$}};
+%\addplot[blue,domain=1/2^6:10,samples=100]  {log2(x)} node[above left] {$y=\log_2(x)$};
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}<presentation:0>{The Model}
+\begin{itemize}
+	\item $n$ voters, each citizen $i$ has an ideal point $x_i$ which is an \emph{iid} draw from an uniform distribution $\Gamma=\{1,2,...,100\}$.
+	\item When policy $\gamma$ is implemented, payoffs of citizen $i$ are given by $u(D,x_i,\gamma)=D-\vert x_i-\gamma \vert$.
+	\item Two candidates (``left-wing'' and ``right-wing''). Each represents a policy which is an \emph{iid} draw from an uniform distribution over $\gamma_L \in \{1,...,50\}$ ($\gamma_R \in \{51,...,100\}$).
+	\item There are $n_L$ voters.
+	\item Both parties negotiate with only one of these $n$ voters who are randomly selected from the total population.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}<presentation:0>{The Model}
+\begin{itemize}
+\item Each candidate has a budget ($B$) that they can use to buy votes.
+\item Profits of party $i$ are given by, 
+
+\begin{align*}
+  \pi_i(W,e_i,s_i)=W\cdot e_i+(1-s_i\cdot a_j )\cdot B
+\end{align*}
+
+where $W$ ($W\geq B$) is a constant that represents how much each party values winning the election, $e_i=1$ if party $i$ wins the election, 0 otherwise,  $s_i$ is the fraction of $B$ that the party offers to voter $j$ who can accept the offer ($a_j=1$) or not ($a_j=0$).
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}<presentation:0>{The Model}
+\centering
+\vspace{1cm}
+\begin{tikzpicture}[scale=0.8]
+   \draw (0,0) -- (10,0);
+   \draw (0,2pt)--(0,-2pt)node[below]{$0$};
+   \draw (10,2pt)--(10,-2pt)node[below]{$100$};  
+   \draw (5,2pt)--(5,-2pt)node[below]{$50$};
+   \draw (3,2pt)--(3,-2pt)node[below]{$p_L$};
+   \draw (8,2pt)--(8,-2pt)node[below]{$p_R$};
+ %  \draw (4,2pt)--(4,-2pt)node[below]{$x$};
+ %   \draw (9,2pt)--(9,-2pt)node[below]{$x$};
+\onslide<2->{
+ \draw[dashed] (3,-1) --(3,-2) node[below]{$B$};
+ \draw[dashed] (8,-1) --(8,-2) node[below]{$B$};
+}
+\onslide<3->{
+	\draw (7,2pt)--(7,-2pt)node[below]{\textcolor{red}{$x$}};
+}
+\onslide<4>{
+\draw[decorate,decoration={brace,amplitude=3pt},red]
+(3,1)  -- (7,1) ; 
+\node at (5,1.5){\textcolor{red}{$u(x,p_L)=D-|x-p_L|$}};
+\draw[dashed,red] (3,0)--(3,1);
+\draw[dashed,red] (7,0)--(7,1);
+}
+
+\onslide<5>{
+	\draw[decorate,decoration={brace,amplitude=3pt},red]
+	(7,1)  -- (8,1) ; 
+	\node at (7.5,1.5){\textcolor{red}{$u(x,p_R)=D-|x-p_R|$}};
+	\draw[dashed,red] (7,0)--(7,1);
+	\draw[dashed,red] (8,0)--(8,1);
+}
+
+\onslide<6->
+{
+\draw[decorate,decoration={brace,amplitude=3pt,mirror}]
+	(0,-4)  -- (10,-4) ; 
+\node at (5,-4.5){
+\textbf{$n \sim$ Uniforme}};
+	
+}
+
+\onslide<7->
+{
+	\draw[decorate,decoration={brace,amplitude=3pt,mirror}]
+	(0,-3)  -- (5.5,-3) ; 
+	\node at (2.75,-3.5){
+		\textbf{$n _L$ }};
+	\draw[decorate,decoration={brace,amplitude=3pt,mirror}]
+	(5.5,-3)  -- (10,-3) ; 
+	\node at (7.75,-3.5){
+		\textbf{$n _R$ }};
+	\draw[dashed] (5.5,0)--(5.5,-3);
+}
+\end{tikzpicture}
+
+
+\onslide<8->{
+\begin{align*}
+ \pi_i(W,e_i,s_i)=W\cdot e_i+(1-s_i\cdot a_j )\cdot B
+\end{align*}
+}
+
+
+\end{frame}
+
+\begin{frame}<presentation:0>{Timing}
+\begin{itemize}
+	\item At the beginning of the game $n$ voters and two political parties are randomly located on their respective ideal points: voters along $\Gamma$, and payoff relevant information is revealed.
+	\item \textbf{Vote-buying Case}
+	\begin{itemize}
+	\item Each party simultaneously decides if making an offer to the voter.
+	\item The voter decides if to take the offer (or which one, if there are two offers).
+	\item Voter casts a ballot; if the voter accepts a party's offer, he should vote for that party.
+	\end{itemize}
+		\item \textbf{Vote-selling Case}
+		\begin{itemize}
+	\item Voter may privately proposes a certain amount to each party in exchange for his vote.
+	\item Parties decide if to pay or not the offer.
+	\item Voter decides which one to accept, if any.
+  \item Voter casts a ballot; if the voter accepts a party's offer, he should vote for that party.
+	\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}<presentation:0>{Equilibrium in Vote-Buying Case}
+	\begin{itemize}
+		\item Parties only have incentives to negotiate with a voter $i$ if he is the pivotal voter, this means:
+		\begin{align*}
+			\vert n_L -n_R \vert \leq 1 \hspace{2cm} i\in max\{n_L,n_R\}
+		\end{align*}
+		\item Notation: $i^*\in \{L,R\}$ the preferred party of the voter, and $-i^*$ the other party. 
+		\item If the voter is pivotal, the less preferred party (${-i^*}$) has incentives to offer him a certain amount $m_{-i^*}$ such that:
+
+\begin{align*}
+    m_{-i^*} &\geq u(D,x_i,\gamma_{i^*})-u(D,x_i,\gamma_{-i^*})\\
+    &=\left( D-\vert x_{i^*}-\gamma_{i^*} \vert \right) - \left( D-\vert x_{i^*}-\gamma_{-i^*} \vert \right)\\
+     &=\vert x_{i^*}-\gamma_{-i^*} \vert- \vert x_{i^*}-\gamma_{i^*} \vert . 
+\end{align*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}<presentation:0>{Equilibrium in Vote-Buying Case}
+\begin{itemize}
+	\item Parties want to win the election at a minimum cost, in equilibrium $m^*_{i^*}=0$ and $m^*_{-i^*}=\vert x_{i^*}-\gamma_{-i^*} \vert- \vert x_{i^*}-\gamma_{i^*} \vert$.
+	\item The pivotal voter is indifferent between both political parties.
+	\item Two Nash Equilibria,
+	\begin{itemize}
+	\item $\{(m^*_{i^*},m^*_{-i^*}), \text{Accept offer} -i^*\}$
+	\item $\{(m^*_{i^*},m^*_{-i^*}), \text{Reject offer} -i^*\}$
+	\end{itemize}
+\end{itemize}	
+\end{frame}
+
+
+\begin{frame}<presentation:0>{Equilibrium in Vote-Selling Case}
+	\begin{itemize}
+		\item The voter has incentives to set the highest price each party can pay (this is given by $B$).
+		\item The voter may swing towards party $-i^*$ only if budget is large enough to compensate for looses if voting for his less prefer policy ($B> \vert x_{i^*}-\gamma_{-i^*} \vert- \vert x_{i^*}-\gamma_{i^*} \vert$).
+		\item Note that if both parties accept to pay $B$ to the voter, he will accept the offer of $i^*$.
+		
+	\end{itemize}
+\end{frame}
+
+\begin{frame}<presentation:0>{Equilibrium in Vote-Selling Case}
+	\begin{itemize}
+		
+		\item Then the parties,
+		\begin{center}
+
+\begin{tabular}{ll|c|c|}
+     & \multicolumn{1}{c}{}& \multicolumn{2}{c}{\textbf{$-i^*$}}  \\
+     &\multicolumn{1}{c}{} &\multicolumn{1}{c}{Accept} & \multicolumn{1}{c}{Reject} \\
+     \cline{3-4}
+    \multirow{ 2}{*}{$i^*$} & Accept & $W$ , $B$ & $W$ , $B$ \\
+      \cline{3-4}
+     & Reject & $B$ , $W$ & $W+B$ , $B$ \\
+      \cline{3-4}
+\end{tabular}
+\end{center}
+\vspace{0.8cm}
+\item Nash Equilibria: $\{(B,B), (\text{Accept}, \text{Accept}), \text{Accept offer } i^* \}$
+	\end{itemize}
+\end{frame}
+
+\section{Experimental Design}
+
+
+\subsection{Setup}
+\begin{frame}[c]%{Experimental Design: Setup}
+  \begin{itemize}
+    \item The experiment was conducted in Chile {\tiny\color{gray}(April/May 2021).} 
+    \item \texttt{O-tree} (\texttt{Z-tree}). {\tiny\color{gray}Fischbacher 2007.}
+    \item All participants were required to successfully complete two practice rounds.
+    \item Show-up fee of \$2,000 CLP ($\approx$ 2.1\texteuro).
+    \item Every game was played between three people: two parties and one voter.
+    \item All transactions were performed exchanging experimental ``points.''\\
+    {\tiny\color{gray}(1 point = \$\Sexpr{as.numeric(unique(dat$session.config.real_world_currency_per_point))}).}
+    \item \Sexpr{as.numeric(length(unique(v.buying.dat$participant.code)))} subjects were recruited. 
+    \item Each subject played the game three times (N = \Sexpr{as.numeric(nrow(dat.v.b))}).
+    \item In-between subjects experimental design.
+ 
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Treatments}
+\begin{frame}[c]%{Treatments}
+  \begin{itemize}
+    %\item In between-subjects design (individuals are randomly assigned to various treatments)
+
+    \item[1.] {\color{blue}Role}: \emph{party A}, \emph{party B} or \emph{voter}.
+
+    \item[2.] {\bf Voters}: {\color{blue}``ideological position''} (points depending on whether party A or B won election). {\tiny\color{gray} Points reflect ``spatial'' distance between the voter and both parties (continuum 1-100).}
+
+    % For instance, if party A wins the election, a voter would receive in that case 2,400 points, whereas if party B won the election, that voter would receive 200 points (``ideologically'' closer to party A).
+
+    \item[3.] {\bf Parties}: {\color{blue}endowments} (points to buy votes, if any).\\
+    {\tiny\color{gray}But both parties receive the same endowment in the same game.}
+
+    \item[4.] {\bf Parties}: {\color{blue}vote shares} (number of votes each party \emph{will} receive---excluding the ``voter'' participant.
+
+    \item Every randomization was common knowledge.
+    
+    %\item Our design mimics an electoral market where we can observe under which conditions different clientelist dynamics develop.
+  \end{itemize}
+\end{frame}
+
+
+
+\miniframeson
+\subsection{Experimental Flow}
+\begin{frame}%{Experimental Flow}
+\includegraphics[scale=1.2, center]{Experimental_Flow_Figure.pdf}
+\end{frame}
+
+
+
+
+\miniframeson
+\subsection{Payoffs}
+\begin{frame}%{Payoffs}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+  
+\begin{itemize}[<+->]
+
+  %\item {\bf Minimize hypothetical bias}: subjects were compensated with real money according to their decisions.
+  
+  \item {\bf Parties}: payoffs depend on whether they are elected. If they spend points buying votes, that amount is discounted. % For simplicity, voters received zero endowments
+
+  \item {\bf Voters}: payoffs depend on whether their party is elected, and on whether they sell their vote. {\bf Can't defect: if they accept an offer, they vote for that party}.
+\end{itemize}
+\end{column}
+
+
+\hfill%
+\begin{column}{.48\textwidth}
+
+
+\includegraphics[scale=0.4, center]{payoffplot.png}
+
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+
+\section{Statistical Analyses}
+
+\subsection{Dependent Variable}
+
+\miniframeson
+\begin{frame}%{Payoffs}
+  \begin{columns}[c]
+  \begin{column}{.47\textwidth}
+  
+\begin{itemize}
+  \item Focus is vote buying (parties). \\
+  {\color{gray}Voter data discarded}. 
+
+  \item {\bf Dependent variable}: the amount of the vote-buying offer made by parties (if any).
+
+  \item If predictions of formal model are accurate, we should see that offers go up when the risk of losing the election is higher.
+\end{itemize}
+\end{column}
+
+
+\hfill%
+\begin{column}{.48\textwidth}
+
+
+\includegraphics[scale=0.55, center]{depvarplot.png}
+
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+\subsection{Statistical Model: OLS}
+
+% eq:0
+\miniframeson
+\begin{frame}[c]
+        \begin{center}
+            \begin{equation*}\label{eq:ols}
+            \begin{aligned}
+                \text{Offer}_{i} = \; & \beta_{0} + \\
+                & \beta_{1}\text{Vote Share}_{i} + \\
+                & \beta_{2}\Delta\text{Points Accumulated}_{i} + \\
+                & \beta_{3}\text{Spatial Distance}_{i} + \\
+                & \beta_{4}\text{Party Budget}_{i} + \\
+                & \alpha_{i} + \epsilon_{i}
+            \end{aligned}
+            \end{equation*}
+        \end{center}
+
+
+        \begin{itemize}
+            \item[] {\color{white}empty.}
+        \end{itemize}
+\end{frame}
+
+
+% eq:1
+\miniframesoff
+\begin{frame}[c]
+        \begin{center}
+            \begin{equation*}\label{eq:ols}
+            \begin{aligned}
+                \text{{\color{red}Offer}}_{i} = \; & \beta_{0} + \\
+                & \beta_{1}\text{Vote Share}_{i} + \\
+                & \beta_{2}\Delta\text{Points Accumulated}_{i} + \\
+                & \beta_{3}\text{Spatial Distance}_{i} + \\
+                & \beta_{4}\text{Party Budget}_{i} + \\
+                & \alpha_{i} + \epsilon_{i}
+            \end{aligned}
+            \end{equation*}
+        \end{center}
+
+
+        \begin{itemize}
+            \item[{\color{red}$\bullet$}] Dependent variable described.
+        \end{itemize}
+\end{frame}
+
+% eq:2
+\miniframesoff
+\begin{frame}[c]
+        \begin{center}
+            \begin{equation*}\label{eq:ols}
+            \begin{aligned}
+                \text{Offer}_{i} = \; & \beta_{0} + \\
+                & \beta_{1}\text{{\color{red}Vote Share}}_{i} + \\
+                & \beta_{2}\Delta\text{Points Accumulated}_{i} + \\
+                & \beta_{3}\text{Spatial Distance}_{i} + \\
+                & \beta_{4}\text{Party Budget}_{i} + \\
+                & \alpha_{i} + \epsilon_{i}
+            \end{aligned}
+            \end{equation*}
+        \end{center}
+
+
+        \begin{itemize}
+            \item[{\color{red}$\bullet$}] Number of certain votes each party.
+        \end{itemize}
+\end{frame}
+
+
+% eq:3
+\miniframesoff
+\begin{frame}[c]
+        \begin{center}
+            \begin{equation*}\label{eq:ols}
+            \begin{aligned}
+                \text{Offer}_{i} = \; & \beta_{0} + \\
+                & \beta_{1}\text{Vote Share}_{i} + \\
+                & \beta_{2}{\color{red}\Delta}\text{{\color{red}Points Accumulated}}_{i} + \\
+                & \beta_{3}\text{Spatial Distance}_{i} + \\
+                & \beta_{4}\text{Party Budget}_{i} + \\
+                & \alpha_{i} + \epsilon_{i}
+            \end{aligned}
+            \end{equation*}
+        \end{center}
+
+
+        \begin{itemize}
+            \item[{\color{red}$\bullet$}] Change in points respect to $t-1$ (prior round).
+        \end{itemize}
+\end{frame}
+
+
+% eq:4
+\miniframesoff
+\begin{frame}[c]
+        \begin{center}
+            \begin{equation*}\label{eq:ols}
+            \begin{aligned}
+                \text{Offer}_{i} = \; & \beta_{0} + \\
+                & \beta_{1}\text{Vote Share}_{i} + \\
+                & \beta_{2}\Delta\text{Points Accumulated}_{i} + \\
+                & \beta_{3}\text{{\color{red}Spatial Distance}}_{i} + \\
+                & \beta_{4}\text{Party Budget}_{i} + \\
+                & \alpha_{i} + \epsilon_{i}
+            \end{aligned}
+            \end{equation*}
+        \end{center}
+
+
+        \begin{itemize}
+            \item[{\color{red}$\bullet$}] Distance from the voter (points).
+        \end{itemize}
+\end{frame}
+
+
+% eq:5
+\miniframesoff
+\begin{frame}[c]
+        \begin{center}
+            \begin{equation*}\label{eq:ols}
+            \begin{aligned}
+                \text{Offer}_{i} = \; & \beta_{0} + \\
+                & \beta_{1}\text{Vote Share}_{i} + \\
+                & \beta_{2}\Delta\text{Points Accumulated}_{i} + \\
+                & \beta_{3}\text{Spatial Distance}_{i} + \\
+                & \beta_{4}\text{{\color{red}Party Budget}}_{i} + \\
+                & \alpha_{i} + \epsilon_{i}
+            \end{aligned}
+            \end{equation*}
+        \end{center}
+
+
+        \begin{itemize}
+            \item[{\color{red}$\bullet$}] Party's budget (points).
+        \end{itemize}
+\end{frame}
+
+
+% eq:6
+\miniframesoff
+\begin{frame}[c]
+        \begin{center}
+            \begin{equation*}\label{eq:ols}
+            \begin{aligned}
+                \text{Offer}_{i} = \; & \beta_{0} + \\
+                & \beta_{1}\text{Vote Share}_{i} + \\
+                & \beta_{2}\Delta\text{Points Accumulated}_{i} + \\
+                & \beta_{3}\text{Spatial Distance}_{i} + \\
+                & \beta_{4}\text{Party Budget}_{i} + \\
+                & {\color{red}\alpha}_{i} + \epsilon_{i}
+            \end{aligned}
+            \end{equation*}
+        \end{center}
+
+
+        \begin{itemize}
+            \item[{\color{red}$\bullet$}] Participant fixed effects.
+        \end{itemize}
+\end{frame}
+
+
+
+\subsection{Results}
+
+% 0
+\miniframeson
+\begin{frame}[c]
+        \begin{center}
+          \vspace{-0.7cm}\includegraphics[scale=.5, center]{m1plot.png}
+        \end{center}
+
+
+        \begin{itemize}
+            \vspace{-1.5cm}\item[] Overall, results conform with Prospect Theory's predictions. {\TINY\color{gray}Robust std. errors used to construct confidence intervals.}
+        \end{itemize}
+\end{frame}
+
+% 1
+\miniframesoff
+\begin{frame}[c]
+        \begin{center}
+          \vspace{-0.7cm}\includegraphics[scale=.5, center]{m1plot.png}
+        \end{center}
+
+
+        \begin{itemize}
+            \vspace{-1.5cm}\item[1.] Parties buy more votes when are likely winners (not losers).
+        \end{itemize}
+\end{frame}
+
+
+% 2
+\miniframesoff
+\begin{frame}[c]
+        \begin{center}
+          \vspace{-0.7cm}\includegraphics[scale=.5, center]{m1plot.png}
+        \end{center}
+
+
+        \begin{itemize}
+            \vspace{-1.5cm}\item[2.] Decision-makers buy more votes when sunk costs are higher.
+        \end{itemize}
+\end{frame}
+
+
+% 3
+\miniframesoff
+\begin{frame}[c]
+        \begin{center}
+          \vspace{-0.7cm}\includegraphics[scale=.5, center]{m1plot.png}
+        \end{center}
+
+
+        \begin{itemize}
+            \vspace{-1.5cm}\item[3.] Spatial distances (core/swing) do not matter.
+        \end{itemize}
+\end{frame}
+
+
+% 4
+\miniframesoff
+\begin{frame}[c]
+        \begin{center}
+          \vspace{-0.7cm}\includegraphics[scale=.5, center]{m1plot.png}
+        \end{center}
+
+
+        \begin{itemize}
+            \vspace{-1.5cm}\item[4.] Party budget does not matter.
+        \end{itemize}
+\end{frame}
+
+
+\section{Discussion}
+
+\subsection{In sum}
+
+\miniframeson
+\begin{frame}%{Payoffs}
+    \begin{itemize}
+    \item This is a work in progress.\pause  
+    \item In this paper identified {\bf two main gaps} in the literature. We don't know,
+      \begin{enumerate}
+        \item {\color{blue}The rationale of clientelist targeting}.
+        \item {\color{blue}The role of electoral contestation}.\pause
+      \end{enumerate}
+    \item We {\bf attribute this confusion} to the the fact that the literature takes the {\bf EUT as a starting point}.\pause
+    \item We introduced {\bf Prospect Theory} in the vote-buying literature as an {\bf alternative way to understand decision-making under risk}.\pause
+    \item To test this theory, we {\bf formalized a theory of vote-buying} and test it in the {\bf lab}.\pause
+    \item Results widely conform with Prospect Theory.
+  \end{itemize}
+\end{frame}%{Payoffs}
+
+
+\subsection{Discussion}
+
+% 1
+\miniframeson
+\begin{frame}%{Payoffs}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+      \begin{itemize}
+        \item {\bf Parties are risk-averse in the domain of gains}: decision-makers exaggerate the probability of unlikely losses, so they buy more votes when are likely winners (not losers).
+      \end{itemize}
+\end{column}
+\hfill%
+  \begin{column}{.48\textwidth}
+    \includegraphics[scale=0.5, center]{m1plot_1.png}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+% 2
+\miniframesoff
+\begin{frame}%{Payoffs}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+      \begin{itemize}
+        \item {\bf Parties are risk-seeking in the domain of losses}: unlike EUT theories predict, parties do consider sunk costs, buying more votes to compensate for past losses.
+      \end{itemize}
+\end{column}
+\hfill%
+  \begin{column}{.48\textwidth}
+    \includegraphics[scale=0.5, center]{m1plot_2.png}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+% 3
+\miniframesoff
+\begin{frame}%{Payoffs}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+      \begin{itemize}
+        \item {\bf Core/swing voters}: voter types are not relevant for vote buying.
+      \end{itemize}
+\end{column}
+\hfill%
+  \begin{column}{.48\textwidth}
+    \includegraphics[scale=0.5, center]{m1plot_3.png}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+% 4
+\miniframesoff
+\begin{frame}%{Payoffs}
+  \begin{columns}[c]
+  \begin{column}{.48\textwidth}
+      \begin{itemize}
+        \item {\bf Party budgets}: unlike traditional theories, wealthier parties don't necessarily buy more votes.
+      \end{itemize}
+\end{column}
+\hfill%
+  \begin{column}{.48\textwidth}
+    \includegraphics[scale=0.5, center]{m1plot_4.png}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+% end
+\subsection{End}
+\miniframeson
+\begin{frame}[c]{Thank you}
+        \begin{center}
+          \vspace{-0.7cm}\includegraphics[scale=.05, center]{Resources_Presentation/qr-code.pdf}
+        \end{center}
+
+
+        \begin{itemize}
+            \item Paper (draft) available at {\color{blue}www.HectorBahamonde.com}.
+            \item All feedback is welcomed!
+        \end{itemize}
+\end{frame}
+
+
+\section{Appendix}
+
+\tiny
+\begin{frame}[plain]
+<<summary:stats:t, echo = FALSE, results='asis', warning = FALSE, message = F, cache=FALSE, include = TRUE>>=
+
+@
+\end{frame}
+\normalsize
+
+
+
+\begin{frame}[plain]
+<<reg:table:t, echo = FALSE, results='asis', warning = FALSE, message = F, cache=FALSE, include = TRUE>>=
+
+
+@
+\end{frame}
+
+
+
+\end{document}
+
