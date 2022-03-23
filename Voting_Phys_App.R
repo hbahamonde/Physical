@@ -5,6 +5,7 @@ cat("\014")
 rm(list=ls())
 setwd("/Users/hectorbahamonde/research/Physical/")
 
+## ---- loadings:d
 # Pacman
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 
@@ -158,58 +159,144 @@ dat$esec.r = recode_factor(dat$esec,
                            "Lower technical" = "Working Class",
                            "Routine" = "Working Class"
 )
+## ----
 
 
 ############################## 
 # Descriptive Plots
 ############################## 
 
-p_load(ggplot2,gridExtra)
+p_load(ggplot2,cowplot)
 
 # Attractiveness
 ##
-d.p1.a = ggplot(dat, aes(x = attractiveness, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "bottom")
+d.p1.a = ggplot(subset(dat, !is.na(gender)), aes(x = attractiveness, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Attractiveness")
+d.p1.a$labels$fill <- "Candidate Gender"
+d.p1.a$labels$colour <- "Candidate Gender"
 ##
-d.p2.a = ggplot(dat, aes(x = attractiveness, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+d.p2.a = ggplot(subset(dat, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Attractiveness") 
+d.p2.a$labels$fill <- "European Socio-Economic\nClassification"
+d.p2.a$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.a = ggplot(dat, aes(x = attractiveness, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+d.p3.a = ggplot(subset(dat, !is.na(party)), aes(x = attractiveness, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Attractiveness") 
+d.p3.a$labels$fill <- "Political Party"
+d.p3.a$labels$colour <- "Political Party"
 ##
-grid.arrange(d.p1.a, d.p2.a, d.p3.a, nrow = 1, ncol= 3)
+attractiveness.p = plot_grid(
+  d.p1.a, d.p2.a, d.p3.a, 
+  align = "hv",
+  axis = "b", 
+  ncol = 3,
+  labels = c('A1', 'A2', 'A2')
+  )
+ggsave("attractiveness.pdf", plot = attractiveness.p, 
+       width = 1400,
+       height = 500,
+       units = c("px"),
+       dpi = 80
+       )
 
 
 # Physical-Occupation Congruence
 ##
-d.p1.p = ggplot(dat, aes(x = phys_occ_cong, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "bottom")
+d.p1.p = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Physical Occupation-Congruent") 
+d.p1.p$labels$fill <- "Candidate Gender"
+d.p1.p$labels$colour <- "Candidate Gender"
 ##
-d.p2.p = ggplot(dat, aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Physical Occupation-Congruent") 
+d.p2.p$labels$fill <- "European Socio-Economic\nClassification"
+d.p2.p$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.p = ggplot(dat, aes(x = phys_occ_cong, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+d.p3.p = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Physical Occupation-Congruent") 
+d.p3.p$labels$fill <- "Political Party"
+d.p3.p$labels$colour <- "Political Party"
 ##
-grid.arrange(d.p1.p, d.p2.p, d.p3.p, nrow = 1, ncol= 3)
+phys_occ_cong.p = plot_grid(
+  d.p1.p, d.p2.p, d.p3.p, 
+  align = "hv",
+  axis = "b", 
+  ncol = 3,
+  labels = c('POC1', 'POC2', 'POC3')
+)
+ggsave("phys_occ_cong.pdf", plot = phys_occ_cong.p, 
+       width = 1400,
+       height = 500,
+       units = c("px"),
+       dpi = 80
+)
+
+
 
 
 # Masculinity
 ##
-d.p1.m = ggplot(dat, aes(x = masculinity, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "bottom")
+d.p1.m = ggplot(subset(dat, !is.na(gender)), aes(x = masculinity, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Masculinity") 
+d.p1.m$labels$fill <- "Candidate Gender"
+d.p1.m$labels$colour <- "Candidate Gender"
 ##
-d.p2.m = ggplot(dat, aes(x = masculinity, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+d.p2.m = ggplot(subset(dat, !is.na(esec.r)), aes(x = masculinity, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Masculinity") 
+d.p2.m$labels$fill <- "European Socio-Economic\nClassification"
+d.p2.m$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.m = ggplot(dat, aes(x = masculinity, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+d.p3.m = ggplot(subset(dat, !is.na(party)), aes(x = masculinity, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Masculinity") 
+d.p3.m$labels$fill <- "Political Party"
+d.p3.m$labels$colour <- "Political Party"
 ##
-grid.arrange(d.p1.m, d.p2.m, d.p3.m, nrow = 1, ncol= 3)
-
+masculinity.p = plot_grid(
+  d.p1.m, d.p2.m, d.p3.m, 
+  align = "hv",
+  axis = "b", 
+  ncol = 3,
+  labels = c('M1', 'M2', 'M3')
+)
+ggsave("masculinity.pdf", plot = masculinity.p, 
+       width = 1400,
+       height = 500,
+       units = c("px"),
+       dpi = 80
+)
 
 # Femininity
 ##
-d.p1.f = ggplot(dat, aes(x = femininity, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "bottom")
+d.p1.f = ggplot(subset(dat, !is.na(gender)), aes(x = femininity, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "bottom") + labs(y = "Density", x = "Candidate Femininity") 
+d.p1.f$labels$fill <- "Candidate Gender"
+d.p1.f$labels$colour <- "Candidate Gender"
 ##
-d.p2.f = ggplot(dat, aes(x = femininity, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+d.p2.f = ggplot(subset(dat, !is.na(esec.r)), aes(x = femininity, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom") + labs(y = "Density", x = "Candidate Femininity") 
+d.p2.f$labels$fill <- "European Socio-Economic\nClassification"
+d.p2.f$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.f = ggplot(dat, aes(x = femininity, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom")
+d.p3.f = ggplot(subset(dat, !is.na(party)), aes(x = femininity, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom") + labs(y = "Density", x = "Candidate Femininity") 
+d.p3.f$labels$fill <- "Political Party"
+d.p3.f$labels$colour <- "Political Party"
 ##
-grid.arrange(d.p1.f, d.p2.f, d.p3.f, nrow = 1, ncol= 3)
+femininity.p = plot_grid(
+  d.p1.f, d.p2.f, d.p3.f, 
+  align = "hv",
+  axis = "b", 
+  ncol = 3,
+  labels = c('F1', 'F2', 'F3')
+  )
+ggsave("femininity.pdf", plot = femininity.p, 
+       width = 1400,
+       height = 500,
+       units = c("px"),
+       dpi = 80
+       )
+# mega plot
+total.plot.p = plot_grid(
+  d.p1.a,d.p1.p,d.p1.m,d.p1.f,
+  d.p2.a,d.p2.p,d.p2.m,d.p2.f,
+  d.p3.a,d.p3.p,d.p3.m,d.p3.f,
+  align = "hv",
+  axis = "b", 
+  ncol = 4,
+  nrow = 3#,
+  #labels = c('A1', 'A2', 'A2','POC1', 'POC2', 'POC3','M1', 'M2', 'M3','F1', 'F2', 'F3')
+)
 
-
+# Try to plot_grid in two stages. First, horizontally. Then, the three rows. Share legend in the first stage.
+# https://wilkelab.org/cowplot/articles/shared_legends.html
 ############################## 
 # Models
 ############################## 
