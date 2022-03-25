@@ -135,10 +135,11 @@ dat.stata = subset(dat, select = -c(occup.elect.off,occupation_phys_cong_data))
 write.dta(dat.stata, paste0(getwd(),"/data.dta",""))
 # load Stata DO file with code below
 p_load(RStata)
-options("RStata.StataPath" = "/Applications/Stata/StataIC.app/Contents/MacOS/StataIC") 
+options("RStata.StataPath" = '/Applications/Stata/StataIC.app/Contents/MacOS/StataIC') 
 # this will cause an error, but it's just because it's calling the app, not the Terminal. I couldn't get to open the Terminal instead.
 ## https://github.com/lbraglia/RStata/issues/11
 ## I also put a ticket.
+## BUT ALWAYS MAKE SURE net install iscogen is installed IN STATA
 options("RStata.StataVersion" = 15)
 stata("Occupation_Conv.do")
 #### OR ALTERNATIVELY GO TO STATA
@@ -159,8 +160,6 @@ dat$esec.r = recode_factor(dat$esec,
                            "Lower technical" = "Working Class",
                            "Routine" = "Working Class"
 )
-## ----
-
 
 ############################## 
 # Descriptive Plots
@@ -182,7 +181,7 @@ d.p3.a = ggplot(subset(dat, !is.na(party)), aes(x = attractiveness, color = part
 d.p3.a$labels$fill <- "Political Party"
 d.p3.a$labels$colour <- "Political Party"
 ##
-attractiveness.p = plot_grid(
+attractiveness.p = cowplot::plot_grid(
   d.p1.a, d.p2.a, d.p3.a, 
   align = "hv",
   axis = "b", 
@@ -210,7 +209,7 @@ d.p3.p = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party
 d.p3.p$labels$fill <- "Political Party"
 d.p3.p$labels$colour <- "Political Party"
 ##
-phys_occ_cong.p = plot_grid(
+phys_occ_cong.p = cowplot::plot_grid(
   d.p1.p, d.p2.p, d.p3.p, 
   align = "hv",
   axis = "b", 
@@ -237,7 +236,7 @@ d.p3.m = ggplot(subset(dat, !is.na(party)), aes(x = masculinity, color = party, 
 d.p3.m$labels$fill <- "Political Party"
 d.p3.m$labels$colour <- "Political Party"
 ##
-masculinity.p = plot_grid(
+masculinity.p = cowplot::plot_grid(
   d.p1.m, d.p2.m, d.p3.m, 
   align = "hv",
   axis = "b", 
@@ -256,7 +255,7 @@ d.p1.f = ggplot(subset(dat, !is.na(gender)), aes(x = femininity, color = gender,
 d.p1.f$labels$fill <- "Candidate Gender"
 d.p1.f$labels$colour <- "Candidate Gender"
 ##
-d.p2.f = ggplot(subset(dat, !is.na(esec.r)), aes(x = femininity, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom") + labs(y = "Density", x = "Candidate Femininity")
+d.p2.f = ggplot(subset(dat, !is.na(esec.r)), aes(x = femininity, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "bottom", legend.title.align=0.5) + labs(y = "Density", x = "Candidate Femininity") 
 d.p2.f$labels$fill <- "European Socio-Economic\nClassification"
 d.p2.f$labels$colour <- "European Socio-Economic\nClassification"
 ##
@@ -264,7 +263,7 @@ d.p3.f = ggplot(subset(dat, !is.na(party)), aes(x = femininity, color = party, f
 d.p3.f$labels$fill <- "Political Party"
 d.p3.f$labels$colour <- "Political Party"
 ##
-femininity.p = plot_grid(
+femininity.p = cowplot::plot_grid(
   d.p1.f, d.p2.f, d.p3.f, 
   align = "hv",
   axis = "b", 
@@ -277,7 +276,7 @@ ggsave("femininity.pdf", plot = femininity.p,
        dpi = 80
        )
 # mega plot
-total.plot.p = plot_grid(
+total.plot.p = cowplot::plot_grid(
   d.p1.p,d.p2.p,d.p3.p,
   d.p1.a,d.p2.a,d.p3.a,
   d.p1.m,d.p2.m,d.p3.m,
@@ -302,12 +301,16 @@ ggsave("densities.jpeg", plot = total.plot.p,
        dpi = 80,
        device = "jpeg"
 )
+## ----
 
-# Try to plot_grid in two stages. First, horizontally. Then, the three rows. Share legend in the first stage.
-# https://wilkelab.org/cowplot/articles/shared_legends.html
+
 ############################## 
 # Models
 ############################## 
+
+## ---- models:d
+
+
 # base models
 main.model.formula = as.formula(turnout ~ phys_occ_cong*esec.r + party + age + city)
 
@@ -317,10 +320,49 @@ m0 = glm(main.model.formula, family="poisson", data=dat)
 m1.m = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Man",])
 m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
 
+
+############################## 
+# Predicted Probabilities Plot
+############################## 
+p_load(sjPlot,ggplot2,cowplot)
+
+# Poisson
+p1.poisson = plot_model(m0, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
+p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Man Data") + theme_sjplot() + theme(legend.position = "bottom",legend.title.align=0.5) + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
+p2.poisson$labels$colour <- "European Socio-Economic Classification"
+p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Woman Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
+
+#p_load(gridExtra)
+#grid.arrange(p1.poisson, p2.poisson, p3.poisson, nrow = 1, ncol= 3)
+
+pred.prob.p = cowplot::plot_grid(p1.poisson,p2.poisson,p3.poisson,
+                   align = "hv",
+                   axis = "b", 
+                   ncol = 3,
+                   nrow = 1
+                   )
+ggsave("pred_prob_plot.pdf", plot = pred.prob.p, 
+       width = 1200,
+       height = 600,
+       units = c("px"),
+       dpi = 80
+)
+
+ggsave("pred_prob_plot.jpeg", plot = pred.prob.p, 
+       width = 1200,
+       height = 600,
+       units = c("px"),
+       dpi = 80,
+       device = "jpeg"
+)
+
+
+
+
 # individual predictions: Predicted Probabilities
-p_load(ggeffects)
-ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working Class"))
-ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working Class"))
+# p_load(ggeffects)
+# ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working Class"))
+# ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working Class"))
 
 
 
@@ -395,11 +437,11 @@ m3.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + femininity + city, fam
 
 m4.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + masculinity + city, family="poisson", data=dat[dat$gender=="Man",])
 m4.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat[dat$gender=="Woman",])
+## ----
 
-
-
+## ---- table:d
 p_load(texreg)
-screenreg( # screenreg texreg
+texreg( # screenreg texreg
   list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
   custom.header = list("1" = 1,
                        "2" = 2,
@@ -426,7 +468,16 @@ screenreg( # screenreg texreg
     "Man", "Woman"),
   #custom.coef.names = NULL,
   omit.coef = "(city)|(party)",
-  #custom.coef.names = c("Intercept", "Vote Share (%)", "Points Accumulated (delta)", "Ideological Distance", "Party Budget", "Pivotal Voter"),
+  custom.coef.names = c("Intercept",
+                        "Physical Occupation-Congruent",
+                        "Middle Class",
+                        "Working Class",
+                        "Age",
+                        "Physical Occupation-Congruent $\\times$ Middle Class",
+                        "Physical Occupation-Congruent $\\times$ Working Class",
+                        "Attractiveness",
+                        "Masculinity",
+                        "Femininity"),
   # custom.header = list( "Poisson" = 1),
   stars = c(0.001, 0.01, 0.05, 0.1),
   include.adjrs = FALSE,
@@ -438,21 +489,7 @@ screenreg( # screenreg texreg
   threeparttable = TRUE,
   custom.note = "\\item %stars. \\item Dependent variable is Turnout. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the simetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
 )
-
-
-
-############################## 
-# Predicted Probabilities Plot
-############################## 
-p_load(sjPlot,ggplot2)
-
-# Poisson
-p1.poisson = plot_model(m0, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot()
-p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Man Data") + theme_sjplot() + theme(legend.position = "bottom")
-p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Woman Data") + theme_sjplot()
-
-p_load(gridExtra)
-grid.arrange(p1.poisson, p2.poisson, p3.poisson, nrow = 1, ncol= 3)
+## ----
 
 
 ## Neg Binomial

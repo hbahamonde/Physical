@@ -31,7 +31,7 @@
 %\usepackage{setspace}      % \doublespacing \singlespacing \onehalfspacing %doble espacio
 %\label{x:y}                          %ocupar para autoref.
 %\autoref{x:y}                        %ocupar para autoref.
-%\usepackage{nopageno}      %desactivar para p�ginas
+%\usepackage{nopageno}      %desactivar para p<U+FFFD>ginas
 \usepackage{pifont}
 %\usepackage{marvosym} %faces
 \usepackage{hyperref}
@@ -229,130 +229,14 @@
 
 \begin{document}
 
-<<echo=FALSE, cache=FALSE, warning = FALSE, message = F>>=
-read_chunk('/Users/hectorbahamonde/research/Physical/Voting_Phys_App.R') # Hector path // MAC
-
-@
-
-
-<<rsetup, include=FALSE>>=
-chooseCRANmirror(graphics=FALSE, ind=1)
-if (!require("pacman")) install.packages("pacman"); library(pacman)
-p_load(knitr)
-options(scipen = 99999999999)
-
-@
-
-<<loadings:d, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=TRUE, eval=TRUE>>=
-
-@
-
-
-<<models:d, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = TRUE, cache=TRUE, eval=TRUE>>=
-
-@
-
-<<table:d, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = TRUE, cache=TRUE, eval=TRUE>>=
-
-@
-
-
-% % % % % % % % % % % % % % %
-%           CONTENT
-% % % % % % % % % % % % % % %
-
-%% title frame
-\begin{frame}
-\titlepage
-\end{frame}
-
-
-\section{Introduction}
-\subsection{First things first...}
-
-\begin{frame}[c]{}
-
-{\bf Vote buying}: distribution of private rewards to individuals during elections in exchange for electoral support {\scriptsize(Nichter, 2014)}.
-\vspace{1cm}
-
-  %\includegraphics[scale=0.3, center]{Resources_Presentation/vote_buying.jpg}
-
-\end{frame}
-
-
-\subsection{Motivation}
-\begin{frame}[c]{Vote-Buying Literature Builds on the Wrong Framework}
-
-\begin{itemize}
-    \item {\bf Say you're a \underline{clientelist} political party campaigning}\pause:
-        \begin{enumerate}
-            \item When do you buy votes? {\scriptsize\color{gray} Winning/losing the election?}\pause
-            \item Who do you target? {\scriptsize\color{gray} Your own supporters (``core'') or the ones who are more likely to flip (``swing'')?}\pause
-            \item Should your past ``haunt'' you? {\scriptsize\color{gray} Do prior electoral losses matter?}\pause
-        \end{enumerate}
-    \item {\bf If we follow what the literature says...the answers are mixed}:
-        \begin{enumerate}
-            \item[\checkmark] When losing the elections: {\bf risk}.\pause
-            \item[\checkmark] To both core and swing voters  (targeting core supporters is not a {\bf waste}).\pause
-            \item[\checkmark] It shouldn't: {\bf ``sunk costs''} should not affect current decisions.\pause
-        \end{enumerate}
-   \item {\bf We contest these answers}. \pause Explain: {\color{blue}traditional clientelism research has failed to answer these questions because it has a wrong understanding about the party's decision-making process under risk}.
-   \end{itemize}
-\end{frame}
-
-
-
-\miniframesoff
-\begin{frame}[c]{Milestones}
-    \begin{itemize}
-      \item {\bf Motivate the problem}: vote buying literature is purely based on the Expected Utility Theory (EUT) {\tiny (von Neumann and Morgenstern)}.\pause
-      \item {\bf Problem}: as a consequence, there are too many important loose ends.\pause
-      \item {\bf Propose a possible solution}: re-think about how parties make decisions under risk (Prospect Theory).\pause
-      \item {\bf Empirics}: we formalized a vote buying game, and then test it in an economic lab experiment.\pause
-      \item {\bf Results}: we find strong support in favor of Prospect Theory.\pause
-      \item {\bf Feedback wanted!}
-    \end{itemize}
-\end{frame}
-
-\subsection{Argument}
-
-\miniframeson
-\begin{frame}[c]{Argument}
-   \huge {\bf Vote-buying will be higher when parties},
-   \centering
-    \begin{itemize}
-      \item[\checkmark] {\color{blue} Are probable winners}---{\color{gray}risk-averse in the domain of gains}.\pause
-      \item[\checkmark] {\color{blue} Have experienced losses in the past} ({\color{blue}sunk costs})---{\color{gray}risk-seeking in the domain of losses}.
-    \end{itemize}
-\end{frame}
-
-
-\section{The problem}
-
-\subsection{The Problem}
-
-\miniframeson
-\begin{frame}[c]{Clientelism and the Expected Utility Theory}
-  \begin{itemize}
-    \item The EUT was one of the first theories of decision making under risk.\pause
-    \item Since its introduction, it has \emph{dominated} political science as a field (including the vote-buying lit.).\pause
-    \item {\bf The problem}: the (whole!) literature assumes that in the party's decision-making process:\pause
-              \begin{enumerate}
-                  \item {\color{blue}Losses and gains affect in a {\bf comparable} way}.\\
-                  {\scriptsize\color{gray}Winning elections {\bf feels good as} losing one hurts.}\pause
-                  \item {\color{blue}Parties focus only on {\bf absolute} levels of utilities}.\\
-                  {\scriptsize\color{gray}Overlooking {\bf changes} in outcomes respect to a reference point (``sunk costs'').}\pause
-              \end{enumerate}
-        \item These assumptions have led to several empirical inconsistencies.\pause
-          \begin{enumerate}
-            \item Clientelist Targeting.
-            \item Political Contestation.
-          \end{enumerate}
-  \end{itemize}
-\end{frame}
 
 
 
 
-\end{document}
+
+
+
+
+
+
 
