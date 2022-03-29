@@ -5,7 +5,7 @@
 * net install iscogen, replace from(https://raw.githubusercontent.com/benjann/iscogen/master/)
 clear all
 set more off, permanently
-use "/Users/hectorbahamonde/research/Physical/data.dta" /*load data*/
+use "data.dta" /*load data*/
 
 * net install iscogen /* make sure package is installed */
 iscogen oesch5 = oesch5(ISCO_code), replace

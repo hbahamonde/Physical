@@ -1,5 +1,55 @@
 \RequirePackage{atbegshi}
-\documentclass[compress,aspectratio=169]{beamer} % aspectratio=169
+\documentclass[compress,aspectratio=169]{beamer}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt} % aspectratio=169
 
 
 % % % % % % % % % % % % % % %
@@ -31,7 +81,7 @@
 %\usepackage{setspace}      % \doublespacing \singlespacing \onehalfspacing %doble espacio
 %\label{x:y}                          %ocupar para autoref.
 %\autoref{x:y}                        %ocupar para autoref.
-%\usepackage{nopageno}      %desactivar para p<U+FFFD>ginas
+%\usepackage{nopageno}      %desactivar para p�ginas
 \usepackage{pifont}
 %\usepackage{marvosym} %faces
 \usepackage{hyperref}
@@ -151,6 +201,20 @@
 \makeatother
 
 
+%%% bib begin
+\usepackage[backend=biber,style=numeric, citestyle=ieee]{biblatex}
+\addbibresource{/Users/hectorbahamonde/Bibliografia_PoliSci/library.bib} 
+
+
+% USAGES
+%% use \textcite to cite normal
+%% \parencite to cite in parentheses
+%% \footcite to cite in footnote
+%% the default can be modified in autocite=FOO, footnote, for ex. 
+%%% bib end
+
+
+
 % % % % % % % % % % % % % % %
 %       To show the TITLE at the Bottom of each slide
 % % % % % % % % % % % % % % %
@@ -218,15 +282,11 @@
 
 \institute[shortinst]{\inst{1} University of Turku, Finland}
 
-\date{\today}
+\date{April 7th, 2022}
 
 %to to see shadows of previous blocks
 %\setbeamercovered{dynamic}
-
-
-
-
-
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
 
@@ -239,4 +299,170 @@
 
 
 
+
+
+
+% % % % % % % % % % % % % % %
+%           CONTENT
+% % % % % % % % % % % % % % %
+
+%% title frame
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\section{Introduction}
+\subsection{Order of the day}
+
+\begin{frame}[c]{}
+  \begin{itemize}
+    \item {\bf Motivate the problem}: It's clear that {\bf the better the candidate's looks, the higher the turnout}.
+
+    \item {\bf Problem}: The literature \emph{only} looks at candidate attractiveness, which is just one dimension of physical appearance.
+
+    \item {\bf Gaps}: we explore the degree in which a candidate's {\bf occupation is congruent with his/her physical appearance}.
+
+    \item {\bf Empirics}: we exploit a novel data set of candidate's physical appearance in the context of the 2017 Finnish Municipal Elections.
+
+    \item {\bf Results}: we find that there exists a systematic electoral penalty for female candidates that look-like and also hold working-class occupations.
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Motivation}
+
+
+\begin{frame}[c]{Good-looking Candidates do Better in Elections}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+  \item Better-looking candidates are more likely to win elections. 
+  \item Dion et al. (1972) we know that ``beautiful is good'' and that ``voters vote beautiful'' (Efrain and Patterson, 1974).
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\includegraphics[width=\textwidth]{pic_4.png}
+{\tiny ``What Are Good-Looking Candidates?'' (Stockemer and Praino, 2019)}
+\end{column}
+\end{columns}
+\end{frame} 
+
+
+
+% 1
+\begin{frame}[c]{Nixon-Kennedy 1960 Debate}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny \color{gray}Mattes et. al (2010).}
+  \item[] {\color{white}Nixon didn't look right.}
+  \item[] {\color{white}And was all sweaty. {\tiny\color{white} Stockemer and Praino (2019)}.}
+  \item[] {\color{white}Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\includegraphics[width=\textwidth]{pic_1.jpg}
+\end{column}
+\end{columns}
+\end{frame} 
+
+% 2
+\miniframesoff
+\begin{frame}[c]{Nixon-Kennedy 1960 Debate}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny\color{gray} Mattes et. al (2010).}
+  \item Nixon didn't look right.
+  \item[] {\color{white}And was all sweaty. {\tiny\color{white} Stockemer and Praino (2019).}}
+  \item[] {\color{white}Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\includegraphics[width=\textwidth]{pic_2.JPG}
+\end{column}
+\end{columns}
+\end{frame} 
+
+
+% 3
+\miniframesoff
+\begin{frame}[c]{Nixon-Kennedy 1960 Debate}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny \color{gray} Mattes et. al (2010).}
+  \item Nixon didn't look right.
+  \item And was all sweaty.\\{\tiny\color{gray} Stockemer and Praino (2019).}
+  \item[] {\color{white} Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\includegraphics[width=\textwidth]{pic_3.jpg}
+\end{column}
+\end{columns}
+\end{frame} 
+
+% 4
+\miniframesoff
+\begin{frame}[c]{Nixon-Kennedy 1960 Debate}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny \color{gray} Mattes et. al (2010).}
+  \item Nixon didn't look right.
+  \item And was all sweaty.\\{\tiny\color{gray} Stockemer and Praino (2019).}
+  \item Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\includegraphics[width=\textwidth]{pic_5.jpg}
+\end{column}
+\end{columns}
+\end{frame} 
+
+
+
+
+
+
+\miniframesoff
+\begin{frame}[c]{Milestones}
+    \begin{itemize}
+      \item {\bf Motivate the problem}: vote buying literature is purely based on the Expected Utility Theory (EUT) {\tiny (von Neumann and Morgenstern)}.
+      \item {\bf Problem}: as a consequence, there are too many important loose ends.
+      \item {\bf Propose a possible solution}: re-think about how parties make decisions under risk (Prospect Theory).
+      \item {\bf Empirics}: we formalized a vote buying game, and then test it in an economic lab experiment.
+      \item {\bf Results}: we find strong support in favor of Prospect Theory.
+      \item {\bf Feedback wanted!}
+    \end{itemize}
+\end{frame}
+
+\subsection{Argument}
+
+\miniframeson
+\begin{frame}[c]{Argument}
+   \huge {\bf Vote-buying will be higher when parties},
+   \centering
+    \begin{itemize}
+      \item[\checkmark] {\color{blue} Are probable winners}---{\color{gray}risk-averse in the domain of gains}.
+      \item[\checkmark] {\color{blue} Have experienced losses in the past} ({\color{blue}sunk costs})---{\color{gray}risk-seeking in the domain of losses}.
+    \end{itemize}
+\end{frame}
+
+
+\section{The problem}
+
+\subsection{The Problem}
+
+\miniframeson
+\begin{frame}[c]{Clientelism and the Expected Utility Theory}
+\printbibliography[heading=none]
+\end{frame}
+
+
+
+
+\end{document}
 

@@ -151,6 +151,20 @@
 \makeatother
 
 
+%%% bib begin
+\usepackage[backend=biber,style=numeric, citestyle=ieee]{biblatex}
+\addbibresource{/Users/hectorbahamonde/Bibliografia_PoliSci/library.bib} 
+
+
+% USAGES
+%% use \textcite to cite normal
+%% \parencite to cite in parentheses
+%% \footcite to cite in footnote
+%% the default can be modified in autocite=FOO, footnote, for ex. 
+%%% bib end
+
+
+
 % % % % % % % % % % % % % % %
 %       To show the TITLE at the Bottom of each slide
 % % % % % % % % % % % % % % %
@@ -218,7 +232,7 @@
 
 \institute[shortinst]{\inst{1} University of Turku, Finland}
 
-\date{\today}
+\date{April 7th, 2022}
 
 %to to see shadows of previous blocks
 %\setbeamercovered{dynamic}
@@ -268,48 +282,128 @@ options(scipen = 99999999999)
 
 
 \section{Introduction}
-\subsection{First things first...}
+\subsection{Order of the day}
 
 \begin{frame}[c]{}
+  \begin{itemize}
+    \item {\bf Motivate the problem}: It's clear that {\bf the better the candidate's looks, the higher the turnout}.
 
-{\bf Vote buying}: distribution of private rewards to individuals during elections in exchange for electoral support {\scriptsize(Nichter, 2014)}.
-\vspace{1cm}
+    \item {\bf Problem}: The literature \emph{only} looks at candidate attractiveness, which is just one dimension of physical appearance.
 
-  %\includegraphics[scale=0.3, center]{Resources_Presentation/vote_buying.jpg}
+    \item {\bf Gaps}: we explore the degree in which a candidate's {\bf occupation is congruent with his/her physical appearance}.
 
+    \item {\bf Empirics}: we exploit a novel data set of candidate's physical appearance in the context of the 2017 Finnish Municipal Elections.
+
+    \item {\bf Results}: we find that there exists a systematic electoral penalty for female candidates that look-like and also hold working-class occupations.
+  \end{itemize}
 \end{frame}
 
 
 \subsection{Motivation}
-\begin{frame}[c]{Vote-Buying Literature Builds on the Wrong Framework}
 
+
+\begin{frame}[c]{Good-looking Candidates do Better in Elections}
+\begin{columns}
+\begin{column}{.45\textwidth}
 \begin{itemize}
-    \item {\bf Say you're a \underline{clientelist} political party campaigning}\pause:
-        \begin{enumerate}
-            \item When do you buy votes? {\scriptsize\color{gray} Winning/losing the election?}\pause
-            \item Who do you target? {\scriptsize\color{gray} Your own supporters (``core'') or the ones who are more likely to flip (``swing'')?}\pause
-            \item Should your past ``haunt'' you? {\scriptsize\color{gray} Do prior electoral losses matter?}\pause
-        \end{enumerate}
-    \item {\bf If we follow what the literature says...the answers are mixed}:
-        \begin{enumerate}
-            \item[\checkmark] When losing the elections: {\bf risk}.\pause
-            \item[\checkmark] To both core and swing voters  (targeting core supporters is not a {\bf waste}).\pause
-            \item[\checkmark] It shouldn't: {\bf ``sunk costs''} should not affect current decisions.\pause
-        \end{enumerate}
-   \item {\bf We contest these answers}. \pause Explain: {\color{blue}traditional clientelism research has failed to answer these questions because it has a wrong understanding about the party's decision-making process under risk}.
-   \end{itemize}
-\end{frame}
+  \item Better-looking candidates are more likely to win elections. 
+  \item Dion et al. (1972) we know that ``beautiful is good'' and that ``voters vote beautiful'' (Efrain and Patterson, 1974).
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\includegraphics[width=\textwidth]{pic_4.png}
+{\tiny ``What Are Good-Looking Candidates?'' (Stockemer and Praino, 2019)}
+\end{column}
+\end{columns}
+\end{frame} 
+
+
+
+% 1
+\begin{frame}[c]{Nixon-Kennedy 1960 Debate}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny \color{gray}Mattes et. al (2010).}
+  \item[] {\color{white}Nixon didn't look right.}
+  \item[] {\color{white}And was all sweaty. {\tiny\color{white} Stockemer and Praino (2019)}.}
+  \item[] {\color{white}Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\includegraphics[width=\textwidth]{pic_1.jpg}
+\end{column}
+\end{columns}
+\end{frame} 
+
+% 2
+\miniframesoff
+\begin{frame}[c]{Nixon-Kennedy 1960 Debate}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny\color{gray} Mattes et. al (2010).}
+  \item Nixon didn't look right.
+  \item[] {\color{white}And was all sweaty. {\tiny\color{white} Stockemer and Praino (2019).}}
+  \item[] {\color{white}Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\includegraphics[width=\textwidth]{pic_2.JPG}
+\end{column}
+\end{columns}
+\end{frame} 
+
+
+% 3
+\miniframesoff
+\begin{frame}[c]{Nixon-Kennedy 1960 Debate}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny \color{gray} Mattes et. al (2010).}
+  \item Nixon didn't look right.
+  \item And was all sweaty.\\{\tiny\color{gray} Stockemer and Praino (2019).}
+  \item[] {\color{white} Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\includegraphics[width=\textwidth]{pic_3.jpg}
+\end{column}
+\end{columns}
+\end{frame} 
+
+% 4
+\miniframesoff
+\begin{frame}[c]{Nixon-Kennedy 1960 Debate}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny \color{gray} Mattes et. al (2010).}
+  \item Nixon didn't look right.
+  \item And was all sweaty.\\{\tiny\color{gray} Stockemer and Praino (2019).}
+  \item Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\includegraphics[width=\textwidth]{pic_5.jpg}
+\end{column}
+\end{columns}
+\end{frame} 
+
+
+
 
 
 
 \miniframesoff
 \begin{frame}[c]{Milestones}
     \begin{itemize}
-      \item {\bf Motivate the problem}: vote buying literature is purely based on the Expected Utility Theory (EUT) {\tiny (von Neumann and Morgenstern)}.\pause
-      \item {\bf Problem}: as a consequence, there are too many important loose ends.\pause
-      \item {\bf Propose a possible solution}: re-think about how parties make decisions under risk (Prospect Theory).\pause
-      \item {\bf Empirics}: we formalized a vote buying game, and then test it in an economic lab experiment.\pause
-      \item {\bf Results}: we find strong support in favor of Prospect Theory.\pause
+      \item {\bf Motivate the problem}: vote buying literature is purely based on the Expected Utility Theory (EUT) {\tiny (von Neumann and Morgenstern)}.
+      \item {\bf Problem}: as a consequence, there are too many important loose ends.
+      \item {\bf Propose a possible solution}: re-think about how parties make decisions under risk (Prospect Theory).
+      \item {\bf Empirics}: we formalized a vote buying game, and then test it in an economic lab experiment.
+      \item {\bf Results}: we find strong support in favor of Prospect Theory.
       \item {\bf Feedback wanted!}
     \end{itemize}
 \end{frame}
@@ -321,7 +415,7 @@ options(scipen = 99999999999)
    \huge {\bf Vote-buying will be higher when parties},
    \centering
     \begin{itemize}
-      \item[\checkmark] {\color{blue} Are probable winners}---{\color{gray}risk-averse in the domain of gains}.\pause
+      \item[\checkmark] {\color{blue} Are probable winners}---{\color{gray}risk-averse in the domain of gains}.
       \item[\checkmark] {\color{blue} Have experienced losses in the past} ({\color{blue}sunk costs})---{\color{gray}risk-seeking in the domain of losses}.
     \end{itemize}
 \end{frame}
@@ -333,22 +427,7 @@ options(scipen = 99999999999)
 
 \miniframeson
 \begin{frame}[c]{Clientelism and the Expected Utility Theory}
-  \begin{itemize}
-    \item The EUT was one of the first theories of decision making under risk.\pause
-    \item Since its introduction, it has \emph{dominated} political science as a field (including the vote-buying lit.).\pause
-    \item {\bf The problem}: the (whole!) literature assumes that in the party's decision-making process:\pause
-              \begin{enumerate}
-                  \item {\color{blue}Losses and gains affect in a {\bf comparable} way}.\\
-                  {\scriptsize\color{gray}Winning elections {\bf feels good as} losing one hurts.}\pause
-                  \item {\color{blue}Parties focus only on {\bf absolute} levels of utilities}.\\
-                  {\scriptsize\color{gray}Overlooking {\bf changes} in outcomes respect to a reference point (``sunk costs'').}\pause
-              \end{enumerate}
-        \item These assumptions have led to several empirical inconsistencies.\pause
-          \begin{enumerate}
-            \item Clientelist Targeting.
-            \item Political Contestation.
-          \end{enumerate}
-  \end{itemize}
+\printbibliography[heading=none]
 \end{frame}
 
 

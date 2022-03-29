@@ -5,7 +5,6 @@ cat("\014")
 rm(list=ls())
 setwd("/Users/hectorbahamonde/research/Physical/")
 
-## ---- loadings:d
 # Pacman
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 
@@ -133,16 +132,21 @@ dat = dat %>% dplyr::distinct(candidate.number,ideology,age,masculinity,attracti
 p_load(foreign)
 dat.stata = subset(dat, select = -c(occup.elect.off,occupation_phys_cong_data))
 write.dta(dat.stata, paste0(getwd(),"/data.dta",""))
+
+#### GO TO STATA and RUN DO FILE
+
 # load Stata DO file with code below
-p_load(RStata)
-options("RStata.StataPath" = '/Applications/Stata/StataIC.app/Contents/MacOS/StataIC') 
+#p_load(RStata)
+#options("RStata.StataPath" = '/Applications/Stata/StataIC.app/Contents/MacOS/StataIC') 
+#chooseStataBin <- '/Applications/Stata/StataIC.app/Contents/MacOS/StataIC'
+#options("chooseStataBin" = '/Applications/Stata/StataIC.app/Contents/MacOS/StataIC')
 # this will cause an error, but it's just because it's calling the app, not the Terminal. I couldn't get to open the Terminal instead.
 ## https://github.com/lbraglia/RStata/issues/11
 ## I also put a ticket.
 ## BUT ALWAYS MAKE SURE net install iscogen is installed IN STATA
-options("RStata.StataVersion" = 15)
-stata("Occupation_Conv.do")
-#### OR ALTERNATIVELY GO TO STATA
+# options("RStata.StataVersion" = 15)
+# RStata::stata("Occupation_Conv.do")
+
 dat <- read.dta(paste0(getwd(),"/dat.dta",""))
 
 
@@ -161,9 +165,21 @@ dat$esec.r = recode_factor(dat$esec,
                            "Routine" = "Working Class"
 )
 
+
+save(dat, file = "dat.Rdata")
+
+
+
 ############################## 
 # Descriptive Plots
 ############################## 
+
+## ---- loadings:d
+cat("\014")
+rm(list=ls())
+setwd("/Users/hectorbahamonde/research/Physical/")
+
+load(file = "/Users/hectorbahamonde/research/Physical/dat.Rdata")
 
 p_load(ggplot2,cowplot)
 
@@ -309,8 +325,6 @@ ggsave("densities.jpeg", plot = total.plot.p,
 ############################## 
 
 ## ---- models:d
-
-
 # base models
 main.model.formula = as.formula(turnout ~ phys_occ_cong*esec.r + party + age + city)
 
@@ -355,8 +369,23 @@ ggsave("pred_prob_plot.jpeg", plot = pred.prob.p,
        dpi = 80,
        device = "jpeg"
 )
+############################## 
+# robustness checks
+############################## 
 
+m2 = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat)
+m3 = glm(turnout ~ phys_occ_cong*esec.r + party + age + masculinity + city, family="poisson", data=dat)
+m4 = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat)
 
+m2.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Man",])
+m2.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Woman",])
+
+m3.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Man",])
+m3.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Woman",])
+
+m4.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + masculinity + city, family="poisson", data=dat[dat$gender=="Man",])
+m4.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat[dat$gender=="Woman",])
+## ----
 
 
 # individual predictions: Predicted Probabilities
@@ -419,29 +448,9 @@ plot(effect("phys_occ_cong*esec.r", m1.w.quasi.poisson))
 # m1.w.nb <- glm.nb(turnout ~ phys_occ_cong*esec.r + party + age + city + city, data=dat[dat$gender=="Woman",])
 
 
-
-
-############################## 
-# robustness checks
-############################## 
-
-m2 = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat)
-m3 = glm(turnout ~ phys_occ_cong*esec.r + party + age + masculinity + city, family="poisson", data=dat)
-m4 = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat)
-
-m2.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Man",])
-m2.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Woman",])
-
-m3.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Man",])
-m3.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Woman",])
-
-m4.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + masculinity + city, family="poisson", data=dat[dat$gender=="Man",])
-m4.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat[dat$gender=="Woman",])
-## ----
-
 ## ---- table:d
 p_load(texreg)
-texreg( # screenreg texreg
+reg.table = texreg( # screenreg texreg
   list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
   custom.header = list("1" = 1,
                        "2" = 2,
