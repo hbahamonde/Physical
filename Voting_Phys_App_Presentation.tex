@@ -13,6 +13,9 @@
 \makeatother
 
 \definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}}}
+\makeatother
 \newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
 \newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
 \newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
@@ -47,6 +50,14 @@
 \definecolor{messagecolor}{rgb}{0, 0, 0}
 \definecolor{warningcolor}{rgb}{1, 0, 1}
 \definecolor{errorcolor}{rgb}{1, 0, 0}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+}}
+\makeatother
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
 \usepackage{alltt} % aspectratio=169
@@ -319,9 +330,14 @@
   \begin{itemize}
     \item {\bf Motivate the problem}: It's clear that {\bf the better the candidate's looks, the higher the turnout}.
 
-    \item {\bf Problem}: The literature \emph{only} looks at candidate attractiveness, which is just one dimension of physical appearance.
+    \item {\bf Gaps in the literature}: The literature \emph{only} looks at candidate attractiveness, which is just \emph{one} dimension of physical appearance.
 
-    \item {\bf Gaps}: we explore the degree in which a candidate's {\bf occupation is congruent with his/her physical appearance}.
+\item Our paper:
+
+      \begin{itemize}
+        \item {\bf Beyond attractiveness}: explore the degree in which {\bf a candidate's occupation is congruent with his/her physical appearance}.
+        \item {\bf Inequality perspective}: Study how the candidate's perceived {\bf social class} affects turnout.
+      \end{itemize}
 
     \item {\bf Empirics}: we exploit a novel data set of candidate's physical appearance in the context of the 2017 Finnish Municipal Elections.
 
@@ -351,11 +367,12 @@
 
 
 % 1
+\miniframesoff
 \begin{frame}[c]{Nixon-Kennedy 1960 Debate}
 \begin{columns}
 \begin{column}{.45\textwidth}
 \begin{itemize}
-  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny \color{gray}Mattes et. al (2010).}
+  \item Nixon's ``five-o'clock'' shadow largely affected voter evaluations.\\{\tiny \color{gray}Mattes et. al (2010).}
   \item[] {\color{white}Nixon didn't look right.}
   \item[] {\color{white}And was all sweaty. {\tiny\color{white} Stockemer and Praino (2019)}.}
   \item[] {\color{white}Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
@@ -373,7 +390,7 @@
 \begin{columns}
 \begin{column}{.45\textwidth}
 \begin{itemize}
-  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny\color{gray} Mattes et. al (2010).}
+  \item Nixon's ``five-o'clock'' shadow largely affected voter evaluations.\\{\tiny\color{gray} Mattes et. al (2010).}
   \item Nixon didn't look right.
   \item[] {\color{white}And was all sweaty. {\tiny\color{white} Stockemer and Praino (2019).}}
   \item[] {\color{white}Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
@@ -392,7 +409,7 @@
 \begin{columns}
 \begin{column}{.45\textwidth}
 \begin{itemize}
-  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny \color{gray} Mattes et. al (2010).}
+  \item Nixon's ``five-o'clock'' shadow largely affected voter evaluations.\\{\tiny \color{gray} Mattes et. al (2010).}
   \item Nixon didn't look right.
   \item And was all sweaty.\\{\tiny\color{gray} Stockemer and Praino (2019).}
   \item[] {\color{white} Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
@@ -410,7 +427,7 @@
 \begin{columns}
 \begin{column}{.45\textwidth}
 \begin{itemize}
-  \item Nixon's ``five-o'clock'' shadow, largely affected voter evaluations.\\{\tiny \color{gray} Mattes et. al (2010).}
+  \item Nixon's ``five-o'clock'' shadow largely affected voter evaluations.\\{\tiny \color{gray} Mattes et. al (2010).}
   \item Nixon didn't look right.
   \item And was all sweaty.\\{\tiny\color{gray} Stockemer and Praino (2019).}
   \item Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.
@@ -423,46 +440,121 @@
 \end{frame} 
 
 
+\subsection{Gaps}
+
+
+\miniframeson
+\begin{frame}[c]{Gaps in the Current Literature}
+\begin{itemize}
+  \item While the literature has advanced our knowledge in a number of ways, its focus has been on just attractiveness.
+  \item We believe that physical \emph{appearance} goes way beyond than just physical \emph{attractiveness}.
+  \item Even while some have studied how ``looking \emph{competent}'' (and not necessarily ``\emph{beautiful}'') helps candidates winning elections, there are a number of unanswered questions.
+  \item Importantly, a number of these unexplored questions touch upon issues of social stratification.
+  \item For example, \emph{Does it matter for turnout if the candidate looks like a working-class individual as opposed to a white-collar individual?}
+\end{itemize}
+\end{frame} 
+
+
+\subsection{Filling in the Gaps}
+
+
+\miniframeson
+\begin{frame}[c]{Our Paper}
+\begin{itemize}
+  \item Studies the electoral consequences for candidates of looking ``upper-class,'' ``middle-class'' or ``working-class.''
+  \item Exploits a novel data set comprised of a representative sample of the Finnish population (N=7,920). In these data, participants rated a subsample of photos of political candidates (N=1,415) according to several physical appearance measurements.
+  \item We find that there exists a systematic electoral penalty, particularly for female candidates, that look-like and also hold working-class occupations.
+\end{itemize}
+\end{frame} 
 
 
 
+\section{Theory}
 
-\miniframesoff
-\begin{frame}[c]{Milestones}
+\subsection{Political Psychology and Heuristics}
+
+\miniframeson
+\begin{frame}[c]{Political Psychology}
     \begin{itemize}
-      \item {\bf Motivate the problem}: vote buying literature is purely based on the Expected Utility Theory (EUT) {\tiny (von Neumann and Morgenstern)}.
-      \item {\bf Problem}: as a consequence, there are too many important loose ends.
-      \item {\bf Propose a possible solution}: re-think about how parties make decisions under risk (Prospect Theory).
-      \item {\bf Empirics}: we formalized a vote buying game, and then test it in an economic lab experiment.
-      \item {\bf Results}: we find strong support in favor of Prospect Theory.
-      \item {\bf Feedback wanted!}
+      \item A candidate's {\bf physical appearance} is ``the most important'' {\color{gray}\tiny (Lau \& Redlawsk 2001)} and the ``most obvious and accessible'' {\color{gray}\tiny (Dion et al. 1972)} \emph{heuristic} available to voters {\color{gray}\tiny (Stockemer \& Praino 2017)}.
+
+      \item {\bf Heuristics} allows reasonable voting decision making with minimal cognitive effort.
+
+      \item Thus, ``voters vote beautiful'' {\color{gray}\tiny(Efrain \& Patterson 1974)} because attractive candidates ``are more likely to be attributed the qualities associated with successful politicians'' {\color{gray}\tiny(Stockemer \& Praino 2019)}.
+
     \end{itemize}
 \end{frame}
+
+
+
+\subsection{Expectation States Theory and Inequality}
+
+\miniframeson
+\begin{frame}[c]{Expectation States Theory}
+    \begin{itemize}
+      \item {\bf Expectation States Theory}: physical appearance, gender and occupation ``cue social categories and signify social status'' making them all a ``locus of inequality.''
+
+      - ``sexual attractiveness'' is a gender-specific status symbol: physical attractiveness intersects with gender producing unfavorable outcomes for women.
+
+
+    \end{itemize}
+\end{frame}
+
+
+\section{Argument}
 
 \subsection{Argument}
 
+
 \miniframeson
 \begin{frame}[c]{Argument}
-   \huge {\bf Vote-buying will be higher when parties},
-   \centering
-    \begin{itemize}
-      \item[\checkmark] {\color{blue} Are probable winners}---{\color{gray}risk-averse in the domain of gains}.
-      \item[\checkmark] {\color{blue} Have experienced losses in the past} ({\color{blue}sunk costs})---{\color{gray}risk-seeking in the domain of losses}.
-    \end{itemize}
+    \begin{enumerate}
+
+      \item Differences between social groups (gender, occupation, race, etc.) are translated into social inequalities.
+
+      \item For instance, women are more likely to get penalized because of how they look.
+
+      \item In the context of low-information elections, a candidate with a lower status is faced with lower performance expectation, that is, lower turnout. 
+
+      \item Since voters use heuristics, they will elect more systematically high-status male candidates than similar female candidates.
+
+    \end{enumerate}
 \end{frame}
 
 
-\section{The problem}
+\miniframesoff
+\begin{frame}[c]%{Argument}
+\includegraphics[width=\textwidth]{argument.pdf}
+\end{frame}
 
-\subsection{The Problem}
+\section{Empirics}
+
+\subsection{Case}
 
 \miniframeson
-\begin{frame}[c]{Clientelism and the Expected Utility Theory}
-\printbibliography[heading=none]
+\begin{frame}[c]{Finland: A Hard Case}
+  \begin{itemize}
+    \item We follow a ``{\bf least-likely case design}'' {\color{gray}\tiny(Levy 2008).} Finland has been consistently considered as:
+      \begin{itemize}
+        \item[-] A democratic {\color{gray}\tiny (Polity-V)}.
+        \item[-] An economic egalitarian {\color{gray}\tiny (Waltl 2022)}.
+        \item[-] A gender egalitarian.
+        \item[-] A social-mobility prone country {\color{gray}\tiny (Erola 2009)}.
+        \item[-] Having low-information Municipal Elections {\color{gray}\tiny(Berggren et al. 2010 and 2017)}.
+      \end{itemize}
+      \item Thus, it should be {\bf hard to find} a correlation between class-congruent use of status symbols and turnout.
+    \end{itemize}
+\vspace{0.5cm}
+{\color{gray}...and yet, we \emph{do}.}
 \end{frame}
 
-
-
+\miniframeson
+\subsection{Data}
+\begin{frame}[c]{Several Sources}
+  \begin{itemize}
+    \item Test.
+      \end{itemize}
+\end{frame}
 
 \end{document}
 
