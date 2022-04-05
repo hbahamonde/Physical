@@ -86,7 +86,6 @@ dat$ideology = ifelse(
                 dat$party=="SKP", "Left", ifelse(
                   dat$party=="VAS", "Left", ifelse(
                     dat$party=="VIHR", "Center", NA
-                    )
                   )
                 )
               )
@@ -96,6 +95,7 @@ dat$ideology = ifelse(
       )
     )
   )
+)
 ## recode
 dat$ideology <- ordered(dat$ideology, levels = c("Left", "Center-Left", "Center", "Center-Right", "Right"))
 
@@ -118,7 +118,7 @@ dat = dat %>% dplyr::select(id,
                             occup.elect.off,
                             ISCO_code,
                             everything()
-                            )
+)
 # table(dat$municipality.y==dat$municipality) # municipalities match 100%
 ## I was getting duplicated municipality columns because of the NA's. Delete redundant columns.
 dat = dat %>% select(c(-municipality.x,-municipality.y))
@@ -202,13 +202,13 @@ attractiveness.p = cowplot::plot_grid(
   align = "hv",
   axis = "b", 
   ncol = 3
-  )
+)
 ggsave("attractiveness.pdf", plot = attractiveness.p, 
        width = 1400,
        height = 500,
        units = c("px"),
        dpi = 80
-       )
+)
 
 
 # Physical-Occupation Congruence
@@ -257,7 +257,7 @@ masculinity.p = cowplot::plot_grid(
   align = "hv",
   axis = "b", 
   ncol = 3
-  )
+)
 ggsave("masculinity.pdf", plot = masculinity.p, 
        width = 1400,
        height = 500,
@@ -284,13 +284,13 @@ femininity.p = cowplot::plot_grid(
   align = "hv",
   axis = "b", 
   ncol = 3
-  )
+)
 ggsave("femininity.pdf", plot = femininity.p, 
        width = 1400,
        height = 500,
        units = c("px"),
        dpi = 80
-       )
+)
 # mega plot
 total.plot.p = cowplot::plot_grid(
   d.p1.p,d.p2.p,d.p3.p,
@@ -323,6 +323,11 @@ ggsave("densities.jpeg", plot = total.plot.p,
 ############################## 
 # Models
 ############################## 
+cat("\014")
+rm(list=ls())
+setwd("/Users/hectorbahamonde/research/Physical/")
+
+load(file = "/Users/hectorbahamonde/research/Physical/dat.Rdata")
 
 ## ---- models:d
 # base models
@@ -342,19 +347,19 @@ p_load(sjPlot,ggplot2,cowplot)
 
 # Poisson
 p1.poisson = plot_model(m0, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
-p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Man Data") + theme_sjplot() + theme(legend.position = "bottom",legend.title.align=0.5) + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
+p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Data") + theme_sjplot() + theme(legend.position = "bottom",legend.title.align=0.5) + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
 p2.poisson$labels$colour <- "European Socio-Economic Classification"
-p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Woman Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
+p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Women Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
 
 #p_load(gridExtra)
 #grid.arrange(p1.poisson, p2.poisson, p3.poisson, nrow = 1, ncol= 3)
 
 pred.prob.p = cowplot::plot_grid(p1.poisson,p2.poisson,p3.poisson,
-                   align = "hv",
-                   axis = "b", 
-                   ncol = 3,
-                   nrow = 1
-                   )
+                                 align = "hv",
+                                 axis = "b", 
+                                 ncol = 3,
+                                 nrow = 1
+)
 ggsave("pred_prob_plot.pdf", plot = pred.prob.p, 
        width = 1200,
        height = 600,
@@ -449,7 +454,9 @@ plot(effect("phys_occ_cong*esec.r", m1.w.quasi.poisson))
 
 
 ## ---- table:d
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(texreg)
+
 reg.table = texreg( # screenreg texreg
   list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
   custom.header = list("1" = 1,
@@ -466,15 +473,15 @@ reg.table = texreg( # screenreg texreg
                        "12" = 12),
   custom.model.names = c(
     # m0, m1.m, m1.w
-    "Full", "Man", "Woman", 
+    "Full", "Men", "Women", 
     # m2, m3, m4 
     "Full","Full","Full",  
     # m2.m, m2.w,
-    "Man", "Woman", 
+    "Men", "Women", 
     # m3.m, m3.w
-    "Man", "Woman", 
+    "Men", "Women", 
     # m4.m, m4.w
-    "Man", "Woman"),
+    "Men", "Women"),
   #custom.coef.names = NULL,
   omit.coef = "(city)|(party)",
   custom.coef.names = c("Intercept",
@@ -488,23 +495,27 @@ reg.table = texreg( # screenreg texreg
                         "Masculinity",
                         "Femininity"),
   # custom.header = list( "Poisson" = 1),
-  stars = c(0.001, 0.01, 0.05, 0.1),
+  stars = c(0.001, 0.01, 0.05),
   include.adjrs = FALSE,
-  symbol = "\\cdot",
+  #symbol = "\\\\cdot",
   label = "reg:t",
-  caption = "Statistical Model (OLS): Amount of Vote-Buying Offer.",
+  caption = "Statistical Models",
+  caption.above = T,
+  center = T,
   float.pos="H",
   use.packages = FALSE,
   threeparttable = TRUE,
-  custom.note = "\\item %stars. \\item Dependent variable is Turnout. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the simetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
+  scalebox = 0.4,
+  custom.note = "\\item %stars. \\item Dependent variable is Turnout. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
 )
 ## ----
 
 
+
 ## Neg Binomial
 # p1.neg.bin = plot_model(m0.nb, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot()
-# p2.neg.bin = plot_model(m1.m.nb, type = "int", show.legend = TRUE, title = "Man Data") + theme_sjplot() + theme(legend.position = "bottom")
-# p3.neg.bin = plot_model(m1.w.nb, type = "int", show.legend = F, title = "Woman Data") + theme_sjplot()
+# p2.neg.bin = plot_model(m1.m.nb, type = "int", show.legend = TRUE, title = "Men Data") + theme_sjplot() + theme(legend.position = "bottom")
+# p3.neg.bin = plot_model(m1.w.nb, type = "int", show.legend = F, title = "Women Data") + theme_sjplot()
 ##
 # p_load(gridExtra)
 # grid.arrange(p1.neg.bin, p2.neg.bin, p3.neg.bin, nrow = 1, ncol= 3)
@@ -517,8 +528,8 @@ reg.table = texreg( # screenreg texreg
 # p_load(sjPlot,ggplot2)
 ##
 # plot_model(m0.nb, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot()
-# plot_model(m1.m.nb, type = "int", show.legend = TRUE, title = "Man Data") + theme_sjplot() + theme(legend.position = "bottom")
-# plot_model(m1.w.nb, type = "int", show.legend = F, title = "Woman Data") + theme_sjplot()
+# plot_model(m1.m.nb, type = "int", show.legend = TRUE, title = "Men Data") + theme_sjplot() + theme(legend.position = "bottom")
+# plot_model(m1.w.nb, type = "int", show.legend = F, title = "Women Data") + theme_sjplot()
 ##
 # p_load(gridExtra)
 # grid.arrange(m0.ols, m1.m.ols, m1.w.ols, nrow = 1, ncol= 3)
