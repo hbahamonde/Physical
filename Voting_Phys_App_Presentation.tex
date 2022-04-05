@@ -72,7 +72,7 @@
 \usepackage{xcolor}[dvipsnames]
 \usepackage{amssymb,amsmath}
 \usepackage{threeparttable} % package to have long notes in reg tables in texreg. 
-
+\usepackage{graphics}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.11}
 \usepgfplotslibrary{fillbetween}
@@ -86,7 +86,7 @@
 %\usepackage{times}
 \usepackage{array}
 \usepackage{tabularx}
-%\usepackage{booktabs}
+\usepackage{booktabs}
 %\usepackage{textcomp}
 \usepackage{float}
 %\usepackage{setspace}      % \doublespacing \singlespacing \onehalfspacing %doble espacio
@@ -94,6 +94,8 @@
 %\autoref{x:y}                        %ocupar para autoref.
 %\usepackage{nopageno}      %desactivar para p�ginas
 \usepackage{pifont}
+\newcommand{\xmark}{\ding{55}}%
+
 %\usepackage{marvosym} %faces
 \usepackage{hyperref}
 \usepackage{multirow}
@@ -341,7 +343,7 @@
 
     \item {\bf Empirics}: we exploit a novel data set of candidate's physical appearance in the context of the 2017 Finnish Municipal Elections.
 
-    \item {\bf Results}: we find that there exists a systematic electoral penalty for female candidates that look-like and also hold working-class occupations.
+    \item {\bf Results}: There is systematic electoral penalty for female candidates that look-like and also hold working-class occupations.
   \end{itemize}
 \end{frame}
 
@@ -446,10 +448,10 @@
 \miniframeson
 \begin{frame}[c]{Gaps in the Current Literature}
 \begin{itemize}
-  \item While the literature has advanced our knowledge in a number of ways, its focus has been on just attractiveness.
-  \item We believe that physical \emph{appearance} goes way beyond than just physical \emph{attractiveness}.
+  \item While the literature has advanced a number of important questions, its focus has been on just {\bf attractiveness}.
+  \item We believe that physical \emph{appearance} goes way beyond \emph{attractiveness}.
   \item Even while some have studied how ``looking \emph{competent}'' (and not necessarily ``\emph{beautiful}'') helps candidates winning elections, there are a number of unanswered questions.
-  \item Importantly, a number of these unexplored questions touch upon issues of social stratification.
+  \item Importantly, several of these questions are related to inequality.
   \item For example, \emph{Does it matter for turnout if the candidate looks like a working-class individual as opposed to a white-collar individual?}
 \end{itemize}
 \end{frame} 
@@ -461,9 +463,9 @@
 \miniframeson
 \begin{frame}[c]{Our Paper}
 \begin{itemize}
-  \item Studies the electoral consequences for candidates of looking ``upper-class,'' ``middle-class'' or ``working-class.''
-  \item Exploits a novel data set comprised of a representative sample of the Finnish population (N=7,920). In these data, participants rated a subsample of photos of political candidates (N=1,415) according to several physical appearance measurements.
-  \item We find that there exists a systematic electoral penalty, particularly for female candidates, that look-like and also hold working-class occupations.
+  \item Study the electoral consequences for candidates of looking ``upper-class,'' ``middle-class'' or ``working-class.''
+  \item Exploit a novel data set representative at the country level (N=7,920). In these data, participants rated a subsample of photos of political candidates (N=1,415) according to several physical appearance measurements.
+  \item Find that female candidates that look-like and also perform working-class occupations do poorly in elections. 
 \end{itemize}
 \end{frame} 
 
@@ -478,7 +480,7 @@
     \begin{itemize}
       \item A candidate's {\bf physical appearance} is ``the most important'' {\color{gray}\tiny (Lau \& Redlawsk 2001)} and the ``most obvious and accessible'' {\color{gray}\tiny (Dion et al. 1972)} \emph{heuristic} available to voters {\color{gray}\tiny (Stockemer \& Praino 2017)}.
 
-      \item {\bf Heuristics} allows reasonable voting decision making with minimal cognitive effort.
+      \item {\bf Heuristics} are cognitive devices that allow reasonable voting decision making with minimal effort.
 
       \item Thus, ``voters vote beautiful'' {\color{gray}\tiny(Efrain \& Patterson 1974)} because attractive candidates ``are more likely to be attributed the qualities associated with successful politicians'' {\color{gray}\tiny(Stockemer \& Praino 2019)}.
 
@@ -507,7 +509,7 @@
 
 
 \miniframeson
-\begin{frame}[c]{Argument}
+\begin{frame}<presentation:0>
     \begin{enumerate}
 
       \item Differences between social groups (gender, occupation, race, etc.) are translated into social inequalities.
@@ -522,9 +524,9 @@
 \end{frame}
 
 
-\miniframesoff
+\miniframeson
 \begin{frame}[c]%{Argument}
-\includegraphics[width=\textwidth]{argument.pdf}
+\centering\includegraphics[scale=1.2]{argument.pdf}
 \end{frame}
 
 \section{Empirics}
@@ -540,7 +542,7 @@
         \item[-] An economic egalitarian {\color{gray}\tiny (Waltl 2022)}.
         \item[-] A gender egalitarian.
         \item[-] A social-mobility prone country {\color{gray}\tiny (Erola 2009)}.
-        \item[-] Having low-information Municipal Elections {\color{gray}\tiny(Berggren et al. 2010 and 2017)}.
+        %\item[-] Having low-information Municipal Elections {\color{gray}\tiny(Berggren et al. 2010 and 2017)}.
       \end{itemize}
       \item Thus, it should be {\bf hard to find} a correlation between class-congruent use of status symbols and turnout.
     \end{itemize}
@@ -565,7 +567,7 @@
   \item {\bf ``Low-information'' elections}: most voters get exposed to only the official candidate pictures shown in the posters.\\
   {\color{gray}\tiny(Berggren et al. 2010 \& 2017).}
   \item {\bf Public information}: shown in city centers, bus stops, \emph{and} voting booths!
-  \item Municipalities \emph{must} provide the \emph{same} number of slots for posters.
+  \item Municipalities \emph{must} provide the \emph{same} number of poster slots for all parties.
 \end{itemize}
 \end{column}
 \begin{column}{.45\textwidth}
@@ -577,18 +579,196 @@
 
 
 
+\subsection{Data}
+
+\miniframeson
+\begin{frame}[c]{2017 Municipal Elections: Candidate Data}
+  \begin{itemize}
+    \item {\bf Ministry of Justice}: candidate's pictures, district, occupation and turnout.
+    \item {\bf Sample}: Universe 33,618, possible 10,000, randomly selected {\bf 1,500 candidate photographs}. 
+    \item {\bf Occupation}: {\color{blue}European Socio-economic Classification}: recoded each candidate's occupation (upper, middle and working class).
+  \end{itemize}
+\end{frame}
+
+
+\miniframesoff
+\begin{frame}[c]{Novel Raters Data}
+  \begin{itemize}
+    \item {\bf Sample}: able to collect data from 7,920 randomly selected Finnish-speaking Finns.
+    \item {\bf Task}: participants evaluated a random sample of candidate photographs according to five items (N$\sim$50).
+    \item {\bf Items}: 
+      \begin{enumerate}
+        \item {\bf \scriptsize Occupation-Congruent Appearance}.
+        \item {\bf \scriptsize Attractiveness}.
+        \item {\bf \scriptsize Masculinity}.
+        \item {\bf \scriptsize Femininity}.
+      \end{enumerate}
+    \item {\bf Avoiding recognition}: proprietary software designed to avoid assigning candidates running in the same district of the rater's.
+     
+  \end{itemize}
+   \hyperlink{table:items}{\beamergotobutton{show table with items}}
+\end{frame}
+
+\miniframesoff
+\begin{frame}[plain]%{Argument}
+\centering\includegraphics[scale=0.1999]{densities.pdf}
+\end{frame}
+
+
+\subsection{Statistical Analyses}
 
 
 \miniframeson
-\subsection{Data}
-\begin{frame}[c]{Data}
+\begin{frame}[c]{Functional Form and Model}
+
+ \begin{align*}
+ Y_{i}=\text{Turnout}_{i}\sim\;&\text{\texttt{Poisson}}\\
+ \text{Turnout}_{i}  = \;
+ & \beta_{0} + \\
+ & \beta_{1}\text{{\only<2>{\color{red}}Occupation-congruent Appearance}}\times\beta_{2}\text{{\only<2>{\color{red}}Social Class}} + \\
+ & \beta_{2}\text{{\only<3>{\color{red}}Age}} + \\
+ & \gamma{1}\text{{\only<4>{\color{red}}Party}} + \\
+ & \gamma{2}\text{{\only<5>{\color{red}}City}}
+ \end{align*}
+ \begin{itemize}
+  \item {\bf Also control for}: {\only<6>{\color{red}}Attractiveness}, {\only<7>{\color{red}}Masculinity} and {\only<8>{\color{red}}Femininity}.
+ \item {\bf Partition the data} (full, men \& women).
+\end{itemize}
+\end{frame}
+
+
+
+\miniframesoff
+\begin{frame}[plain]%{Functional Form and Model}
+\center
+
+\begin{table}[H]
+\caption{Statistical Models}
+\begin{center}
+\scalebox{0.4}{
+\begin{threeparttable}
+\begin{tabular}{l c c c c c c c c c c c c}
+\hline
+ & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{7} & \multicolumn{1}{c}{8} & \multicolumn{1}{c}{9} & \multicolumn{1}{c}{10} & \multicolumn{1}{c}{11} & \multicolumn{1}{c}{12} \\
+\cline{2-2} \cline{3-3} \cline{4-4} \cline{5-5} \cline{6-6} \cline{7-7} \cline{8-8} \cline{9-9} \cline{10-10} \cline{11-11} \cline{12-12} \cline{13-13}
+ & Full & Men & Women & Full & Full & Full & Men & Women & Men & Women & Men & Women \\
+\hline
+Intercept                                            & $4.49^{***}$  & $2.58^{***}$  & $6.17^{***}$  & $2.11^{***}$  & $4.27^{***}$  & $2.15^{***}$  & $-0.25^{**}$  & $3.24^{***}$  & $2.50^{***}$  & $2.98^{***}$  & $0.17$        & $2.80^{***}$  \\
+                                                     & $(0.05)$      & $(0.08)$      & $(0.07)$      & $(0.05)$      & $(0.05)$      & $(0.05)$      & $(0.09)$      & $(0.08)$      & $(0.08)$      & $(0.08)$      & $(0.09)$      & $(0.08)$      \\
+Physical Occupation-Congruent                        & $0.41^{***}$  & $0.59^{***}$  & $0.28^{***}$  & $0.25^{***}$  & $0.42^{***}$  & $0.26^{***}$  & $0.37^{***}$  & $0.22^{***}$  & $0.59^{***}$  & $0.28^{***}$  & $0.37^{***}$  & $0.24^{***}$  \\
+                                                     & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      \\
+Middle Class                                         & $0.30^{***}$  & $0.81^{***}$  & $-0.05$       & $0.41^{***}$  & $0.23^{***}$  & $0.31^{***}$  & $0.54^{***}$  & $0.12$        & $0.77^{***}$  & $0.18$        & $0.75^{***}$  & $0.16$        \\
+                                                     & $(0.06)$      & $(0.08)$      & $(0.11)$      & $(0.06)$      & $(0.06)$      & $(0.06)$      & $(0.08)$      & $(0.11)$      & $(0.08)$      & $(0.11)$      & $(0.08)$      & $(0.11)$      \\
+Working Class                                        & $1.03^{***}$  & $1.59^{***}$  & $0.70^{***}$  & $0.49^{***}$  & $1.07^{***}$  & $0.58^{***}$  & $0.95^{***}$  & $0.23^{***}$  & $1.59^{***}$  & $0.32^{***}$  & $0.86^{***}$  & $0.19^{**}$   \\
+                                                     & $(0.03)$      & $(0.04)$      & $(0.07)$      & $(0.03)$      & $(0.03)$      & $(0.03)$      & $(0.04)$      & $(0.07)$      & $(0.04)$      & $(0.07)$      & $(0.04)$      & $(0.07)$      \\
+Age                                                  & $-0.02^{***}$ & $-0.01^{***}$ & $-0.03^{***}$ & $-0.00^{***}$ & $-0.02^{***}$ & $-0.01^{***}$ & $0.00^{***}$  & $-0.01^{***}$ & $-0.01^{***}$ & $-0.02^{***}$ & $0.01^{***}$  & $-0.01^{***}$ \\
+                                                     & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      \\
+Physical Occupation-Congruent $\times$ Middle Class  & $-0.18^{***}$ & $-0.34^{***}$ & $-0.11^{***}$ & $-0.20^{***}$ & $-0.16^{***}$ & $-0.17^{***}$ & $-0.22^{***}$ & $-0.17^{***}$ & $-0.33^{***}$ & $-0.19^{***}$ & $-0.28^{***}$ & $-0.18^{***}$ \\
+                                                     & $(0.02)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.02)$      & $(0.02)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.03)$      \\
+Physical Occupation-Congruent $\times$ Working Class & $-0.46^{***}$ & $-0.61^{***}$ & $-0.43^{***}$ & $-0.28^{***}$ & $-0.48^{***}$ & $-0.31^{***}$ & $-0.39^{***}$ & $-0.28^{***}$ & $-0.62^{***}$ & $-0.29^{***}$ & $-0.35^{***}$ & $-0.27^{***}$ \\
+                                                     & $(0.01)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.02)$      \\
+Attractiveness                                       &               &               &               & $0.76^{***}$  &               & $0.89^{***}$  & $1.00^{***}$  & $0.72^{***}$  &               &               & $1.08^{***}$  & $0.53^{***}$  \\
+                                                     &               &               &               & $(0.01)$      &               & $(0.01)$      & $(0.01)$      & $(0.01)$      &               &               & $(0.01)$      & $(0.01)$      \\
+Masculinity                                          &               &               &               &               & $0.09^{***}$  &               &               &               & $0.04^{***}$  &               & $-0.28^{***}$ &               \\
+                                                     &               &               &               &               & $(0.00)$      &               &               &               & $(0.01)$      &               & $(0.01)$      &               \\
+Femininity                                           &               &               &               &               &               & $-0.15^{***}$ &               &               &               & $0.68^{***}$  &               & $0.26^{***}$  \\
+                                                     &               &               &               &               &               & $(0.00)$      &               &               &               & $(0.01)$      &               & $(0.02)$      \\
+\hline
+AIC                                                  & $287653.94$   & $170596.79$   & $79111.45$    & $267973.43$   & $287029.77$   & $265328.79$   & $154959.12$   & $73290.19$    & $170577.24$   & $74331.79$    & $153861.01$   & $73001.39$    \\
+BIC                                                  & $288886.12$   & $171561.82$   & $79936.45$    & $269210.66$   & $288267.17$   & $266571.24$   & $155928.83$   & $74119.20$    & $171546.96$   & $75161.13$    & $154835.41$   & $73834.74$    \\
+Log Likelihood                                       & $-143590.97$  & $-85092.40$   & $-39365.73$   & $-133749.72$  & $-143277.88$  & $-132426.40$  & $-77272.56$   & $-36454.09$   & $-85081.62$   & $-36974.89$   & $-76722.51$   & $-36308.70$   \\
+Deviance                                             & $278666.41$   & $165250.11$   & $75150.60$    & $258990.24$   & $278040.23$   & $256343.60$   & $149610.43$   & $69333.68$    & $165228.56$   & $70368.94$    & $148510.33$   & $69042.88$    \\
+Num. obs.                                            & $1368$        & $800$         & $568$         & $1367$        & $1368$        & $1367$        & $800$         & $567$         & $800$         & $568$         & $800$         & $567$         \\
+\hline
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\scriptsize{\item $^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$. \item Dependent variable is Turnout. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.}
+\end{tablenotes}
+\end{threeparttable}
+}
+\label{reg:t}
+\end{center}
+\end{table}
+
+\end{frame}
+
+
+\miniframesoff
+\begin{frame}[c]{Main Results}
+\centering\includegraphics[scale=0.3]{pred_prob_plot.pdf}
+\end{frame}
+
+\section{Discussion}
+
+\subsection{Wrapping Up}
+
+\miniframeson
+\begin{frame}[c]{Main Takeaways}
   \begin{itemize}
-    \item Several Sources:
-      \begin{enumerate}
-        \item Test.
-      \end{enumerate}
+    \item[$\checkmark$] Considered {\bf the use of heuristics in elections} and the concept of {\bf ``status'' in expectation states theory}.
+    \item[$\checkmark$] Selected the {\bf \emph{unlikely} case} of the 2017 Finnish Municipal Elections.
+    \item[$\checkmark$] Exploited a {\bf novel representative data set} on physical appearance.
+  \end{itemize}
+\end{frame}
+
+\miniframesoff
+\begin{frame}[c]{Main Results}
+      \begin{itemize}
+        \item {\bf Male \& female} candidates:  
+          \begin{enumerate}
+            \item[$\checkmark$] Candidates that show {\color{black!30!green}\emph{higher degrees of congruence}} between physical appearance and occupation {\color{black!30!green}do better}.
+            \item[$\checkmark$] Candidates that look-like and also hold {\color{black!30!green}\emph{upper-class occupations} do best} in elections.
+          \end{enumerate}
+        \item  {\bf Female} candidates: 
+          \begin{itemize}
+          \item Systematic {\color{red}electoral penalty} when they {\color{red}{\bf look-like}} and also {\bf hold {\color{red}working-class} occupations}.
+        \end{itemize}
       \end{itemize}
 \end{frame}
 
+\miniframesoff
+\begin{frame}[c]{Thank you}
+        %\begin{center}
+        %  \vspace{-0.7cm}\includegraphics[scale=.05, center]{/Users/hectorbahamonde/hbahamonde.github.io/resources/qr-code.pdf}
+        %\end{center}
+
+
+        \begin{itemize}
+            %\item Paper (draft) available at {\color{blue}www.HectorBahamonde.com}.
+            \item[] All feedback is welcomed!
+        \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Appendix}
+
+% Raters Data: Questions and Answer Set
+\miniframesoff
+\begin{frame}[c]{\hypertarget{table:items}{Raters Data: Questions and Answer Set}}
+\begin{table}[h]\tiny
+\begin{tabularx}{\textwidth}{|c||c|X|X|X}%{@{}l *3{>{\centering\arraybackslash}X}@{}}%{|c||cX|X|X}
+{\bf Sample} & {\bf Attribute} & {\bf Question} & {\bf Answer Set} \\
+\hline
+1      & Occupation-Congruent Appearance & To what extent does this person respond to your image of someone working in [occupation]? & 5=Perfectly responds to my image, 4=Responds well to my image, 3=Somewhat responds to my image, 2=Does not respond to my image well, 1=Does not respond to my image at all. \\
+\hline
+2      & Attractiveness & In your opinion, how attractive does this person look, as compared to others of the same age and gender?   & 5=very attractive, 4=more attractive than the average, 3=average, 2=below average, 1=well below average (Griffin and Langois 2006; Bono et al. 2017; Tu, Gilbert and Bono 2021)\\
+\hline
+3      & Masculinity & To what extent do you think this person looks masculine, as compared to others of the same age and gender? & 1=not masculine at all, to 5=very masculine (e.g., Hoss et al. 2005).\\
+\hline
+4      & Femininity & To what extent do you think this person looks feminine, as compared to others of the same age and gender?  & 1=not feminine at all, to 5=very feminine.  
+\end{tabularx}
+\end{table}
+\end{frame}
+
+
+
+
 \end{document}
 
+
+
+                                                                                                                                                                               

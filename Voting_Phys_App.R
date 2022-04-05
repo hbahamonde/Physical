@@ -346,7 +346,7 @@ m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
 p_load(sjPlot,ggplot2,cowplot)
 
 # Poisson
-p1.poisson = plot_model(m0, type = "int", show.legend = F, title = "Combined Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
+p1.poisson = plot_model(m0, type = "int", show.legend = F, title = "Full Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
 p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Data") + theme_sjplot() + theme(legend.position = "bottom",legend.title.align=0.5) + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
 p2.poisson$labels$colour <- "European Socio-Economic Classification"
 p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Women Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
