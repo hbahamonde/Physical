@@ -338,12 +338,12 @@
 
       \begin{itemize}
         \item {\bf Beyond attractiveness}: explore the degree in which {\bf a candidate's occupation is congruent with his/her physical appearance}.
-        \item {\bf Inequality perspective}: Study how the candidate's perceived {\bf social class} affects turnout.
+        \item {\bf Inequality perspective}: Study how the candidate's {\bf social class} affects turnout.
       \end{itemize}
 
     \item {\bf Empirics}: we exploit a novel data set of candidate's physical appearance in the context of the 2017 Finnish Municipal Elections.
 
-    \item {\bf Results}: There is systematic electoral penalty for female candidates that look-like and also hold working-class occupations.
+    \item {\bf Results}: Find that Finns vote systematically more for ``upper-class'' candidates, but that there are important gender differences.
   \end{itemize}
 \end{frame}
 
@@ -452,7 +452,7 @@
   \item We believe that physical \emph{appearance} goes way beyond \emph{attractiveness}.
   \item Even while some have studied how ``looking \emph{competent}'' (and not necessarily ``\emph{beautiful}'') helps candidates winning elections, there are a number of unanswered questions.
   \item Importantly, several of these questions are related to inequality.
-  \item For example, \emph{Does it matter for turnout if the candidate looks like a working-class individual as opposed to a white-collar individual?}
+  \item {\bf In this paper we want to explain {\color{red}turnout}}: {\color{blue}\emph{Does it matter if the candidate look like a working-class individual as opposed to a white-collar individual?}}
 \end{itemize}
 \end{frame} 
 
@@ -461,11 +461,11 @@
 
 
 \miniframeson
-\begin{frame}[c]{Our Paper}
+\begin{frame}[c]{To Fill These Gaps...}
 \begin{itemize}
-  \item Study the electoral consequences for candidates of looking ``upper-class,'' ``middle-class'' or ``working-class.''
-  \item Exploit a novel data set representative at the country level (N=7,920). In these data, participants rated a subsample of photos of political candidates (N=1,415) according to several physical appearance measurements.
-  \item Find that female candidates that look-like and also perform working-class occupations do poorly in elections. 
+  \item Study the electoral consequences for candidates of {\bf looking} ``upper-class,'' ``middle-class'' or ``working-class.''
+  \item Exploit a {\bf novel data} set were we are able to measure different physical appearance aspects of a subsample of political candidates.
+  \item {\bf Find} that Finns vote systematically more for ``upper-class'' candidates, but that there are important gender differences.
 \end{itemize}
 \end{frame} 
 
@@ -480,9 +480,9 @@
     \begin{itemize}
       \item A candidate's {\bf physical appearance} is ``the most important'' {\color{gray}\tiny (Lau \& Redlawsk 2001)} and the ``most obvious and accessible'' {\color{gray}\tiny (Dion et al. 1972)} \emph{heuristic} available to voters {\color{gray}\tiny (Stockemer \& Praino 2017)}.
 
-      \item {\bf Heuristics} are cognitive devices that allow reasonable voting decision making with minimal effort.
+      \item {\bf Heuristics} are cognitive devices that allow reasonable voting decision making with minimal effort {\color{gray}\tiny (Lau \& Redlawsk 2001 and Tversky \& Kahneman 1973)}.
 
-      \item Thus, ``voters vote beautiful'' {\color{gray}\tiny(Efrain \& Patterson 1974)} because attractive candidates ``are more likely to be attributed the qualities associated with successful politicians'' {\color{gray}\tiny(Stockemer \& Praino 2019)}.
+      \item Thus, ``{\color{blue}voters vote beautiful}'' {\color{gray}\tiny(Efrain \& Patterson 1974)} because attractive candidates ``are more likely to be attributed the {\color{blue}qualities} associated with {\color{blue}successful} politicians'' {\color{gray}\tiny(Stockemer \& Praino 2019)}.
 
     \end{itemize}
 \end{frame}
@@ -586,7 +586,7 @@
   \begin{itemize}
     \item {\bf Ministry of Justice}: candidate's pictures, district, occupation and turnout.
     \item {\bf Sample}: Universe 33,618, possible 10,000, randomly selected {\bf 1,500 candidate photographs}. 
-    \item {\bf Occupation}: {\color{blue}European Socio-economic Classification}: recoded each candidate's occupation (upper, middle and working class).
+    \item {\bf Occupation}: {\color{blue}European Socio-economic Classification}, recoded each candidate's occupation (upper, middle and working class).
   \end{itemize}
 \end{frame}
 
@@ -625,17 +625,16 @@
  Y_{i}=\text{Turnout}_{i}\sim\;&\text{\texttt{Poisson}}\\
  \text{Turnout}_{i}  = \;
  & \beta_{0} + \\
- & \beta_{1}\text{{\only<2>{\color{red}}Occupation-congruent Appearance}}\times\beta_{2}\text{{\only<2>{\color{red}}Social Class}} + \\
+ & \beta_{1}\text{{\only<2>{\color{red}}Occupation-congruent Appearance}}\times\text{{\only<2>{\color{red}}Social Class}} + \\
  & \beta_{2}\text{{\only<3>{\color{red}}Age}} + \\
  & \gamma{1}\text{{\only<4>{\color{red}}Party}} + \\
  & \gamma{2}\text{{\only<5>{\color{red}}City}}
  \end{align*}
  \begin{itemize}
   \item {\bf Also control for}: {\only<6>{\color{red}}Attractiveness}, {\only<7>{\color{red}}Masculinity} and {\only<8>{\color{red}}Femininity}.
- \item {\bf Partition the data} (full, men \& women).
+ \item {\bf Partition the data} ({\only<9>{\color{red}}full}, {\only<10>{\color{red}}men} \& {\only<11>{\color{red}}women}).
 \end{itemize}
 \end{frame}
-
 
 
 \miniframesoff
@@ -700,6 +699,24 @@ Num. obs.                                            & $1368$        & $800$    
 
 \section{Discussion}
 
+\subsection{At a Glance}
+
+\miniframeson
+\begin{frame}[c]{Main Results}
+      \begin{itemize}
+        \item {\bf Male \& female} candidates:  
+          \begin{enumerate}
+            \item[$\checkmark$] Candidates that show {\color{black!30!green}\emph{higher degrees of congruence}} between physical appearance and occupation {\color{black!30!green}do better}.
+            \item[$\checkmark$] Candidates that look-like and also perform {\color{black!30!green}\emph{upper-class occupations} do best} in elections.
+          \end{enumerate}
+        \item  {\bf Female} candidates: stronger effects.
+          \begin{itemize}
+          \item Systematic {\color{red}electoral penalty} when they {\color{red}{\bf look-like}} and also {\bf perform {\color{red}working-class} occupations}.
+          \item Systematic {\color{black!30!green}electoral premium} when they {\color{black!30!green}{\bf look-like}} and also {\bf perform {\color{black!30!green}white-collar} occupations}.
+        \end{itemize}
+      \end{itemize}
+\end{frame}
+
 \subsection{Wrapping Up}
 
 \miniframeson
@@ -707,23 +724,9 @@ Num. obs.                                            & $1368$        & $800$    
   \begin{itemize}
     \item[$\checkmark$] Considered {\bf the use of heuristics in elections} and the concept of {\bf ``status'' in expectation states theory}.
     \item[$\checkmark$] Selected the {\bf \emph{unlikely} case} of the 2017 Finnish Municipal Elections.
-    \item[$\checkmark$] Exploited a {\bf novel representative data set} on physical appearance.
+    \item[$\checkmark$] Exploited a {\bf novel representative data set} on candidates physical appearances.
+    \item[{\color{black!30!green}$\checkmark$}] Proposed an alternative explanation for {\color{red}turnout} not based on attractiveness but on {\color{black!30!green}occupation-congruent appearance} and {\color{black!30!green}social stratification}.
   \end{itemize}
-\end{frame}
-
-\miniframesoff
-\begin{frame}[c]{Main Results}
-      \begin{itemize}
-        \item {\bf Male \& female} candidates:  
-          \begin{enumerate}
-            \item[$\checkmark$] Candidates that show {\color{black!30!green}\emph{higher degrees of congruence}} between physical appearance and occupation {\color{black!30!green}do better}.
-            \item[$\checkmark$] Candidates that look-like and also hold {\color{black!30!green}\emph{upper-class occupations} do best} in elections.
-          \end{enumerate}
-        \item  {\bf Female} candidates: 
-          \begin{itemize}
-          \item Systematic {\color{red}electoral penalty} when they {\color{red}{\bf look-like}} and also {\bf hold {\color{red}working-class} occupations}.
-        \end{itemize}
-      \end{itemize}
 \end{frame}
 
 \miniframesoff

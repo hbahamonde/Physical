@@ -213,15 +213,15 @@ ggsave("attractiveness.pdf", plot = attractiveness.p,
 
 # Physical-Occupation Congruence
 ##
-d.p1.p = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Physical Occupation-Congruent")
+d.p1.p = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate's Occupation-congruent Appearance")
 d.p1.p$labels$fill <- "Candidate Gender"
 d.p1.p$labels$colour <- "Candidate Gender"
 ##
-d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Physical Occupation-Congruent")
+d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate's Occupation-congruent Appearance")
 d.p2.p$labels$fill <- "European Socio-Economic\nClassification"
 d.p2.p$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.p = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate Physical Occupation-Congruent")
+d.p3.p = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + theme(legend.position = "none") + labs(y = "Density", x = "Candidate's Occupation-congruent Appearance")
 d.p3.p$labels$fill <- "Political Party"
 d.p3.p$labels$colour <- "Political Party"
 ##
@@ -346,10 +346,10 @@ m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
 p_load(sjPlot,ggplot2,cowplot)
 
 # Poisson
-p1.poisson = plot_model(m0, type = "int", show.legend = F, title = "Full Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
-p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Data") + theme_sjplot() + theme(legend.position = "bottom",legend.title.align=0.5) + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
+p1.poisson = plot_model(m0, type = "int", show.legend = F, title = "Full Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate's Occupation-congruent Appearance") 
+p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Data") + theme_sjplot() + theme(legend.position = "bottom",legend.title.align=0.5) + labs(y = "Candidate Turnout", x = "Candidate's Occupation-congruent Appearance") 
 p2.poisson$labels$colour <- "European Socio-Economic Classification"
-p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Women Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate Physical Occupation-Congruent") 
+p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Women Data") + theme_sjplot() + labs(y = "Candidate Turnout", x = "Candidate's Occupation-congruent Appearance") 
 
 #p_load(gridExtra)
 #grid.arrange(p1.poisson, p2.poisson, p3.poisson, nrow = 1, ncol= 3)

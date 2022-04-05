@@ -13,7 +13,7 @@
 
 %\node[draw,align=center,fill=orange,text=black] (B4) at (7,0) {{\tiny Voter uses heuristics}\\{\tiny in low-information}\\{\tiny election}};
 
-\node[draw,fill=red,text=black,align=center] (B5) at (8.2,0) {{\bf {\scriptsize Lower}}\\{\scriptsize turnout$\star$}};
+\node[draw,fill=red,text=black,align=center] (B5) at (7.4,0) {{\bf {\scriptsize Lower}}\\{\scriptsize turnout$\star$}};
 
 
 \draw[-,draw=blue,thick] (B1) to (B2);
@@ -36,7 +36,7 @@ node[below, near start] {{\scriptsize \color{black!30!green}\bf Congruent}};
 
 %\node[draw,,align=center,fill=orange,text=black] (A4) at (7,2) {{\tiny Voter uses heuristics}\\{\tiny in low-information}\\{\tiny election}};
 
-\node[draw,fill=black!30!green,text=black,align=center] (A5) at (8.2,2) {{\bf {\scriptsize Higher}}\\{\scriptsize turnout$\star$}};
+\node[draw,fill=black!30!green,text=black,align=center] (A5) at (7.4,2) {{\bf {\scriptsize Higher}}\\{\scriptsize turnout$\star$}};
 
 
 \draw[-,draw=blue,thick] (A1) to (A2);
@@ -52,10 +52,10 @@ node[above, near start] {{\scriptsize \color{black!30!green}\bf Congruent}};
 
 
 
-\coordinate (dm1) at (6.5,2.6);
-\coordinate (dm2) at (6.5,-0.7);
-\node[rectangle,draw,minimum width=0.7cm] [fit = (dm1) (dm2)] (bx4) {};
-\node[align=center,fill=orange,font=\scriptsize,rotate=90] at (bx4.center) {Voter uses heuristics \\in low-information election};
+\coordinate (dm1) at (6,2.6);
+\coordinate (dm2) at (6,-0.7);
+\node[rectangle,minimum width=0.35cm] [fit = (dm1) (dm2)] (bx4) {};
+\node[align=center,fill=orange,font=\scriptsize,rotate=90] at (bx4.center) {Voters use heuristics};
 
 \node[draw,fill=pink,font=\tiny,minimum width=0.1cm,thin] at (7,-2) {$\star$Particularly for women};
 
