@@ -592,7 +592,7 @@ plot(effect("phys_occ_cong*esec.r", m1.w.quasi.poisson))
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(texreg)
 
-reg.table = texreg( # screenreg texreg
+reg.table = screenreg( # screenreg texreg
   list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
   custom.header = list("1" = 1,
                        "2" = 2,
@@ -640,8 +640,8 @@ reg.table = texreg( # screenreg texreg
   float.pos="H",
   use.packages = FALSE,
   threeparttable = TRUE,
-  scalebox = 0.4,
-  custom.note = "\\item %stars. \\item Dependent variable is votes received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
+  scalebox = 0.5,
+  custom.note = "\\item %stars. \\item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
 )
 ## ----
 
