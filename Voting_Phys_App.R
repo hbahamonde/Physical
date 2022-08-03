@@ -640,7 +640,7 @@ reg.table = texreg( # screenreg texreg
   float.pos="H",
   use.packages = FALSE,
   threeparttable = TRUE,
-  scalebox = 0.5,
+  scalebox = 0.4,
   custom.note = "\\item %stars. \\item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
 )
 ## ----
