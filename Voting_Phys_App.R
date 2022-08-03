@@ -592,7 +592,7 @@ plot(effect("phys_occ_cong*esec.r", m1.w.quasi.poisson))
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(texreg)
 
-reg.table = screenreg( # screenreg texreg
+reg.table = texreg( # screenreg texreg
   list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
   custom.header = list("1" = 1,
                        "2" = 2,
