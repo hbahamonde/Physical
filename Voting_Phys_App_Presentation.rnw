@@ -443,10 +443,10 @@ options(scipen = 99999999999)
 
 \section{Theory}
 
-\subsection{Political Psychology and Heuristics}
+\subsection{Political Psychology}
 
 \miniframeson
-\begin{frame}[c]{Political Psychology}
+\begin{frame}[c]{Political Psychology: Heuristics}
     \begin{itemize}
       \item A candidate's {\bf physical appearance} is ``the most important'' {\color{gray}\tiny (Lau \& Redlawsk 2001)} and the ``most obvious and accessible'' {\color{gray}\tiny (Dion et al. 1972)} \emph{heuristic} available to voters {\color{gray}\tiny (Stockemer \& Praino 2017)}.
 
@@ -459,14 +459,22 @@ options(scipen = 99999999999)
 
 
 
-\subsection{Expectation States Theory and Inequality}
+\subsection{Status Expectations Theory}
 
 \miniframeson
-\begin{frame}[c]{Expectation States Theory}
+\begin{frame}[c]{Status Expectations Theory}
     \begin{itemize}
-      \item {\bf Expectation States Theory}: physical appearance, gender and occupation ``cue social categories and signify social status'' making them all a ``locus of inequality.''
+      \item {\bf Status Expectations Theory}: physical attractiveness is considered a similar status characteristic as gender or occupation.
+        \begin{itemize}
+          \item[$\checkmark$] For ex., attractive people are `better' and more `capable' {\tiny\color{gray}(Webster \& Driskell 1983)}.
+        \end{itemize}
 
-      - ``sexual attractiveness'' is a gender-specific status symbol: physical attractiveness intersects with gender producing unfavorable outcomes for women.
+        \item In this paper we broaden this idea to physical appearance-based cues of occupation as a status characteristic.
+
+        \begin{itemize}
+          \item[$\checkmark$] We {\color{blue}argue} that information about a candidate's occupation combined with his/her physical appearance function as cue of status, in turn affecting his/her likelihood of winning an election.
+        \end{itemize}
+
 
 
     \end{itemize}
