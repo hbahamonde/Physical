@@ -76,6 +76,8 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.11}
 \usepgfplotslibrary{fillbetween}
+\usepackage{fontawesome}
+
 
 %\usepackage{tipx}
 %\usepackage{tikz}
@@ -451,8 +453,8 @@
 %
 \begin{frame}[c]{What About Wealthy-looking or Poor-looking Candidates?}
 \begin{itemize}
-  \item While we know that better-looking candidates win more often, we're rather {\color{blue}ignorant about the effects of looking poor/wealthy on the probability of winning elections}.
-  \item This questions is relevant because it touches upon issues of perceived social stratification and voting choices.
+  \item While we know that better-looking candidates win more often, we're rather {\color{blue}ignorant about the effects of \underline{\emph{looking} poor/wealthy} on the probability of winning elections}.
+  \item This questions is relevant because it touches upon issues of perceived social stratification and vote choices.
 \end{itemize}
 \end{frame} 
 
@@ -476,7 +478,7 @@
     \item {\bf (\emph{Uncomfortable}) results}: Finns systematically...
       \begin{enumerate}
         \item Vote for upper-class candidates.
-        \item {\color{red}Punish working-class candidates, specially female candidates}. 
+        \item {\color{red}Punish working-class candidates, \emph{specially} {\bf female} candidates}. 
       \end{enumerate}
   \end{itemize}
 \end{frame}
@@ -508,16 +510,10 @@
     \begin{itemize}
       \item {\bf Status Expectations Theory}: physical attractiveness is considered a similar status characteristic as gender or occupation.
         \begin{itemize}
-          \item[$\checkmark$] For ex., attractive people are `better' and more `capable' {\tiny\color{gray}(Webster \& Driskell 1983)}.
+          \item[$\checkmark$] For ex., attractive people are `better' or `more capable' {\tiny\color{gray}(Webster \& Driskell 1983)}.
         \end{itemize}
 
-        \item In this paper we broaden this idea to physical appearance-based cues of occupation as a status characteristic.
-
-        \begin{itemize}
-          \item[$\checkmark$] We {\color{blue}argue} that information about a candidate's occupation combined with his/her physical appearance function as cue of status, in turn affecting his/her likelihood of winning an election.
-        \end{itemize}
-
-
+        \item We extend this concept to physical appearance-based cues of occupation as a status characteristic.
 
     \end{itemize}
 \end{frame}
@@ -529,23 +525,33 @@
 
 
 \miniframeson
-\begin{frame}<presentation:0>
-    \begin{enumerate}
+\begin{frame}%<presentation:0>
+    \begin{itemize}
 
-      \item Differences between social groups (gender, occupation, race, etc.) are translated into social inequalities.
+      \item[] We {\color{blue}\bf argue} that the information about a {\color{blue}candidate's occupation} combined with his/her {\color{blue}physical appearance} function as cue of {\color{blue}status}, in turn affecting his/her likelihood of winning an {\color{blue}election}.
 
-      \item For instance, women are more likely to get penalized because of how they look.
+      \begin{itemize}
+        \item {\bf Differences} between social groups (gender, occupation, race) {\bf reflect social inequalities}.
 
-      \item In the context of low-information elections, a candidate with a lower status is faced with lower performance expectation, that is, less votes. 
+        %\item For instance, women are more likely to get penalized because of how they look.
 
-      \item Since voters use heuristics, they will elect more systematically high-status male candidates than similar female candidates.
+        \item A candidate with a {\bf lower status} is faced with lower performance expectation, that is, {\bf less votes}. 
 
-    \end{enumerate}
+        \item Since voters use {\bf heuristics}, they will systematically elect `{\bf high-status looking}' candidates.
+
+        \begin{itemize}
+          \item[$\checkmark$] {\color{black!30!green}Upper-class looking candidates}.
+          \item[$\checkmark$] {\color{black!30!green}Male candidates}.
+        \end{itemize}
+
+    \end{itemize}
+
+    \end{itemize}
 \end{frame}
 
 
 \miniframeson
-\begin{frame}[c]%{Argument}
+\begin{frame}<presentation:0>%{Argument}
 \centering\includegraphics[scale=1.2]{argument.pdf}
 \end{frame}
 
@@ -567,10 +573,12 @@
       \item Thus, it should be {\bf hard to find} a correlation between class-congruent use of status symbols and voting.
     \end{itemize}
 \vspace{0.5cm}
-{\color{gray}...and yet, we \emph{do}.}
+...and yet, we \emph{do}.
 \end{frame}
 
-\miniframesoff
+\subsection{Voting Data}
+
+\miniframeson
 \begin{frame}[c]{Municipal Elections in Finland}
   \begin{itemize}
     \item {\bf Municipal Elections}: held every four years to elect councilors of the different municipalities {\color{gray}(N=293)}.
@@ -599,9 +607,7 @@
 
 
 
-\subsection{Data}
-
-\miniframeson
+\miniframesoff
 \begin{frame}[c]{2017 Municipal Elections: Candidate Data}
   \begin{itemize}
     \item {\bf Ministry of Justice}: candidate's pictures, district, occupation and voting data.
@@ -610,15 +616,16 @@
   \end{itemize}
 \end{frame}
 
+\subsection{Raters Data}
 
-\miniframesoff
+\miniframeson
 \begin{frame}[c]{Novel Raters Data}
   \begin{itemize}
     \item {\bf Sample}: able to collect data from 7,920 randomly selected Finnish-speaking Finns.
-    \item {\bf Task}: participants evaluated a random sample of candidate photographs according to five items (N$\sim$50).
+    \item {\bf Task}: participants evaluated a random sample of candidate photographs according to four items (N$\sim$50).
     \item {\bf Items}: 
       \begin{enumerate}
-        \item {\bf \scriptsize Occupation-Congruent Appearance}.
+        \item {\bf \scriptsize Occupation-Appearance congruence}.
         \item {\bf \scriptsize Attractiveness}.
         \item {\bf \scriptsize Masculinity}.
         \item {\bf \scriptsize Femininity}.
@@ -631,7 +638,7 @@
 
 \miniframesoff
 \begin{frame}[plain]%{Argument}
-\centering\includegraphics[scale=0.1999]{densities.pdf}
+\centering\includegraphics[scale=0.162]{densities.pdf}
 \end{frame}
 
 
@@ -661,39 +668,53 @@
 \begin{frame}[plain]%{Functional Form and Model}
 \center
 
-===============================================================================================================================================================================================================================================
-                                                                1              2              3               4               5               6              7              8              9              10             11             12     
-                                                         --------------  -------------  -------------  --------------  --------------  --------------  -------------  -------------  -------------  -------------  -------------  -------------
-                                                         Full            Men            Women          Full            Full            Full            Men            Women          Men            Women          Men            Women        
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Intercept                                                      4.49 ***       2.58 ***       6.17 ***        2.11 ***        4.27 ***        2.15 ***      -0.25 **        3.24 ***       2.50 ***       2.98 ***       0.17           2.80 ***
-                                                              (0.05)         (0.08)         (0.07)          (0.05)          (0.05)          (0.05)         (0.09)         (0.08)         (0.08)         (0.08)         (0.09)         (0.08)   
-Appearance-Occupation Congruence                               0.41 ***       0.59 ***       0.28 ***        0.25 ***        0.42 ***        0.26 ***       0.37 ***       0.22 ***       0.59 ***       0.28 ***       0.37 ***       0.24 ***
-                                                              (0.01)         (0.01)         (0.01)          (0.01)          (0.01)          (0.01)         (0.01)         (0.01)         (0.01)         (0.01)         (0.01)         (0.01)   
-Middle Class                                                   0.30 ***       0.81 ***      -0.05            0.41 ***        0.23 ***        0.31 ***       0.54 ***       0.12           0.77 ***       0.18           0.75 ***       0.16    
-                                                              (0.06)         (0.08)         (0.11)          (0.06)          (0.06)          (0.06)         (0.08)         (0.11)         (0.08)         (0.11)         (0.08)         (0.11)   
-Working Class                                                  1.03 ***       1.59 ***       0.70 ***        0.49 ***        1.07 ***        0.58 ***       0.95 ***       0.23 ***       1.59 ***       0.32 ***       0.86 ***       0.19 ** 
-                                                              (0.03)         (0.04)         (0.07)          (0.03)          (0.03)          (0.03)         (0.04)         (0.07)         (0.04)         (0.07)         (0.04)         (0.07)   
-Age                                                           -0.02 ***      -0.01 ***      -0.03 ***       -0.00 ***       -0.02 ***       -0.01 ***       0.00 ***      -0.01 ***      -0.01 ***      -0.02 ***       0.01 ***      -0.01 ***
-                                                              (0.00)         (0.00)         (0.00)          (0.00)          (0.00)          (0.00)         (0.00)         (0.00)         (0.00)         (0.00)         (0.00)         (0.00)   
-Appearance-Occupation Congruence $\times$ Middle Class        -0.18 ***      -0.34 ***      -0.11 ***       -0.20 ***       -0.16 ***       -0.17 ***      -0.22 ***      -0.17 ***      -0.33 ***      -0.19 ***      -0.28 ***      -0.18 ***
-                                                              (0.02)         (0.02)         (0.03)          (0.02)          (0.02)          (0.02)         (0.02)         (0.03)         (0.02)         (0.03)         (0.02)         (0.03)   
-Appearance-Occupation Congruence $\times$ Working Class       -0.46 ***      -0.61 ***      -0.43 ***       -0.28 ***       -0.48 ***       -0.31 ***      -0.39 ***      -0.28 ***      -0.62 ***      -0.29 ***      -0.35 ***      -0.27 ***
-                                                              (0.01)         (0.01)         (0.02)          (0.01)          (0.01)          (0.01)         (0.01)         (0.02)         (0.01)         (0.02)         (0.01)         (0.02)   
-Attractiveness                                                                                               0.76 ***                        0.89 ***       1.00 ***       0.72 ***                                     1.08 ***       0.53 ***
-                                                                                                            (0.01)                          (0.01)         (0.01)         (0.01)                                       (0.01)         (0.01)   
-Masculinity                                                                                                                  0.09 ***                                                     0.04 ***                     -0.28 ***               
-                                                                                                                            (0.00)                                                       (0.01)                        (0.01)                  
-Femininity                                                                                                                                  -0.15 ***                                                    0.68 ***                      0.26 ***
-                                                                                                                                            (0.00)                                                      (0.01)                        (0.02)   
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-AIC                                                       287653.94      170596.79       79111.45       267973.43       287029.77       265328.79      154959.12       73290.19      170577.24       74331.79      153861.01       73001.39    
-BIC                                                       288886.12      171561.82       79936.45       269210.66       288267.17       266571.24      155928.83       74119.20      171546.96       75161.13      154835.41       73834.74    
-Log Likelihood                                           -143590.97      -85092.40      -39365.73      -133749.72      -143277.88      -132426.40      -77272.56      -36454.09      -85081.62      -36974.89      -76722.51      -36308.70    
-Deviance                                                  278666.41      165250.11       75150.60       258990.24       278040.23       256343.60      149610.43       69333.68      165228.56       70368.94      148510.33       69042.88    
-Num. obs.                                                   1368            800            568            1367            1368            1367            800            567            800            568            800            567       
-===============================================================================================================================================================================================================================================
-\item *** p < 0.001; ** p < 0.01; * p < 0.05. \item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.
+\begin{table}[H]
+\caption{Statistical Models}
+\begin{center}
+\scalebox{0.4}{
+\begin{threeparttable}
+\begin{tabular}{l c c c c c c c c c c c c}
+\hline
+ & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{7} & \multicolumn{1}{c}{8} & \multicolumn{1}{c}{9} & \multicolumn{1}{c}{10} & \multicolumn{1}{c}{11} & \multicolumn{1}{c}{12} \\
+\cline{2-2} \cline{3-3} \cline{4-4} \cline{5-5} \cline{6-6} \cline{7-7} \cline{8-8} \cline{9-9} \cline{10-10} \cline{11-11} \cline{12-12} \cline{13-13}
+ & Full & Men & Women & Full & Full & Full & Men & Women & Men & Women & Men & Women \\
+\hline
+Intercept                                               & $4.49^{***}$  & $2.58^{***}$  & $6.17^{***}$  & $2.11^{***}$  & $4.27^{***}$  & $2.15^{***}$  & $-0.25^{**}$  & $3.24^{***}$  & $2.50^{***}$  & $2.98^{***}$  & $0.17$        & $2.80^{***}$  \\
+                                                        & $(0.05)$      & $(0.08)$      & $(0.07)$      & $(0.05)$      & $(0.05)$      & $(0.05)$      & $(0.09)$      & $(0.08)$      & $(0.08)$      & $(0.08)$      & $(0.09)$      & $(0.08)$      \\
+Appearance-Occupation Congruence                        & $0.41^{***}$  & $0.59^{***}$  & $0.28^{***}$  & $0.25^{***}$  & $0.42^{***}$  & $0.26^{***}$  & $0.37^{***}$  & $0.22^{***}$  & $0.59^{***}$  & $0.28^{***}$  & $0.37^{***}$  & $0.24^{***}$  \\
+                                                        & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      \\
+Middle Class                                            & $0.30^{***}$  & $0.81^{***}$  & $-0.05$       & $0.41^{***}$  & $0.23^{***}$  & $0.31^{***}$  & $0.54^{***}$  & $0.12$        & $0.77^{***}$  & $0.18$        & $0.75^{***}$  & $0.16$        \\
+                                                        & $(0.06)$      & $(0.08)$      & $(0.11)$      & $(0.06)$      & $(0.06)$      & $(0.06)$      & $(0.08)$      & $(0.11)$      & $(0.08)$      & $(0.11)$      & $(0.08)$      & $(0.11)$      \\
+Working Class                                           & $1.03^{***}$  & $1.59^{***}$  & $0.70^{***}$  & $0.49^{***}$  & $1.07^{***}$  & $0.58^{***}$  & $0.95^{***}$  & $0.23^{***}$  & $1.59^{***}$  & $0.32^{***}$  & $0.86^{***}$  & $0.19^{**}$   \\
+                                                        & $(0.03)$      & $(0.04)$      & $(0.07)$      & $(0.03)$      & $(0.03)$      & $(0.03)$      & $(0.04)$      & $(0.07)$      & $(0.04)$      & $(0.07)$      & $(0.04)$      & $(0.07)$      \\
+Age                                                     & $-0.02^{***}$ & $-0.01^{***}$ & $-0.03^{***}$ & $-0.00^{***}$ & $-0.02^{***}$ & $-0.01^{***}$ & $0.00^{***}$  & $-0.01^{***}$ & $-0.01^{***}$ & $-0.02^{***}$ & $0.01^{***}$  & $-0.01^{***}$ \\
+                                                        & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      \\
+Appearance-Occupation Congruence $\times$ Middle Class  & $-0.18^{***}$ & $-0.34^{***}$ & $-0.11^{***}$ & $-0.20^{***}$ & $-0.16^{***}$ & $-0.17^{***}$ & $-0.22^{***}$ & $-0.17^{***}$ & $-0.33^{***}$ & $-0.19^{***}$ & $-0.28^{***}$ & $-0.18^{***}$ \\
+                                                        & $(0.02)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.02)$      & $(0.02)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.03)$      \\
+Appearance-Occupation Congruence $\times$ Working Class & $-0.46^{***}$ & $-0.61^{***}$ & $-0.43^{***}$ & $-0.28^{***}$ & $-0.48^{***}$ & $-0.31^{***}$ & $-0.39^{***}$ & $-0.28^{***}$ & $-0.62^{***}$ & $-0.29^{***}$ & $-0.35^{***}$ & $-0.27^{***}$ \\
+                                                        & $(0.01)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.02)$      \\
+Attractiveness                                          &               &               &               & $0.76^{***}$  &               & $0.89^{***}$  & $1.00^{***}$  & $0.72^{***}$  &               &               & $1.08^{***}$  & $0.53^{***}$  \\
+                                                        &               &               &               & $(0.01)$      &               & $(0.01)$      & $(0.01)$      & $(0.01)$      &               &               & $(0.01)$      & $(0.01)$      \\
+Masculinity                                             &               &               &               &               & $0.09^{***}$  &               &               &               & $0.04^{***}$  &               & $-0.28^{***}$ &               \\
+                                                        &               &               &               &               & $(0.00)$      &               &               &               & $(0.01)$      &               & $(0.01)$      &               \\
+Femininity                                              &               &               &               &               &               & $-0.15^{***}$ &               &               &               & $0.68^{***}$  &               & $0.26^{***}$  \\
+                                                        &               &               &               &               &               & $(0.00)$      &               &               &               & $(0.01)$      &               & $(0.02)$      \\
+\hline
+AIC                                                     & $287653.94$   & $170596.79$   & $79111.45$    & $267973.43$   & $287029.77$   & $265328.79$   & $154959.12$   & $73290.19$    & $170577.24$   & $74331.79$    & $153861.01$   & $73001.39$    \\
+BIC                                                     & $288886.12$   & $171561.82$   & $79936.45$    & $269210.66$   & $288267.17$   & $266571.24$   & $155928.83$   & $74119.20$    & $171546.96$   & $75161.13$    & $154835.41$   & $73834.74$    \\
+Log Likelihood                                          & $-143590.97$  & $-85092.40$   & $-39365.73$   & $-133749.72$  & $-143277.88$  & $-132426.40$  & $-77272.56$   & $-36454.09$   & $-85081.62$   & $-36974.89$   & $-76722.51$   & $-36308.70$   \\
+Deviance                                                & $278666.41$   & $165250.11$   & $75150.60$    & $258990.24$   & $278040.23$   & $256343.60$   & $149610.43$   & $69333.68$    & $165228.56$   & $70368.94$    & $148510.33$   & $69042.88$    \\
+Num. obs.                                               & $1368$        & $800$         & $568$         & $1367$        & $1368$        & $1367$        & $800$         & $567$         & $800$         & $568$         & $800$         & $567$         \\
+\hline
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\scriptsize{\item $^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$. \item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.}
+\end{tablenotes}
+\end{threeparttable}
+}
+\label{reg:t}
+\end{center}
+\end{table}
 
 \end{frame}
 
@@ -712,13 +733,13 @@ Num. obs.                                                   1368            800 
       \begin{itemize}
         \item {\bf Male \& female} candidates:  
           \begin{enumerate}
-            \item[$\checkmark$] Candidates that show {\color{black!30!green}\emph{higher degrees of congruence}} between physical appearance and occupation {\color{black!30!green}do better}.
+            %\item[$\checkmark$] Candidates that show {\color{black!30!green}\emph{higher degrees of congruence}} between physical appearance and occupation {\color{black!30!green}do better}.
             \item[$\checkmark$] Candidates that look-like and also perform {\color{black!30!green}\emph{upper-class occupations} do best} in elections.
           \end{enumerate}
-        \item  {\bf Female} candidates: stronger effects.
+        \item  {\bf Female} candidates:
           \begin{itemize}
           \item Systematic {\color{red}electoral penalty} when they {\color{red}{\bf look-like}} and also {\bf perform {\color{red}working-class} occupations}.
-          \item Systematic {\color{black!30!green}electoral premium} when they {\color{black!30!green}{\bf look-like}} and also {\bf perform {\color{black!30!green}white-collar} occupations}.
+          \item Systematic {\color{black!30!green}electoral premium} when they {\color{black!30!green}{\bf look-like}} and also {\bf perform {\color{black!30!green}upper-class} occupations}.
         \end{itemize}
       \end{itemize}
 \end{frame}
@@ -730,21 +751,21 @@ Num. obs.                                                   1368            800 
   \begin{itemize}
     \item[$\checkmark$] Considered {\bf the use of heuristics in elections} and the concept of {\bf ``status'' in expectation states theory}.
     \item[$\checkmark$] Selected the {\bf \emph{unlikely} case} of the 2017 Finnish Municipal Elections.
-    \item[$\checkmark$] Exploited a {\bf novel representative data set} on candidates physical appearances.
-    \item[{\color{black!30!green}$\checkmark$}] Proposed an alternative explanation for {\color{red}voting} not based on attractiveness but on {\color{black!30!green}occupation-congruent appearance} and {\color{black!30!green}social stratification}.
+    \item[$\checkmark$] Exploited a {\bf novel representative data set} of candidates' physical appearances.
+    \item[{\color{black!30!green}$\checkmark$}] Proposed an alternative explanation for {\color{red}voting} not based on attractiveness but on {\color{black!30!green}occupation-appearance congruence} and {\color{black!30!green}social stratification}.
   \end{itemize}
 \end{frame}
 
 \miniframesoff
 \begin{frame}[c]{Thank you}
-        %\begin{center}
-        %  \vspace{-0.7cm}\includegraphics[scale=.05, center]{/Users/hectorbahamonde/hbahamonde.github.io/resources/qr-code.pdf}
-        %\end{center}
+        \begin{center}
+          \vspace{-0.7cm}\includegraphics[scale=.06, center]{/Users/hectorbahamonde/hbahamonde.github.io/resources/qr-code.pdf}
+        \end{center}
 
 
         \begin{itemize}
             %\item Paper (draft) available at {\color{blue}www.HectorBahamonde.com}.
-            \item[] All feedback is welcomed!
+            \item[] {\large\color{red}\faCamera}\; to check out updates on this project.
         \end{itemize}
 \end{frame}
 
@@ -762,7 +783,7 @@ Num. obs.                                                   1368            800 
 \begin{tabularx}{\textwidth}{|c||c|X|X|X}%{@{}l *3{>{\centering\arraybackslash}X}@{}}%{|c||cX|X|X}
 {\bf Sample} & {\bf Attribute} & {\bf Question} & {\bf Answer Set} \\
 \hline
-1      & Occupation-Congruent Appearance & To what extent does this person respond to your image of someone working in [occupation]? & 5=Perfectly responds to my image, 4=Responds well to my image, 3=Somewhat responds to my image, 2=Does not respond to my image well, 1=Does not respond to my image at all. \\
+1      & Occupation-Appearance Congruence & To what extent does this person respond to your image of someone working in [occupation]? & 5=Perfectly responds to my image, 4=Responds well to my image, 3=Somewhat responds to my image, 2=Does not respond to my image well, 1=Does not respond to my image at all. \\
 \hline
 2      & Attractiveness & In your opinion, how attractive does this person look, as compared to others of the same age and gender?   & 5=very attractive, 4=more attractive than the average, 3=average, 2=below average, 1=well below average (Griffin and Langois 2006; Bono et al. 2017; Tu, Gilbert and Bono 2021)\\
 \hline
