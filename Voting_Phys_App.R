@@ -427,6 +427,10 @@ setwd("/Users/hectorbahamonde/research/Physical/")
 
 load(file = "/Users/hectorbahamonde/research/Physical/dat.Rdata")
 
+# Pacman
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
+
+
 ## ---- models:d
 # base models
 main.model.formula = as.formula(turnout ~ phys_occ_cong*esec.r + party + age + city)
@@ -458,6 +462,21 @@ p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Dat
         legend.position = "none") + 
   guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
 
+
+p.full.poisson.presentation = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Data") + 
+  theme_sjplot() + 
+  labs(y = "Candidate Poll: Predicted Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none") + 
+  guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+
 p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Data") + 
   theme_sjplot() + 
   theme(legend.position = "bottom",legend.title.align=0.5) + 
@@ -471,7 +490,20 @@ p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Dat
         plot.title = element_text(size=18),
         strip.text.x = element_text(size = 18)) 
 
+p2.poisson.presentation = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Data") + 
+  theme_sjplot() + 
+  theme(legend.position = "bottom",legend.title.align=0.5) + 
+  labs(y = "Candidate Poll: Predicted Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18)) 
 
+p2.poisson.presentation$labels$colour <- ""
 p2.poisson$labels$colour <- "European Socio-Economic Classification"
 
 p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Women Data") + 
@@ -486,6 +518,22 @@ p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Women Data
         plot.title = element_text(size=18),
         strip.text.x = element_text(size = 18)) 
 
+p3.poisson.presentation = plot_model(m1.w, type = "int", show.legend = T, title = "Women Data") + 
+  theme_sjplot() + 
+  labs(y = "", x = "Candidate's Appearance-Occupation Congruence") + 
+  theme(legend.position = "bottom",legend.title.align=0.5) +
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18)) 
+
+p3.poisson.presentation$labels$colour <- ""
+
+
 #p_load(gridExtra)
 #grid.arrange(p1.poisson, p2.poisson, p3.poisson, nrow = 1, ncol= 3)
 
@@ -495,12 +543,36 @@ pred.prob.p = cowplot::plot_grid(p1.poisson,p2.poisson,p3.poisson,
                                  ncol = 3,
                                  nrow = 1
 )
+
+pred.prob.p.presentation = cowplot::plot_grid(p2.poisson.presentation,p3.poisson.presentation,
+                                 align = "hv",
+                                 axis = "b", 
+                                 ncol = 2,
+                                 nrow = 1
+)
+
+
 ggsave("pred_prob_plot.pdf", plot = pred.prob.p, 
        width = 1200,
        height = 600,
        units = c("px"),
        dpi = 80
 )
+
+ggsave("pred_prob_presentation_male_fem.pdf", plot = pred.prob.p.presentation, 
+       width = 1200,
+       height = 600,
+       units = c("px"),
+       dpi = 80
+)
+
+ggsave("p_full_poisson_presentation.pdf", plot = p.full.poisson.presentation, 
+       width = 1200,
+       height = 600,
+       units = c("px"),
+       dpi = 80
+)
+
 
 ggsave("pred_prob_plot.jpeg", plot = pred.prob.p, 
        width = 1200,
