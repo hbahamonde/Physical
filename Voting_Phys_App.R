@@ -445,7 +445,8 @@ m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
 ############################## 
 # Predicted Probabilities Plot
 ############################## 
-p_load(sjPlot,ggplot2,cowplot)
+p_load(sjPlot,ggplot2,cowplot,ggeffects)
+
 
 # Poisson
 p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Data") + 
@@ -463,7 +464,7 @@ p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Dat
   guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
 
 
-p.full.poisson.presentation = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Data") + 
+p.full.poisson.presentation = plot_model(m0, type = "int", show.legend = T, title = "Full Data") + 
   theme_sjplot() + 
   labs(y = "Candidate Poll: Predicted Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
   theme(axis.text.y = element_text(size=18), 
@@ -474,8 +475,11 @@ p.full.poisson.presentation = plot_model(m0, type = "int", show.legend = FALSE, 
         legend.title=element_text(size=18, face = "bold"),
         plot.title = element_text(size=18),
         strip.text.x = element_text(size = 18),
-        legend.position = "none") + 
+        legend.position = "bottom") + 
   guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+
+p.full.poisson.presentation$labels$colour <- ""
+
 
 p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Data") + 
   theme_sjplot() + 
@@ -567,8 +571,8 @@ ggsave("pred_prob_presentation_male_fem.pdf", plot = pred.prob.p.presentation,
 )
 
 ggsave("p_full_poisson_presentation.pdf", plot = p.full.poisson.presentation, 
-       width = 1200,
-       height = 600,
+       width = 800,
+       height = 800,
        units = c("px"),
        dpi = 80
 )
@@ -601,10 +605,28 @@ m4.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femin
 
 
 # individual predictions: Predicted Probabilities
-# p_load(ggeffects)
-# ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working Class"))
-# ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working Class"))
+p_load(ggeffects)
+ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working"))
+ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working"))
 
+
+
+round(ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[1,2]],0) # Min predicted
+round(ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[1,4]],0) # CI lower
+round(ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[1,5]],0) # CI upper
+
+round(ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[7,2]],0) # Max predicted
+round(ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[7,4]],0) # CI lower
+round(ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[7,5]],0) # CI upper
+
+
+round(ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[1,2]],0) # Min predicted
+round(ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[1,4]],0) # CI lower
+round(ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[1,5]],0) # CI upper
+
+round(ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[8,2]],0) # Max predicted
+round(ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[8,4]],0) # CI lower
+round(ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working"))[[8,5]],0) # CI upper
 
 
 # Quasi Poisson
