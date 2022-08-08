@@ -464,16 +464,16 @@ p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Dat
   guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
 
 
-p.full.poisson.presentation = plot_model(m0, type = "int", show.legend = T, title = "Full Data") + 
+p.full.poisson.presentation = plot_model(m0, type = "int", show.legend = T, title = "Full Data (Males and Females Candidates Combined)") + 
   theme_sjplot() + 
   labs(y = "Candidate Poll: Predicted Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
-        axis.title.y = element_text(size=18), 
+        axis.title.y = element_text(size=22), 
         axis.title.x = element_text(size=22), 
         legend.text=element_text(size=18), 
         legend.title=element_text(size=18, face = "bold"),
-        plot.title = element_text(size=18),
+        plot.title = element_text(size=25),
         strip.text.x = element_text(size = 18),
         legend.position = "bottom") + 
   guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
@@ -504,7 +504,7 @@ p2.poisson.presentation = plot_model(m1.m, type = "int", show.legend = TRUE, tit
         axis.title.x = element_text(size=22), 
         legend.text=element_text(size=18), 
         legend.title=element_text(size=18, face = "bold"),
-        plot.title = element_text(size=18),
+        plot.title = element_text(size=25),
         strip.text.x = element_text(size = 18)) 
 
 p2.poisson.presentation$labels$colour <- ""
@@ -532,7 +532,7 @@ p3.poisson.presentation = plot_model(m1.w, type = "int", show.legend = T, title 
         axis.title.x = element_text(size=22), 
         legend.text=element_text(size=18), 
         legend.title=element_text(size=18, face = "bold"),
-        plot.title = element_text(size=18),
+        plot.title = element_text(size=25),
         strip.text.x = element_text(size = 18)) 
 
 p3.poisson.presentation$labels$colour <- ""

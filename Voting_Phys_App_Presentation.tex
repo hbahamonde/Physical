@@ -724,12 +724,12 @@ Num. obs.                                               & $1368$        & $800$ 
 
 
 \miniframesoff
-\begin{frame}[c]%{Main Results}
+\begin{frame}[plain]%{Main Results}
 \centering\includegraphics[scale=0.3]{p_full_poisson_presentation.pdf}
 \end{frame}
 
 \miniframesoff
-\begin{frame}[c]%{Main Results}
+\begin{frame}[plain]%{Main Results}
 \centering\includegraphics[scale=0.35]{pred_prob_presentation_male_fem.pdf}
 \end{frame}
 
@@ -739,11 +739,11 @@ Num. obs.                                               & $1368$        & $800$ 
 \begin{tabular}{c|c|c|c|c|}
 \textbf{Candidate's Gender} & \textbf{Status} & \textbf{Pred.Votes} & \multicolumn{2}{c}{\textbf{95\% CI}}\\
 \hline
-\multirow{2}{*}{Female} & Doesn't look like working class & 154 & 144 & 165\\
- &  Looks a lot like working class  & 99 & 94 & 104\\
+\multirow{2}{*}{{\color{blue}Female}} & {\only<2>{\color{black!30!green}}Doesn't look like working class} &  {\only<2>{\color{black!30!green}}154} & 144 & 165\\
+ &  {\only<3>{\color{red}}Looks a lot like working class}  & {\only<3>{\color{red}}99} & 94 & 104\\
  \hline
-\multirow{2}{*}{Male} & Doesn't look like working class & 49 & 46 & 51\\
- &  Looks a lot like working class  & 45 & 43 & 47\\
+\multirow{2}{*}{{\color{blue}Male}} & {\only<4>{\color{black!30!green}}Doesn't look like working class} & {\only<4>{\color{black!30!green}}49} & 46 & 51\\
+ &  {\only<5>{\color{red}}Looks a lot like working class}  & {\only<5>{\color{red}}45} & 43 & 47\\
  \hline
 \end{tabular}
 \end{table}
@@ -761,13 +761,18 @@ Num. obs.                                               & $1368$        & $800$ 
         \item {\bf Male \& female} candidates:  
           \begin{enumerate}
             %\item[$\checkmark$] Candidates that show {\color{black!30!green}\emph{higher degrees of congruence}} between physical appearance and occupation {\color{black!30!green}do better}.
-            \item[$\checkmark$] Candidates that look-like and also perform {\color{black!30!green}\emph{upper-class occupations} do best} in elections.
+            \item[$\checkmark$] Candidates that look-like and also perform {\color{black!30!green}\emph{upper-class occupations} do {\bf best}} in elections.\pause
           \end{enumerate}
-        \item  {\bf Female} candidates:
+        \item  {\color{blue}{\bf Female} candidates}:
           \begin{itemize}
           \item Systematic {\color{red}electoral penalty} when they {\color{red}{\bf look-like}} and also {\bf perform {\color{red}working-class} occupations}.
-          \item Systematic {\color{black!30!green}electoral premium} when they {\color{black!30!green}{\bf look-like}} and also {\bf perform {\color{black!30!green}upper-class} occupations}.
+          \item This is represents a 36\%$^{\star\star\star}$ marginal change.\pause
         \end{itemize}
+    \item  {\color{blue}{\bf Male} candidates}:
+          \begin{itemize}
+          \item \emph{Don't} experience the same electoral punishment: it does \emph{not} matter (electorally) if a male candidate looks working-class.
+        \end{itemize}
+
       \end{itemize}
 \end{frame}
 
@@ -779,7 +784,8 @@ Num. obs.                                               & $1368$        & $800$ 
     \item[$\checkmark$] Considered {\bf the use of heuristics in elections} and the concept of {\bf ``status'' in expectation states theory}.
     \item[$\checkmark$] Selected the {\bf \emph{unlikely} case} of the 2017 Finnish Municipal Elections.
     \item[$\checkmark$] Exploited a {\bf novel representative data set} of candidates' physical appearances.
-    \item[{\color{black!30!green}$\checkmark$}] Proposed an alternative explanation for {\color{red}voting} not based on attractiveness but on {\color{black!30!green}occupation-appearance congruence} and {\color{black!30!green}social stratification}.
+    \item[$\checkmark$] Proposed an alternative explanation for {\bf voting} not based on attractiveness but on {\bf occupation-appearance congruence} and {\bf social stratification}.
+    \item[{\color{red}$\checkmark$}] Female candidates experience a systematic {\color{red}\bf electoral penalty} when they {\color{red}{\bf look}} {\bf {\color{red}working-class}}.
   \end{itemize}
 \end{frame}
 
