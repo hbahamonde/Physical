@@ -702,15 +702,15 @@ reg.table = texreg( # screenreg texreg
                        "12" = 12),
   custom.model.names = c(
     # m0, m1.m, m1.w
-    "Full", "Men", "Women", 
+    "Full", "Male", "Female", 
     # m2, m3, m4 
     "Full","Full","Full",  
     # m2.m, m2.w,
-    "Men", "Women", 
+    "Male", "Female", 
     # m3.m, m3.w
-    "Men", "Women", 
+    "Male", "Female", 
     # m4.m, m4.w
-    "Men", "Women"),
+    "Male", "Female"),
   #custom.coef.names = NULL,
   omit.coef = "(city)|(party)",
   custom.coef.names = c("Intercept",
