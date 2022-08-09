@@ -436,7 +436,7 @@ options(scipen = 99999999999)
     \item {\bf (\emph{Uncomfortable}) results}\pause: Finns systematically...
       \begin{enumerate}
         \item {\color{red}Punish {\bf working-class-\emph{looking}} candidates, and \pause
-        \item the fx's are stronger in {\bf female} candidates}. 
+        \item the fx's are stronger for {\bf female} candidates}. 
       \end{enumerate}
   \end{itemize}
 \end{frame}
@@ -452,7 +452,7 @@ options(scipen = 99999999999)
     \begin{itemize}
       \item A candidate's {\bf physical appearance} is ``the most important'' {\color{gray}\tiny (Lau \& Redlawsk 2001)} and the ``most obvious and accessible'' {\color{gray}\tiny (Dion et al. 1972)} \emph{{\color{blue}heuristic}} available to voters {\color{gray}\tiny (Stockemer \& Praino 2017)}.\pause
 
-      \item {\bf {\color{blue}Heuristics}} are cognitive devices that allow {\bf reasonable voting decision making with minimal effort} {\color{gray}\tiny (Lau \& Redlawsk 2001 and Tversky \& Kahneman 1973)}.\pause
+      \item {\bf {\color{blue}Heuristics}} are cognitive devices that allow {\bf reasonable voting decision making with \underline{minimal effort}} {\color{gray}\tiny (Lau \& Redlawsk 2001 and Tversky \& Kahneman 1973)}.\pause
 
       \item Thus, ``{\color{blue}voters vote beautiful}'' {\color{gray}\tiny(Efrain \& Patterson 1974)} because attractive candidates ``are more likely to be attributed the {\color{blue}qualities} associated with {\color{blue}successful} politicians'' {\color{gray}\tiny(Stockemer \& Praino 2019)}.
 
@@ -471,7 +471,7 @@ options(scipen = 99999999999)
           \item[$\checkmark$] For ex., attractive people are `{\color{blue}better}' or `{\color{blue}more capable}' {\tiny\color{gray}(Webster \& Driskell 1983)}.\pause
         \end{itemize}
 
-        \item We extend this concept to cues of {\bf occupation} as a {\bf status} characteristic.
+        \item[\checkmark] We extend this concept to cues of {\bf occupation} as a {\bf status} characteristic.
 
     \end{itemize}
 \end{frame}
@@ -479,7 +479,7 @@ options(scipen = 99999999999)
 
 \section{Argument}
 
-\subsection{Argument and Expectations}
+\subsection{Argument and Empirical Expectations}
 
 
 \miniframeson
@@ -488,7 +488,7 @@ options(scipen = 99999999999)
 
       \item[] We {\color{blue}\bf argue} that the information about a {\color{blue}candidate's occupation} combined with his/her {\color{blue}physical appearance} function as cue of {\color{blue}status}, in turn affecting his/her likelihood of winning an {\color{blue}election}.\pause
 
-      \item {\bf Expectations}:
+      \item {\bf Empirical expectations}:
 
       \begin{itemize}
         %\item {\bf Differences} between social groups (gender, occupation, race) will {\bf reflect social inequalities}.
@@ -502,7 +502,7 @@ options(scipen = 99999999999)
           \item[$\checkmark$] {\color{black!30!green}Male candidates}.
         \end{itemize}
 
-        \item {\bf Lower status} candidates will signal lower performance expectations, thus, receiving {\bf less votes}. 
+        \item {\bf Lower status} candidates will signal {\bf lower performance expectations}, thus, receiving {\bf less votes}. 
 
 
 
@@ -573,7 +573,7 @@ options(scipen = 99999999999)
   \begin{itemize}
     \item {\bf Ministry of Justice}: candidate's pictures, district, occupation and voting data.
     \item {\bf Sample}: Universe 33,618, possible 10,000, randomly selected {\bf 1,500 candidate photographs}. 
-    \item {\bf Occupation}: {\color{blue}European Socio-economic Classification}, recoded each candidate's occupation (upper, middle and working class).
+    \item {\bf Occupation and social class}: {\color{blue}European Socio-economic Classification}, recoded each candidate's occupation (upper, middle and working class).
   \end{itemize}
 \end{frame}
 
@@ -583,7 +583,7 @@ options(scipen = 99999999999)
 \begin{frame}[c]{Novel Raters Data}
   \begin{itemize}
     \item Collected data from 7,920 randomly selected Finnish-speaking Finns.
-    \item {\bf Task}: evaluated a random sample of candidate photographs according to four items (N$\sim$50).
+    \item {\bf Task}: evaluated a random sample of candidate photographs (N$\sim$50) according to four items.
     \item {\bf Items}: 
       \begin{enumerate}
         \item {\bf \scriptsize Occupation-Appearance congruence}. {\tiny{\color{gray}{\emph Does this person look like the profession he/she is declaring?}}}
