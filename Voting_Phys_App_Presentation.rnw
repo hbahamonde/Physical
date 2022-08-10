@@ -486,7 +486,7 @@ options(scipen = 99999999999)
 \begin{frame}%<presentation:0>
     \begin{itemize}
 
-      \item[] We {\color{blue}\bf argue} that the information about a {\color{blue}candidate's occupation} combined with his/her {\color{blue}physical appearance} function as cues of {\color{blue}status}, in turn affecting his/her likelihood of winning an {\color{blue}election}.\pause
+      \item[] We {\color{blue}\bf argue} that a {\color{blue}candidate's occupation} combined with his/her {\color{blue}physical appearance} will function as {\color{blue}\bf cues of status}, in turn affecting his/her likelihood of winning an {\color{blue}election}.\pause
 
       \item {\bf Empirical expectations}:
 
@@ -495,14 +495,14 @@ options(scipen = 99999999999)
 
         %\item For instance, women are more likely to get penalized because of how they look.
 
-        \item Since voters use {\bf heuristics}, they will systematically vote for `{\bf high-status looking}' candidates.
+        \item {\bf Heuristics}: voters will systematically vote for `{\bf high-status looking}' candidates.
 
         \begin{itemize}
           \item[$\checkmark$] {\color{black!30!green}Upper-class looking candidates}.
           \item[$\checkmark$] {\color{black!30!green}Male candidates}.
         \end{itemize}
 
-        \item {\bf Lower status} candidates will signal {\bf lower performance expectations}, thus, receiving {\bf less votes}. 
+       % \item {\bf Lower status} candidates will signal {\bf lower performance expectations}, thus, receiving {\bf less votes}. 
 
 
 
@@ -539,7 +539,7 @@ options(scipen = 99999999999)
 \end{frame}
 
 \miniframeson
-\begin{frame}[c]{Municipal Elections in Finland}
+\begin{frame}<presentation:0>[c]{Municipal Elections in Finland}
   \begin{itemize}
     \item {\bf Municipal Elections}: held every four years to elect councilors of the different municipalities {\color{gray}(N=293)}.
     \item {\bf D'Hondt}: candidates run in party lists. Seats are filled with lists of candidates proportionally.
@@ -558,7 +558,7 @@ options(scipen = 99999999999)
       \item Shown in city centers, bus stops, \emph{and} voting booths!
       \end{itemize}
   \item Municipalities \emph{must} provide the \emph{same} number of poster slots for all parties.
-  \item {\bf ``Low-information'' elections}: most voters get exposed to these posters only. {\color{gray}\tiny(Berggren et al. 2010 \& 2017).}
+  %\item {\bf ``Low-information'' elections}: most voters get exposed to these posters only. {\color{gray}\tiny(Berggren et al. 2010 \& 2017).}
 \end{itemize}
 \end{column}
 \begin{column}{.45\textwidth}
