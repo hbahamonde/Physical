@@ -574,7 +574,7 @@ options(scipen = 99999999999)
 \miniframesoff
 \begin{frame}[c]{2017 Municipal Elections: Candidate Data}
   \begin{itemize}
-    \item {\bf Ministry of Justice}: candidate's picture, district, occupation and number of votes received.
+    \item {\bf Ministry of Justice}: candidate's picture, party, occupation, district and number of votes received.
     \item {\bf Sample}: randomly selected {\bf 1,500 candidate photographs}. {\tiny\color{gray}Universe 33,618; possible 10,000.}
     \item {\bf Occupation and social class}: {\color{blue}European Socio-economic Classification}, recoded each candidate's occupation (upper, middle and working class).
   \end{itemize}
@@ -669,11 +669,11 @@ options(scipen = 99999999999)
         \item {\bf Male \& female} candidates:  
           \begin{enumerate}
             %\item[$\checkmark$] Candidates that show {\color{black!30!green}\emph{higher degrees of congruence}} between physical appearance and occupation {\color{black!30!green}do better}.
-            \item[$\checkmark$] Candidates that look-like and also perform {\color{black!30!green}\emph{upper-class occupations} do {\bf best}} in elections.\pause
+            \item[$\checkmark$] Candidates that look-like {\color{black!30!green}\emph{upper-class} do {\bf best}} in elections.\pause
           \end{enumerate}
         \item  {\color{blue}{\bf Female} candidates}:
           \begin{itemize}
-          \item Systematic {\color{red}electoral penalty} when they {\color{red}{\bf look-like}} and also {\bf perform {\color{red}working-class} occupations}.
+          \item Systematic {\color{red}electoral penalty} when they {\color{red}{\bf look-like}} {\color{red}working-class} individuals.
           \item {\bf Marginal change}: it represents a -36\%$^{\star\star\star}$ votes!\pause
         \end{itemize}
     \item  {\color{blue}{\bf Male} candidates}:
