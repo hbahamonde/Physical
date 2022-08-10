@@ -532,7 +532,7 @@ options(scipen = 99999999999)
         \item[-] A `social-mobility prone' country {\color{gray}\tiny (Erola 2009)}.
         %\item[-] Having low-information Municipal Elections {\color{gray}\tiny(Berggren et al. 2010 and 2017)}.
       \end{itemize}
-      \item Thus, it should be {\bf hard to find} a correlation between class-congruent use of status symbols and voting.
+      \item Thus, it should be {\bf hard to find} a {\bf correlation} between {\color{blue}class-congruent use of status symbols} and {\bf voting}.
     \end{itemize}
 \vspace{0.5cm}
 ...and yet, we \emph{do}.
@@ -552,10 +552,13 @@ options(scipen = 99999999999)
 \begin{columns}
 \begin{column}{.45\textwidth}
 \begin{itemize}
-  \item {\bf Public posters}: shown in city centers, bus stops, \emph{and} voting booths!
+  \item {\bf Public posters}: 
+    \begin{itemize}
+      \item Show candidate face, party and occupation.
+      \item Shown in city centers, bus stops, \emph{and} voting booths!
+      \end{itemize}
   \item Municipalities \emph{must} provide the \emph{same} number of poster slots for all parties.
-  \item {\bf ``Low-information'' elections}: most voters get exposed to these posters only.\\
-  {\color{gray}\tiny(Berggren et al. 2010 \& 2017).}
+  \item {\bf ``Low-information'' elections}: most voters get exposed to these posters only. {\color{gray}\tiny(Berggren et al. 2010 \& 2017).}
 \end{itemize}
 \end{column}
 \begin{column}{.45\textwidth}
@@ -571,7 +574,7 @@ options(scipen = 99999999999)
 \miniframesoff
 \begin{frame}[c]{2017 Municipal Elections: Candidate Data}
   \begin{itemize}
-    \item {\bf Ministry of Justice}: candidates' pictures, districts, occupations and voting data.
+    \item {\bf Ministry of Justice}: candidate's picture, district, occupation and number of votes received.
     \item {\bf Sample}: randomly selected {\bf 1,500 candidate photographs}. {\tiny\color{gray}Universe 33,618; possible 10,000.}
     \item {\bf Occupation and social class}: {\color{blue}European Socio-economic Classification}, recoded each candidate's occupation (upper, middle and working class).
   \end{itemize}
@@ -591,7 +594,7 @@ options(scipen = 99999999999)
         \item {\bf \scriptsize Masculinity}.
         \item {\bf \scriptsize Femininity}.
       \end{enumerate}
-    \item {\bf Avoiding recognition}: proprietary software designed to avoid assigning candidates running in the same rater's district.
+    %\item {\bf Avoiding recognition}: proprietary software designed to avoid assigning candidates running in the same rater's district.
      
   \end{itemize}
    \hyperlink{table:items}{\beamergotobutton{show table with items}} \hyperlink{pics:distribution}{\beamergotobutton{show distributions}}
