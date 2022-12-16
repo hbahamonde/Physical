@@ -174,6 +174,7 @@ save(dat, file = "dat.Rdata")
 # Descriptive Plots
 ############################## 
 
+
 ## ---- loadings:d
 cat("\014")
 rm(list=ls())
@@ -183,8 +184,25 @@ load(file = "/Users/hectorbahamonde/research/Physical/dat.Rdata")
 
 # Pacman
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
-
 p_load(ggplot2,cowplot)
+
+# r1: question 4
+ggplot(na.omit(dat), aes(x=esec.r, y=phys_occ_cong, color=gender)) + 
+  geom_boxplot() + 
+  theme_light() +
+  labs(y = "Candidate's\nAppearance-Occupation\nCongruence", x = "European Socio-Economic Classification") +
+  theme(legend.title=element_blank(),
+        legend.position = "bottom")
+
+# means
+mean(round(mean(dat$phys_occ_cong[dat$esec.r=="Upper" & dat$gender=="Man"], na.rm = T),1),
+round(mean(dat$phys_occ_cong[dat$esec.r=="Middle" & dat$gender=="Man"], na.rm = T),1),
+round(mean(dat$phys_occ_cong[dat$esec.r=="Working" & dat$gender=="Man"], na.rm = T),1),
+round(mean(dat$phys_occ_cong[dat$esec.r=="Upper" & dat$gender=="Woman"], na.rm = T),1),
+round(mean(dat$phys_occ_cong[dat$esec.r=="Middle" & dat$gender=="Woman"], na.rm = T),1),
+round(mean(dat$phys_occ_cong[dat$esec.r=="Working" & dat$gender=="Woman"], na.rm = T),1))
+
+
 
 # Attractiveness
 ##
