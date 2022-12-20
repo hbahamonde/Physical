@@ -202,6 +202,11 @@ round(mean(dat$phys_occ_cong[dat$esec.r=="Upper" & dat$gender=="Woman"], na.rm =
 round(mean(dat$phys_occ_cong[dat$esec.r=="Middle" & dat$gender=="Woman"], na.rm = T),1),
 round(mean(dat$phys_occ_cong[dat$esec.r=="Working" & dat$gender=="Woman"], na.rm = T),1))
 
+# r1: question 5
+options(scipen=999)
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
+p_load(coefplot)
+coefplot(lm(attractiveness ~ esec.r, dat))
 
 
 # Attractiveness
