@@ -455,11 +455,28 @@ if (!require("pacman")) install.packages("pacman"); library(pacman)
 
 
 ## ---- models:d
-# base models
+# basic models
 main.model.formula = as.formula(turnout ~ phys_occ_cong*esec.r + party + age + city)
 
 # Poisson
 options(scipen=999)
+baseline.full.0 = glm(turnout ~ phys_occ_cong + esec.r + party + age + city, family="poisson", data=dat) # full
+baseline.m.0 = glm(turnout ~ phys_occ_cong + esec.r + party + age + city, family="poisson", data=dat[dat$gender=="Man",]) # man
+baseline.w.0 = glm(turnout ~ phys_occ_cong + esec.r + party + age + city, family="poisson", data=dat[dat$gender=="Woman",]) # woman
+# Attractiveness
+baseline.full.a = glm(turnout ~ phys_occ_cong + esec.r + party + age + attractiveness + city, family="poisson", data=dat) # full
+baseline.m.a = glm(turnout ~ phys_occ_cong + esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Man",]) # man
+baseline.w.a = glm(turnout ~ phys_occ_cong + esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Woman",]) #woman
+# Masculinity
+baseline.full.m = glm(turnout ~ phys_occ_cong + esec.r + party + age + masculinity + city, family="poisson", data=dat) # full
+baseline.m.m = glm(turnout ~ phys_occ_cong + esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Man",]) # man
+baseline.w.m = glm(turnout ~ phys_occ_cong + esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Woman",]) #woman
+# Femininity
+baseline.full.f = glm(turnout ~ phys_occ_cong + esec.r + party + age + femininity + city, family="poisson", data=dat) # full
+baseline.m.f = glm(turnout ~ phys_occ_cong + esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Man",]) # man
+baseline.w.f = glm(turnout ~ phys_occ_cong + esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Woman",]) #woman
+
+
 m0 = glm(main.model.formula, family="poisson", data=dat)
 m1.m = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Man",])
 m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
@@ -709,9 +726,10 @@ plot(effect("phys_occ_cong*esec.r", m1.w.quasi.poisson))
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(texreg)
 
-reg.table = texreg( # screenreg texreg
+reg.table = screenreg( # screenreg texreg
   list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
-  custom.header = list("1" = 1,
+  custom.header = list(
+    "1" = 1,
                        "2" = 2,
                        "3" = 3, 
                        "4" = 4,  
@@ -741,8 +759,8 @@ reg.table = texreg( # screenreg texreg
                         "Middle Class",
                         "Working Class",
                         "Age",
-                        "Appearance-Occupation Congruence $\\times$ Middle Class",
-                        "Appearance-Occupation Congruence $\\times$ Working Class",
+                        "Appearance-Occupation Congruence X Middle Class",
+                        "Appearance-Occupation Congruence X Working Class",
                         "Attractiveness",
                         "Masculinity",
                         "Femininity"),
@@ -758,9 +776,83 @@ reg.table = texreg( # screenreg texreg
   use.packages = FALSE,
   threeparttable = TRUE,
   scalebox = 0.4,
-  custom.note = "\\item %stars. \\item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
+  custom.note = "%stars. Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
 )
 ## ----
+
+
+# baseline models without interactions requested by r2
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
+p_load(texreg)
+
+screenreg( # screenreg texreg
+  list(# basic
+    baseline.full.0,
+    baseline.m.0,
+    baseline.w.0,
+    # full
+    baseline.full.a,
+    baseline.full.m,
+    baseline.full.f,
+    # men
+    baseline.m.a,
+    baseline.m.m,
+    baseline.m.f,
+    # women
+    baseline.w.a,
+    baseline.w.m,
+    baseline.w.f),
+  custom.header = list(
+    "1" = 1,
+    "2" = 2,
+    "3" = 3,
+    "4" = 4,
+    "5" = 5,
+    "6" = 6, 
+    "7" = 7,  
+    "8" = 8, 
+    "9" = 9, 
+    "10" = 10,
+    "11" = 11,
+    "12" = 12),
+  custom.model.names = c(
+    #  baseline.full.0, baseline.m.0,baseline.w.0,
+    "Full", "Male", "Female", 
+    # baseline.full.a, baseline.full.m,baseline.full.f,
+    "Full", "Full", "Full", 
+    # baseline.m.a,baseline.m.m,baseline.m.f,
+    "Male","Male","Male",  
+    # baseline.w.a,baseline.w.m,baseline.w.f
+    "Female", "Female", "Female"),
+  #custom.coef.names = NULL,
+  omit.coef = "(city)|(party)",
+  custom.coef.names = c("Intercept",
+                        "Appearance-Occupation Congruence",
+                        "Middle Class",
+                        "Working Class",
+                        "Age",
+                        "Attractiveness",
+                        "Masculinity",
+                        "Femininity"),
+  # custom.header = list( "Poisson" = 1),
+  stars = c(0.001, 0.01, 0.05),
+  include.adjrs = FALSE,
+  #symbol = "\\\\cdot",
+  label = "reg:t",
+  caption = "Statistical Models: Baseline Models Without Interactions",
+  caption.above = T,
+  center = T,
+  float.pos="H",
+  use.packages = FALSE,
+  threeparttable = TRUE,
+  scalebox = 0.4,
+  custom.note = "%stars. Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
+)
+
+
+
+
+
 
 
 
