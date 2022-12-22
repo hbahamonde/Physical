@@ -485,13 +485,14 @@ m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
 ############################## 
 # Predicted Probabilities Plot
 ############################## 
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(sjPlot,ggplot2,cowplot,ggeffects)
 
 
 # Poisson
 p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Data") + 
   theme_sjplot() + 
-  labs(y = "Candidate Poll: Predicted Number of Votes Received", x = "") + 
+  labs(y = "Number of Votes Received", x = "") + 
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
         axis.title.y = element_text(size=18), 
@@ -506,7 +507,7 @@ p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Dat
 
 p.full.poisson.presentation = plot_model(m0, type = "int", show.legend = T, title = "Full Data (Males and Females Candidates Combined)") + 
   theme_sjplot() + 
-  labs(y = "Candidate Poll: Predicted Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
+  labs(y = "Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
         axis.title.y = element_text(size=22), 
@@ -537,7 +538,7 @@ p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Dat
 p2.poisson.presentation = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Data") + 
   theme_sjplot() + 
   theme(legend.position = "bottom",legend.title.align=0.5) + 
-  labs(y = "Candidate Poll: Predicted Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
+  labs(y = "Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
         axis.title.y = element_text(size=18), 
