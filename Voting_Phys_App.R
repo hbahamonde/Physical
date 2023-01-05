@@ -187,12 +187,18 @@ if (!require("pacman")) install.packages("pacman"); library(pacman)
 p_load(ggplot2,cowplot)
 
 # r1: question 4
-ggplot(na.omit(dat), aes(x=esec.r, y=phys_occ_cong, color=gender)) + 
+balance.p = ggplot(na.omit(dat), aes(x=esec.r, y=phys_occ_cong, color=gender)) + 
   geom_boxplot() + 
   theme_light() +
-  labs(y = "Candidate's\nAppearance-Occupation\nCongruence", x = "European Socio-Economic Classification") +
+  labs(y = "Candidate's Appearance-Occupation Congruence", x = "European Socio-Economic Classification") +
   theme(legend.title=element_blank(),
         legend.position = "bottom")
+ggsave("balance.pdf", plot = balance.p, 
+       width = 500,
+       height = 500,
+       units = c("px"),
+       dpi = 80
+)
 
 # means
 mean(round(mean(dat$phys_occ_cong[dat$esec.r=="Upper" & dat$gender=="Man"], na.rm = T),1),
@@ -727,7 +733,7 @@ plot(effect("phys_occ_cong*esec.r", m1.w.quasi.poisson))
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(texreg)
 
-reg.table = screenreg( # screenreg texreg
+reg.table = texreg( # screenreg texreg
   list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
   custom.header = list(
     "1" = 1,
@@ -777,8 +783,7 @@ reg.table = screenreg( # screenreg texreg
   use.packages = FALSE,
   threeparttable = TRUE,
   scalebox = 0.4,
-  custom.note = "%stars. Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models."
-)
+  custom.note = "\\item %stars. \\item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.")
 ## ----
 
 

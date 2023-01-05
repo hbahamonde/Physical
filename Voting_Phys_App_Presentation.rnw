@@ -236,7 +236,7 @@
 
 \institute[shortinst]{\inst{1} University of Turku, Finland}
 
-\date{August 11th, 2022}
+\date{January 14th, 2023}
 
 %to to see shadows of previous blocks
 %\setbeamercovered{dynamic}
@@ -297,7 +297,7 @@ options(scipen = 99999999999)
 \begin{columns}
 \begin{column}{.45\textwidth}
 \begin{itemize}
-    \item During the 1950s and the 1960s, the TV gets massively introduced in American homes.
+    \item During the 1950s and the 1960s, TV gets massively introduced in American homes.
     \item This opened up new possibilities for {\bf political campaigning}.
 \end{itemize}
 \end{column}
@@ -411,7 +411,7 @@ options(scipen = 99999999999)
 %
 \begin{frame}[c]{What About Wealthy-looking or Poor-looking Candidates?}
 \begin{itemize}
-  \item While we know that better-looking candidates win more often, we're rather {\color{blue}ignorant about the effects of \underline{\emph{looking} poor/wealthy} on the probability of winning elections}.
+  \item While we know that better-looking candidates win elections more often, we're rather {\color{blue}ignorant about the effect of \underline{\emph{looking} poor/wealthy} on the probability of losing/winning an election}.
   \item[\checkmark] This questions is relevant because it touches upon issues of social stratification and voting choices.
 \end{itemize}
 \end{frame} 
@@ -467,9 +467,9 @@ options(scipen = 99999999999)
 \begin{frame}[c]{Status Expectations Theory}
     \begin{itemize}
       \item {\bf Status Expectations Theory}: {\color{blue}physical attractiveness} is considered a similar status characteristic as gender or occupation.
-        \begin{itemize}
-          \item[$\checkmark$] For ex., attractive people are `{\color{blue}better}' or `{\color{blue}more capable}' {\tiny\color{gray}(Webster \& Driskell 1983)}.\pause
-        \end{itemize}
+        %\begin{itemize}
+        %  \item[$\checkmark$] For ex., attractive people are `{\color{blue}better}' or `{\color{blue}more capable}' {\tiny\color{gray}(Webster \& Driskell 1983)}.\pause
+        %\end{itemize}
 
         \item[\checkmark] We extend this concept to cues of {\bf occupation} as a {\bf status} characteristic.
 
@@ -583,7 +583,7 @@ options(scipen = 99999999999)
 \subsection{Raters Data}
 
 \miniframeson
-\begin{frame}[c]{Novel Raters Data}
+\begin{frame}[c]{\hypertarget{pics:slide}Novel Raters Data}
   \begin{itemize}
     \item Collected data from 7,920 randomly selected Finnish-speaking Finns.
     \item {\bf Task}: evaluated a random sample of candidate photographs (N$\sim$50) according to four items.
@@ -595,9 +595,9 @@ options(scipen = 99999999999)
         \item {\bf \scriptsize Femininity}.
       \end{enumerate}
     %\item {\bf Avoiding recognition}: proprietary software designed to avoid assigning candidates running in the same rater's district.
-     
+     \vspace{1.5cm}
   \end{itemize}
-   \hyperlink{table:items}{\beamergotobutton{show table with items}} \hyperlink{pics:distribution}{\beamergotobutton{show distributions}}
+   \hyperlink{table:items}{\beamergotobutton{show table with items}} \hyperlink{pics:distribution}{\beamergotobutton{show distributions}} \hyperlink{pics:balance}{\beamergotobutton{show balance plot}}
 
 \end{frame}
 
@@ -606,13 +606,13 @@ options(scipen = 99999999999)
 
 
 \miniframeson
-\begin{frame}[c]{Functional Form and Model}
+\begin{frame}[c]{\hypertarget{reg:table:slide}{Functional Form and Model}}
 
  \begin{align*}
  Y_{i}=\text{Votes}_{i}\sim\;&\text{\texttt{Poisson}}\\
  \text{Votes}_{i}  = \;
  & \beta_{0} + \\
- & \beta_{1}\text{{\only<2>{\color{red}}Occupation-Appearance Congruence}}_{i}\times\text{{\only<2>{\color{red}}Social Class}}_{i} + \\
+ & \beta_{1}\text{{\only<2,12>{\color{red}}Occupation-Appearance Congruence}}_{i}\times\text{{\only<2,12>{\color{red}}Social Class}}_{i} + \\
  & \beta_{2}\text{{\only<3>{\color{red}}Age}}_{i} + \\
  & \gamma{1}\text{{\only<4>{\color{blue}}Party}}_{i} + \\
  & \gamma{2}\text{{\only<5>{\color{blue}}City}}_{i}
@@ -620,29 +620,25 @@ options(scipen = 99999999999)
  \begin{itemize}
   \item {\bf Also control for}: ${\only<6>{\color{red}}\text{Attractiveness}_{i}}$, ${\only<7>{\color{red}}\text{Masculinity}_{i}}$ and ${\only<8>{\color{red}}\text{Femininity}_{i}}$.
  \item {\bf Partition the data} ({\only<9>{\color{red}}full}, {\only<10>{\color{red}}male} \& {\only<11>{\color{red}}female}).
+ \item We concentrate on the {\bf marginal effects} of the {\only<12>{\color{red}}interaction term}.
+ \\
+ \hspace{10.7cm} \hyperlink{reg:table}{\beamergotobutton{show regression table}}
 \end{itemize}
 \end{frame}
 
 
 \miniframesoff
-\begin{frame}[plain]%{Functional Form and Model}
-\center
-\Sexpr{reg.table}
-\end{frame}
-
-
-\miniframesoff
-\begin{frame}[plain]%{Main Results}
+\begin{frame}[plain]{\small Marginal Effects of the Interaction Term}
 \centering\includegraphics[scale=0.3]{p_full_poisson_presentation.pdf}
 \end{frame}
 
 \miniframesoff
-\begin{frame}[plain]%{Main Results}
+\begin{frame}[plain]{\small Marginal Effects of the Interaction Term}
 \centering\includegraphics[scale=0.35]{pred_prob_presentation_male_fem.pdf}
 \end{frame}
 
 \miniframesoff
-\begin{frame}[c]{Predicted Probs' Table}
+\begin{frame}[c]{Predicted Probabilities Table}
 \begin{table}[]
 \begin{tabular}{c|c|c|c|c|}
 \textbf{Candidate's Gender} & \textbf{Status} & $\hat{\text{\bf Votes}}$ & \multicolumn{2}{c}{\textbf{95\% CI}}\\
@@ -733,15 +729,29 @@ options(scipen = 99999999999)
 4      & Femininity & To what extent do you think this person looks feminine, as compared to others of the same age and gender?  & 1=not feminine at all, to 5=very feminine.  
 \end{tabularx}
 \end{table}
+\hyperlink{pics:slide}{\beamergotobutton{go back}}
 \end{frame}
 
 
 \miniframesoff
-\begin{frame}[plain]{\hypertarget{pics:distribution}{{\TINY Raters Data: Distributions of Candidate Phys. App.}}}
+\begin{frame}[plain]{\hypertarget{pics:distribution}{{\tiny Distributions of Candidate Physical Appearance Indicators.}}}
 \centering\includegraphics[scale=0.15]{densities.pdf}
+\hyperlink{pics:slide}{\beamergotobutton{go back}}
 \end{frame}
 
 
+\miniframesoff
+\begin{frame}[plain]{\hypertarget{pics:balance}{{\tiny Balance Plot: Class and Occupation Data.}}}
+\centering\includegraphics[scale=0.5]{balance.pdf}
+\hyperlink{pics:slide}{\beamergotobutton{go back}}
+\end{frame}
+
+\miniframesoff
+\begin{frame}[plain]{\hypertarget{reg:table}{{\tiny Poisson Regression}}}
+\center
+\Sexpr{reg.table}
+\hyperlink{reg:table:slide}{\beamergotobutton{go back}}
+\end{frame}
 
 
 \end{document}

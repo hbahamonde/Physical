@@ -13,6 +13,9 @@
 \makeatother
 
 \definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}}}
+\makeatother
 \newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
 \newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
 \newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
@@ -47,6 +50,14 @@
 \definecolor{messagecolor}{rgb}{0, 0, 0}
 \definecolor{warningcolor}{rgb}{1, 0, 1}
 \definecolor{errorcolor}{rgb}{1, 0, 0}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+}}
+\makeatother
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
 \usepackage{alltt} % aspectratio=169
@@ -286,7 +297,7 @@
 
 \institute[shortinst]{\inst{1} University of Turku, Finland}
 
-\date{August 11th, 2022}
+\date{January 14th, 2023}
 
 %to to see shadows of previous blocks
 %\setbeamercovered{dynamic}
@@ -328,7 +339,7 @@
 \begin{columns}
 \begin{column}{.45\textwidth}
 \begin{itemize}
-    \item During the 1950s and the 1960s, the TV gets massively introduced in American homes.
+    \item During the 1950s and the 1960s, TV gets massively introduced in American homes.
     \item This opened up new possibilities for {\bf political campaigning}.
 \end{itemize}
 \end{column}
@@ -442,7 +453,7 @@
 %
 \begin{frame}[c]{What About Wealthy-looking or Poor-looking Candidates?}
 \begin{itemize}
-  \item While we know that better-looking candidates win more often, we're rather {\color{blue}ignorant about the effects of \underline{\emph{looking} poor/wealthy} on the probability of winning elections}.
+  \item While we know that better-looking candidates win elections more often, we're rather {\color{blue}ignorant about the effect of \underline{\emph{looking} poor/wealthy} on the probability of losing/winning an election}.
   \item[\checkmark] This questions is relevant because it touches upon issues of social stratification and voting choices.
 \end{itemize}
 \end{frame} 
@@ -498,9 +509,9 @@
 \begin{frame}[c]{Status Expectations Theory}
     \begin{itemize}
       \item {\bf Status Expectations Theory}: {\color{blue}physical attractiveness} is considered a similar status characteristic as gender or occupation.
-        \begin{itemize}
-          \item[$\checkmark$] For ex., attractive people are `{\color{blue}better}' or `{\color{blue}more capable}' {\tiny\color{gray}(Webster \& Driskell 1983)}.\pause
-        \end{itemize}
+        %\begin{itemize}
+        %  \item[$\checkmark$] For ex., attractive people are `{\color{blue}better}' or `{\color{blue}more capable}' {\tiny\color{gray}(Webster \& Driskell 1983)}.\pause
+        %\end{itemize}
 
         \item[\checkmark] We extend this concept to cues of {\bf occupation} as a {\bf status} characteristic.
 
@@ -614,7 +625,7 @@
 \subsection{Raters Data}
 
 \miniframeson
-\begin{frame}[c]{Novel Raters Data}
+\begin{frame}[c]{\hypertarget{pics:slide}Novel Raters Data}
   \begin{itemize}
     \item Collected data from 7,920 randomly selected Finnish-speaking Finns.
     \item {\bf Task}: evaluated a random sample of candidate photographs (N$\sim$50) according to four items.
@@ -626,9 +637,9 @@
         \item {\bf \scriptsize Femininity}.
       \end{enumerate}
     %\item {\bf Avoiding recognition}: proprietary software designed to avoid assigning candidates running in the same rater's district.
-     
+     \vspace{1.5cm}
   \end{itemize}
-   \hyperlink{table:items}{\beamergotobutton{show table with items}} \hyperlink{pics:distribution}{\beamergotobutton{show distributions}}
+   \hyperlink{table:items}{\beamergotobutton{show table with items}} \hyperlink{pics:distribution}{\beamergotobutton{show distributions}} \hyperlink{pics:balance}{\beamergotobutton{show balance plot}}
 
 \end{frame}
 
@@ -637,13 +648,13 @@
 
 
 \miniframeson
-\begin{frame}[c]{Functional Form and Model}
+\begin{frame}[c]{\hypertarget{reg:table:slide}{Functional Form and Model}}
 
  \begin{align*}
  Y_{i}=\text{Votes}_{i}\sim\;&\text{\texttt{Poisson}}\\
  \text{Votes}_{i}  = \;
  & \beta_{0} + \\
- & \beta_{1}\text{{\only<2>{\color{red}}Occupation-Appearance Congruence}}_{i}\times\text{{\only<2>{\color{red}}Social Class}}_{i} + \\
+ & \beta_{1}\text{{\only<2,12>{\color{red}}Occupation-Appearance Congruence}}_{i}\times\text{{\only<2,12>{\color{red}}Social Class}}_{i} + \\
  & \beta_{2}\text{{\only<3>{\color{red}}Age}}_{i} + \\
  & \gamma{1}\text{{\only<4>{\color{blue}}Party}}_{i} + \\
  & \gamma{2}\text{{\only<5>{\color{blue}}City}}_{i}
@@ -651,77 +662,25 @@
  \begin{itemize}
   \item {\bf Also control for}: ${\only<6>{\color{red}}\text{Attractiveness}_{i}}$, ${\only<7>{\color{red}}\text{Masculinity}_{i}}$ and ${\only<8>{\color{red}}\text{Femininity}_{i}}$.
  \item {\bf Partition the data} ({\only<9>{\color{red}}full}, {\only<10>{\color{red}}male} \& {\only<11>{\color{red}}female}).
+ \item We concentrate on the {\bf marginal effects} of the {\only<12>{\color{red}}interaction term}.
+ \\
+ \hspace{10.7cm} \hyperlink{reg:table}{\beamergotobutton{show regression table}}
 \end{itemize}
 \end{frame}
 
 
 \miniframesoff
-\begin{frame}[plain]%{Functional Form and Model}
-\center
-
-\begin{table}[H]
-\caption{Statistical Models}
-\begin{center}
-\scalebox{0.4}{
-\begin{threeparttable}
-\begin{tabular}{l c c c c c c c c c c c c}
-\hline
- & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{7} & \multicolumn{1}{c}{8} & \multicolumn{1}{c}{9} & \multicolumn{1}{c}{10} & \multicolumn{1}{c}{11} & \multicolumn{1}{c}{12} \\
-\cline{2-2} \cline{3-3} \cline{4-4} \cline{5-5} \cline{6-6} \cline{7-7} \cline{8-8} \cline{9-9} \cline{10-10} \cline{11-11} \cline{12-12} \cline{13-13}
- & Full & Male & Female & Full & Full & Full & Male & Female & Male & Female & Male & Female \\
-\hline
-Intercept                                               & $4.49^{***}$  & $2.58^{***}$  & $6.17^{***}$  & $2.11^{***}$  & $4.27^{***}$  & $2.15^{***}$  & $-0.25^{**}$  & $3.24^{***}$  & $2.50^{***}$  & $2.98^{***}$  & $0.17$        & $2.80^{***}$  \\
-                                                        & $(0.05)$      & $(0.08)$      & $(0.07)$      & $(0.05)$      & $(0.05)$      & $(0.05)$      & $(0.09)$      & $(0.08)$      & $(0.08)$      & $(0.08)$      & $(0.09)$      & $(0.08)$      \\
-Appearance-Occupation Congruence                        & $0.41^{***}$  & $0.59^{***}$  & $0.28^{***}$  & $0.25^{***}$  & $0.42^{***}$  & $0.26^{***}$  & $0.37^{***}$  & $0.22^{***}$  & $0.59^{***}$  & $0.28^{***}$  & $0.37^{***}$  & $0.24^{***}$  \\
-                                                        & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      \\
-Middle Class                                            & $0.30^{***}$  & $0.81^{***}$  & $-0.05$       & $0.41^{***}$  & $0.23^{***}$  & $0.31^{***}$  & $0.54^{***}$  & $0.12$        & $0.77^{***}$  & $0.18$        & $0.75^{***}$  & $0.16$        \\
-                                                        & $(0.06)$      & $(0.08)$      & $(0.11)$      & $(0.06)$      & $(0.06)$      & $(0.06)$      & $(0.08)$      & $(0.11)$      & $(0.08)$      & $(0.11)$      & $(0.08)$      & $(0.11)$      \\
-Working Class                                           & $1.03^{***}$  & $1.59^{***}$  & $0.70^{***}$  & $0.49^{***}$  & $1.07^{***}$  & $0.58^{***}$  & $0.95^{***}$  & $0.23^{***}$  & $1.59^{***}$  & $0.32^{***}$  & $0.86^{***}$  & $0.19^{**}$   \\
-                                                        & $(0.03)$      & $(0.04)$      & $(0.07)$      & $(0.03)$      & $(0.03)$      & $(0.03)$      & $(0.04)$      & $(0.07)$      & $(0.04)$      & $(0.07)$      & $(0.04)$      & $(0.07)$      \\
-Age                                                     & $-0.02^{***}$ & $-0.01^{***}$ & $-0.03^{***}$ & $-0.00^{***}$ & $-0.02^{***}$ & $-0.01^{***}$ & $0.00^{***}$  & $-0.01^{***}$ & $-0.01^{***}$ & $-0.02^{***}$ & $0.01^{***}$  & $-0.01^{***}$ \\
-                                                        & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      \\
-Appearance-Occupation Congruence $\times$ Middle Class  & $-0.18^{***}$ & $-0.34^{***}$ & $-0.11^{***}$ & $-0.20^{***}$ & $-0.16^{***}$ & $-0.17^{***}$ & $-0.22^{***}$ & $-0.17^{***}$ & $-0.33^{***}$ & $-0.19^{***}$ & $-0.28^{***}$ & $-0.18^{***}$ \\
-                                                        & $(0.02)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.02)$      & $(0.02)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.03)$      \\
-Appearance-Occupation Congruence $\times$ Working Class & $-0.46^{***}$ & $-0.61^{***}$ & $-0.43^{***}$ & $-0.28^{***}$ & $-0.48^{***}$ & $-0.31^{***}$ & $-0.39^{***}$ & $-0.28^{***}$ & $-0.62^{***}$ & $-0.29^{***}$ & $-0.35^{***}$ & $-0.27^{***}$ \\
-                                                        & $(0.01)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.02)$      \\
-Attractiveness                                          &               &               &               & $0.76^{***}$  &               & $0.89^{***}$  & $1.00^{***}$  & $0.72^{***}$  &               &               & $1.08^{***}$  & $0.53^{***}$  \\
-                                                        &               &               &               & $(0.01)$      &               & $(0.01)$      & $(0.01)$      & $(0.01)$      &               &               & $(0.01)$      & $(0.01)$      \\
-Masculinity                                             &               &               &               &               & $0.09^{***}$  &               &               &               & $0.04^{***}$  &               & $-0.28^{***}$ &               \\
-                                                        &               &               &               &               & $(0.00)$      &               &               &               & $(0.01)$      &               & $(0.01)$      &               \\
-Femininity                                              &               &               &               &               &               & $-0.15^{***}$ &               &               &               & $0.68^{***}$  &               & $0.26^{***}$  \\
-                                                        &               &               &               &               &               & $(0.00)$      &               &               &               & $(0.01)$      &               & $(0.02)$      \\
-\hline
-AIC                                                     & $287653.94$   & $170596.79$   & $79111.45$    & $267973.43$   & $287029.77$   & $265328.79$   & $154959.12$   & $73290.19$    & $170577.24$   & $74331.79$    & $153861.01$   & $73001.39$    \\
-BIC                                                     & $288886.12$   & $171561.82$   & $79936.45$    & $269210.66$   & $288267.17$   & $266571.24$   & $155928.83$   & $74119.20$    & $171546.96$   & $75161.13$    & $154835.41$   & $73834.74$    \\
-Log Likelihood                                          & $-143590.97$  & $-85092.40$   & $-39365.73$   & $-133749.72$  & $-143277.88$  & $-132426.40$  & $-77272.56$   & $-36454.09$   & $-85081.62$   & $-36974.89$   & $-76722.51$   & $-36308.70$   \\
-Deviance                                                & $278666.41$   & $165250.11$   & $75150.60$    & $258990.24$   & $278040.23$   & $256343.60$   & $149610.43$   & $69333.68$    & $165228.56$   & $70368.94$    & $148510.33$   & $69042.88$    \\
-Num. obs.                                               & $1368$        & $800$         & $568$         & $1367$        & $1368$        & $1367$        & $800$         & $567$         & $800$         & $568$         & $800$         & $567$         \\
-\hline
-\end{tabular}
-\begin{tablenotes}[flushleft]
-\scriptsize{\item $^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$. \item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.}
-\end{tablenotes}
-\end{threeparttable}
-}
-\label{reg:t}
-\end{center}
-\end{table}
-
-\end{frame}
-
-
-\miniframesoff
-\begin{frame}[plain]%{Main Results}
+\begin{frame}[plain]{\small Marginal Effects of the Interaction Term}
 \centering\includegraphics[scale=0.3]{p_full_poisson_presentation.pdf}
 \end{frame}
 
 \miniframesoff
-\begin{frame}[plain]%{Main Results}
+\begin{frame}[plain]{\small Marginal Effects of the Interaction Term}
 \centering\includegraphics[scale=0.35]{pred_prob_presentation_male_fem.pdf}
 \end{frame}
 
 \miniframesoff
-\begin{frame}[c]{Predicted Probs' Table}
+\begin{frame}[c]{Predicted Probabilities Table}
 \begin{table}[]
 \begin{tabular}{c|c|c|c|c|}
 \textbf{Candidate's Gender} & \textbf{Status} & $\hat{\text{\bf Votes}}$ & \multicolumn{2}{c}{\textbf{95\% CI}}\\
@@ -812,15 +771,77 @@ Num. obs.                                               & $1368$        & $800$ 
 4      & Femininity & To what extent do you think this person looks feminine, as compared to others of the same age and gender?  & 1=not feminine at all, to 5=very feminine.  
 \end{tabularx}
 \end{table}
+\hyperlink{pics:slide}{\beamergotobutton{go back}}
 \end{frame}
 
 
 \miniframesoff
-\begin{frame}[plain]{\hypertarget{pics:distribution}{{\TINY Raters Data: Distributions of Candidate Phys. App.}}}
+\begin{frame}[plain]{\hypertarget{pics:distribution}{{\tiny Distributions of Candidate Physical Appearance Indicators.}}}
 \centering\includegraphics[scale=0.15]{densities.pdf}
+\hyperlink{pics:slide}{\beamergotobutton{go back}}
 \end{frame}
 
 
+\miniframesoff
+\begin{frame}[plain]{\hypertarget{pics:balance}{{\tiny Balance Plot: Class and Occupation Data.}}}
+\centering\includegraphics[scale=0.5]{balance.pdf}
+\hyperlink{pics:slide}{\beamergotobutton{go back}}
+\end{frame}
+
+\miniframesoff
+\begin{frame}[plain]{\hypertarget{reg:table}{{\tiny Poisson Regression}}}
+\center
+
+\begin{table}[H]
+\caption{Statistical Models}
+\begin{center}
+\scalebox{0.4}{
+\begin{threeparttable}
+\begin{tabular}{l c c c c c c c c c c c c}
+\hline
+ & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{7} & \multicolumn{1}{c}{8} & \multicolumn{1}{c}{9} & \multicolumn{1}{c}{10} & \multicolumn{1}{c}{11} & \multicolumn{1}{c}{12} \\
+\cline{2-2} \cline{3-3} \cline{4-4} \cline{5-5} \cline{6-6} \cline{7-7} \cline{8-8} \cline{9-9} \cline{10-10} \cline{11-11} \cline{12-12} \cline{13-13}
+ & Full & Male & Female & Full & Full & Full & Male & Female & Male & Female & Male & Female \\
+\hline
+Intercept                                        & $4.49^{***}$  & $2.58^{***}$  & $6.17^{***}$  & $2.11^{***}$  & $4.27^{***}$  & $2.15^{***}$  & $-0.25^{**}$  & $3.24^{***}$  & $2.50^{***}$  & $2.98^{***}$  & $0.17$        & $2.80^{***}$  \\
+                                                 & $(0.05)$      & $(0.08)$      & $(0.07)$      & $(0.05)$      & $(0.05)$      & $(0.05)$      & $(0.09)$      & $(0.08)$      & $(0.08)$      & $(0.08)$      & $(0.09)$      & $(0.08)$      \\
+Appearance-Occupation Congruence                 & $0.41^{***}$  & $0.59^{***}$  & $0.28^{***}$  & $0.25^{***}$  & $0.42^{***}$  & $0.26^{***}$  & $0.37^{***}$  & $0.22^{***}$  & $0.59^{***}$  & $0.28^{***}$  & $0.37^{***}$  & $0.24^{***}$  \\
+                                                 & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      \\
+Middle Class                                     & $0.30^{***}$  & $0.81^{***}$  & $-0.05$       & $0.41^{***}$  & $0.23^{***}$  & $0.31^{***}$  & $0.54^{***}$  & $0.12$        & $0.77^{***}$  & $0.18$        & $0.75^{***}$  & $0.16$        \\
+                                                 & $(0.06)$      & $(0.08)$      & $(0.11)$      & $(0.06)$      & $(0.06)$      & $(0.06)$      & $(0.08)$      & $(0.11)$      & $(0.08)$      & $(0.11)$      & $(0.08)$      & $(0.11)$      \\
+Working Class                                    & $1.03^{***}$  & $1.59^{***}$  & $0.70^{***}$  & $0.49^{***}$  & $1.07^{***}$  & $0.58^{***}$  & $0.95^{***}$  & $0.23^{***}$  & $1.59^{***}$  & $0.32^{***}$  & $0.86^{***}$  & $0.19^{**}$   \\
+                                                 & $(0.03)$      & $(0.04)$      & $(0.07)$      & $(0.03)$      & $(0.03)$      & $(0.03)$      & $(0.04)$      & $(0.07)$      & $(0.04)$      & $(0.07)$      & $(0.04)$      & $(0.07)$      \\
+Age                                              & $-0.02^{***}$ & $-0.01^{***}$ & $-0.03^{***}$ & $-0.00^{***}$ & $-0.02^{***}$ & $-0.01^{***}$ & $0.00^{***}$  & $-0.01^{***}$ & $-0.01^{***}$ & $-0.02^{***}$ & $0.01^{***}$  & $-0.01^{***}$ \\
+                                                 & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      & $(0.00)$      \\
+Appearance-Occupation Congruence X Middle Class  & $-0.18^{***}$ & $-0.34^{***}$ & $-0.11^{***}$ & $-0.20^{***}$ & $-0.16^{***}$ & $-0.17^{***}$ & $-0.22^{***}$ & $-0.17^{***}$ & $-0.33^{***}$ & $-0.19^{***}$ & $-0.28^{***}$ & $-0.18^{***}$ \\
+                                                 & $(0.02)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.02)$      & $(0.02)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.03)$      & $(0.02)$      & $(0.03)$      \\
+Appearance-Occupation Congruence X Working Class & $-0.46^{***}$ & $-0.61^{***}$ & $-0.43^{***}$ & $-0.28^{***}$ & $-0.48^{***}$ & $-0.31^{***}$ & $-0.39^{***}$ & $-0.28^{***}$ & $-0.62^{***}$ & $-0.29^{***}$ & $-0.35^{***}$ & $-0.27^{***}$ \\
+                                                 & $(0.01)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.02)$      & $(0.01)$      & $(0.02)$      \\
+Attractiveness                                   &               &               &               & $0.76^{***}$  &               & $0.89^{***}$  & $1.00^{***}$  & $0.72^{***}$  &               &               & $1.08^{***}$  & $0.53^{***}$  \\
+                                                 &               &               &               & $(0.01)$      &               & $(0.01)$      & $(0.01)$      & $(0.01)$      &               &               & $(0.01)$      & $(0.01)$      \\
+Masculinity                                      &               &               &               &               & $0.09^{***}$  &               &               &               & $0.04^{***}$  &               & $-0.28^{***}$ &               \\
+                                                 &               &               &               &               & $(0.00)$      &               &               &               & $(0.01)$      &               & $(0.01)$      &               \\
+Femininity                                       &               &               &               &               &               & $-0.15^{***}$ &               &               &               & $0.68^{***}$  &               & $0.26^{***}$  \\
+                                                 &               &               &               &               &               & $(0.00)$      &               &               &               & $(0.01)$      &               & $(0.02)$      \\
+\hline
+AIC                                              & $287653.94$   & $170596.79$   & $79111.45$    & $267973.43$   & $287029.77$   & $265328.79$   & $154959.12$   & $73290.19$    & $170577.24$   & $74331.79$    & $153861.01$   & $73001.39$    \\
+BIC                                              & $288886.12$   & $171561.82$   & $79936.45$    & $269210.66$   & $288267.17$   & $266571.24$   & $155928.83$   & $74119.20$    & $171546.96$   & $75161.13$    & $154835.41$   & $73834.74$    \\
+Log Likelihood                                   & $-143590.97$  & $-85092.40$   & $-39365.73$   & $-133749.72$  & $-143277.88$  & $-132426.40$  & $-77272.56$   & $-36454.09$   & $-85081.62$   & $-36974.89$   & $-76722.51$   & $-36308.70$   \\
+Deviance                                         & $278666.41$   & $165250.11$   & $75150.60$    & $258990.24$   & $278040.23$   & $256343.60$   & $149610.43$   & $69333.68$    & $165228.56$   & $70368.94$    & $148510.33$   & $69042.88$    \\
+Num. obs.                                        & $1368$        & $800$         & $568$         & $1367$        & $1368$        & $1367$        & $800$         & $567$         & $800$         & $568$         & $800$         & $567$         \\
+\hline
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\scriptsize{\item $^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$. \item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.}
+\end{tablenotes}
+\end{threeparttable}
+}
+\label{reg:t}
+\end{center}
+\end{table}
+
+\hyperlink{reg:table:slide}{\beamergotobutton{go back}}
+\end{frame}
 
 
 \end{document}
