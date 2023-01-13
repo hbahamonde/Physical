@@ -367,7 +367,7 @@
   \item Nixon's ``five-o'clock shadow'' negatively affected his evaluation.\\{\tiny \color{gray}Mattes et. al (2010).}
   \item[] {\color{white}Nixon's posture didn't look ``presidential.''}
   \item[] {\color{white}Nixon was all sweaty. {\tiny\color{white} Stockemer and Praino (2019)}.}
-  \item[] {\color{white}Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
+ % \item[] %{\color{white}Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
 \end{itemize}
 \end{column}
 \begin{column}{.45\textwidth}
@@ -385,7 +385,7 @@
   \item Nixon's ``five-o'clock shadow'' negatively affected his evaluation.\\{\tiny\color{gray} Mattes et. al (2010).}
   \item Nixon's posture didn't look ``presidential.''
   \item[] {\color{white}Nixon was all sweaty. {\tiny\color{white} Stockemer and Praino (2019).}}
-  \item[] {\color{white}Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
+ % \item[] %{\color{white}Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
 \end{itemize}
 \end{column}
 \begin{column}{.45\textwidth}
@@ -404,7 +404,7 @@
   \item Nixon's ``five-o'clock shadow'' negatively affected his evaluation.\\{\tiny \color{gray} Mattes et. al (2010).}
   \item Nixon's posture didn't look ``presidential.''
   \item Nixon was all sweaty.\\{\tiny\color{gray} Stockemer and Praino (2019).}
-  \item[] {\color{white} Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
+  %\item[] {\color{white} Radio listeners thought Nixon would win, while TV-watchers though Kennedy would.}
 \end{itemize}
 \end{column}
 \begin{column}{.45\textwidth}
@@ -415,7 +415,7 @@
 
 % 4
 \miniframesoff
-\begin{frame}[c]{Nixon-Kennedy 1960 Debate}
+\begin{frame}<presentation:0>[c]{Nixon-Kennedy 1960 Debate}
 \center\includegraphics[scale=0.2]{pic_5.jpg}\\
 \centering {\color{blue}Radio listeners} thought Nixon would win, while {\color{blue}TV-watchers} though Kennedy would.
 \end{frame} 
@@ -497,7 +497,7 @@
 \miniframeson
 \begin{frame}[c]{Status Expectations Theory}
     \begin{itemize}
-      \item {\bf Status Expectations Theory}: {\color{blue}physical attractiveness} is considered a similar status characteristic as gender or occupation.
+      \item {\color{blue}Physical attractiveness} is considered a similar status characteristic as gender or occupation.
         %\begin{itemize}
         %  \item[$\checkmark$] For ex., attractive people are `{\color{blue}better}' or `{\color{blue}more capable}' {\tiny\color{gray}(Webster \& Driskell 1983)}.\pause
         %\end{itemize}
@@ -510,36 +510,45 @@
 
 \section{Argument}
 
-\subsection{Argument and Empirical Expectations}
+\subsection{Argument}
 
 
 \miniframeson
 \begin{frame}%<presentation:0>
-    \begin{itemize}
 
-      \item[] We {\color{blue}\bf argue} that a {\color{blue}candidate's occupation} combined with his/her {\color{blue}physical appearance} will function as {\color{blue}\bf cues of status}, in turn affecting his/her likelihood of winning an {\color{blue}election}.\pause
 
-      \item {\bf Empirical expectations}:
+\begin{alertblock}{Argument}
+      We argue that information about candidates' {\bf \color{red}occupations} combined with information about candidates' {\bf \color{blue}physical appearance}, function as {\bf cues of status} that have an effect on {\bf voting choices} in low-information elections.
+\end{alertblock}
 
-      \begin{itemize}
+\begin{exampleblock}{In simple...}
+Candidates that {\color{blue}\bf look like} and actually {\color{red} \bf are} wealthy (poor) will do better (worse) in elections.
+\end{exampleblock}
+
+
+
+    %\begin{itemize}
+     % \item {\bf Empirical expectations}:
+
+      %\begin{itemize}
         %\item {\bf Differences} between social groups (gender, occupation, race) will {\bf reflect social inequalities}.
 
         %\item For instance, women are more likely to get penalized because of how they look.
 
-        \item {\bf Heuristics}: voters will systematically vote for `{\bf high-status looking}' candidates.
+       % \item {\bf Heuristics}: voters will systematically vote for `{\bf high-status looking}' candidates.
 
-        \begin{itemize}
-          \item[$\checkmark$] {\color{black!30!green}Upper-class looking candidates}.
-          \item[$\checkmark$] {\color{black!30!green}Male candidates}.
-        \end{itemize}
+        %\begin{itemize}
+         % \item[$\checkmark$] {\color{black!30!green}Upper-class looking candidates}.
+          %\item[$\checkmark$] {\color{black!30!green}Male candidates}.
+        %\end{itemize}
 
        % \item {\bf Lower status} candidates will signal {\bf lower performance expectations}, thus, receiving {\bf less votes}. 
 
 
 
-    \end{itemize}
+    %\end{itemize}
 
-    \end{itemize}
+    %\end{itemize}
 \end{frame}
 
 
@@ -606,7 +615,7 @@
 \begin{frame}[c]{2017 Municipal Elections: Candidate Data}
   \begin{itemize}
     \item {\bf Ministry of Justice}: candidate's picture, party, occupation, district and number of votes received.
-    \item {\bf Sample}: randomly selected {\bf 1,500 candidate photographs}. {\tiny\color{gray}Universe 33,618; possible 10,000.}
+    \item {\bf Sample}: randomly selected {\bf 1,500 candidate head shots}. {\tiny\color{gray}Universe 33,618; possible 10,000.}
     \item {\bf Occupation and social class}: {\color{blue}European Socio-economic Classification}, recoded each candidate's occupation (upper, middle and working class).
   \end{itemize}
 \end{frame}
@@ -650,8 +659,8 @@
  \end{align*}
  \begin{itemize}
   \item {\bf Also control for}: ${\only<6>{\color{red}}\text{Attractiveness}_{i}}$, ${\only<7>{\color{red}}\text{Masculinity}_{i}}$ and ${\only<8>{\color{red}}\text{Femininity}_{i}}$.
- \item {\bf Partition the data} ({\only<9>{\color{red}}full}, {\only<10>{\color{red}}male} \& {\only<11>{\color{red}}female}).
- \item We concentrate on the {\bf marginal effects} of the {\only<12>{\color{red}}interaction term}.
+ \item {\only<9>{\color{red}}Full}, but also {\bf partition the data} ({\only<10>{\color{red}}male} \& {\only<11>{\color{red}}female}).
+ \item We focus on the {\only<12>{\color{red}}{\bf marginal effects}}  of the {\only<12>{\color{red}}interaction term}.
  \\
  \hspace{10.7cm} \hyperlink{reg:table}{\beamergotobutton{show regression table}}
 \end{itemize}
@@ -701,7 +710,7 @@
         \item  {\color{blue}{\bf Female} candidates}:
           \begin{itemize}
           \item Systematic {\color{red}electoral penalty} when they {\color{red}{\bf look-like}} {\color{red}working-class} individuals.
-          \item {\bf Marginal change}: it represents a -36\%$^{\star\star\star}$ votes!\pause
+          \item {\bf Marginal change} represents a -36\%$^{\star\star\star}$ votes!\pause
         \end{itemize}
     \item  {\color{blue}{\bf Male} candidates}:
           \begin{itemize}
@@ -733,7 +742,7 @@
 
         \begin{itemize}
             %\item Paper (draft) available at {\color{blue}www.HectorBahamonde.com}.
-            \item[] {\large\color{red}\faCamera}\; to check out updates on this project. 
+            \item[] {\large\color{red}\faCamera}\; to check updates on this project. 
         \end{itemize}
 \end{frame}
 
