@@ -411,7 +411,7 @@ options(scipen = 99999999999)
 %
 \begin{frame}[c]{What About Wealthy-looking or Poor-looking Candidates?}
 \begin{itemize}
-  \item While we know that better-looking candidates win elections more often, we're rather {\color{blue}ignorant about the effect of \underline{\emph{looking} poor/wealthy} on the probability of losing/winning an election}.
+  \item However, what happens when candidates look \underline{poor/wealthy}, does that affect their chances of getting elected? 
   \item[\checkmark] This questions is relevant because it touches upon issues of social stratification and voting choices.
 \end{itemize}
 \end{frame} 
@@ -674,11 +674,11 @@ Candidates that {\color{blue}\bf look like} and actually {\color{red} \bf are} w
         \item {\bf Male \& female} candidates:  
           \begin{enumerate}
             %\item[$\checkmark$] Candidates that show {\color{black!30!green}\emph{higher degrees of congruence}} between physical appearance and occupation {\color{black!30!green}do better}.
-            \item[$\checkmark$] Candidates that look-like {\color{black!30!green}\emph{upper-class} do {\bf best}} in elections.\pause
+            \item[$\checkmark$] Candidates that look like {\color{black!30!green}\emph{upper-class} do {\bf best}} in elections.\pause
           \end{enumerate}
         \item  {\color{blue}{\bf Female} candidates}:
           \begin{itemize}
-          \item Systematic {\color{red}electoral penalty} when they {\color{red}{\bf look-like}} {\color{red}working-class} individuals.
+          \item Systematic {\color{red}electoral penalty} when they {\color{red}{\bf look like}} {\color{red}working-class} individuals.
           \item {\bf Marginal change} represents a -36\%$^{\star\star\star}$ votes!\pause
         \end{itemize}
     \item  {\color{blue}{\bf Male} candidates}:
