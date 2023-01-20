@@ -133,19 +133,7 @@ p_load(foreign)
 dat.stata = subset(dat, select = -c(occup.elect.off,occupation_phys_cong_data))
 write.dta(dat.stata, paste0(getwd(),"/data.dta",""))
 
-#### GO TO STATA and RUN DO FILE
-
-# load Stata DO file with code below
-#p_load(RStata)
-#options("RStata.StataPath" = '/Applications/Stata/StataIC.app/Contents/MacOS/StataIC') 
-#chooseStataBin <- '/Applications/Stata/StataIC.app/Contents/MacOS/StataIC'
-#options("chooseStataBin" = '/Applications/Stata/StataIC.app/Contents/MacOS/StataIC')
-# this will cause an error, but it's just because it's calling the app, not the Terminal. I couldn't get to open the Terminal instead.
-## https://github.com/lbraglia/RStata/issues/11
-## I also put a ticket.
-## BUT ALWAYS MAKE SURE net install iscogen is installed IN STATA
-# options("RStata.StataVersion" = 15)
-# RStata::stata("Occupation_Conv.do")
+#### GO TO STATA and RUN DO FILE "Occupation_Conv.do"
 
 dat <- read.dta(paste0(getwd(),"/dat.dta",""))
 
@@ -199,6 +187,13 @@ ggsave("balance.pdf", plot = balance.p,
        units = c("px"),
        dpi = 80
 )
+ggsave("balance.jpg", plot = balance.p, 
+       width = 500,
+       height = 500,
+       units = c("px"),
+       dpi = 80
+)
+
 
 # means
 mean(round(mean(dat$phys_occ_cong[dat$esec.r=="Upper" & dat$gender=="Male"], na.rm = T),1),
@@ -214,6 +209,8 @@ if (!require("pacman")) install.packages("pacman"); library(pacman)
 p_load(coefplot)
 coefplot(lm(attractiveness ~ esec.r, dat))
 
+
+## Densities
 
 # Attractiveness
 ##

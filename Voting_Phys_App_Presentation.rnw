@@ -619,15 +619,15 @@ Candidates that {\color{blue}\bf look like} and actually {\color{red} \bf are} w
 
  \begin{align*}
  Y_{i}=\text{Votes}_{i}\sim\;&\text{\texttt{Poisson}}\\
- \text{Votes}_{i}  = \;
- & \beta_{0} + \\
+ \text{log(Votes}_{i})  = \;
  & \beta_{1}\text{{\only<2,12>{\color{red}}Occupation-Appearance Congruence}}_{i}\times\text{{\only<2,12>{\color{red}}Social Class}}_{i} + \\
  & \beta_{2}\text{{\only<3>{\color{red}}Age}}_{i} + \\
  & \gamma{1}\text{{\only<4>{\color{blue}}Party}}_{i} + \\
- & \gamma{2}\text{{\only<5>{\color{blue}}City}}_{i}
+ & \gamma{2}\text{{\only<5>{\color{blue}}City}}_{i} + \\
+ & \mathbf{\Theta}_{i}
  \end{align*}
  \begin{itemize}
-  \item {\bf Also control for}: ${\only<6>{\color{red}}\text{Attractiveness}_{i}}$, ${\only<7>{\color{red}}\text{Masculinity}_{i}}$ and ${\only<8>{\color{red}}\text{Femininity}_{i}}$.
+  \item In  $\mathbf{\Theta}$ we {\bf also control for}: ${\only<6>{\color{red}}\text{Attractiveness}_{i}}$, ${\only<7>{\color{red}}\text{Masculinity}_{i}}$ and ${\only<8>{\color{red}}\text{Femininity}_{i}}$.
  \item {\only<9>{\color{red}}Full}, but also {\bf partition the data} ({\only<10>{\color{red}}male} \& {\only<11>{\color{red}}female}).
  \item We focus on the {\only<12>{\color{red}}{\bf marginal effects}}  of the {\only<12>{\color{red}}interaction term}.
  \\
