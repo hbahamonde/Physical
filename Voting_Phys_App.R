@@ -525,7 +525,7 @@ p.full.poisson.presentation = plot_model(m0, type = "int", show.legend = T, titl
 p.full.poisson.presentation$labels$colour <- ""
 
 
-p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Data") + 
+p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Male Data") + 
   theme_sjplot() + 
   theme(legend.position = "bottom",legend.title.align=0.5) + 
   labs(y = "", x = "Candidate's Appearance-Occupation Congruence") + 
@@ -538,7 +538,7 @@ p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Dat
         plot.title = element_text(size=18),
         strip.text.x = element_text(size = 18)) 
 
-p2.poisson.presentation = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Men Data") + 
+p2.poisson.presentation = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Male Data") + 
   theme_sjplot() + 
   theme(legend.position = "bottom",legend.title.align=0.5) + 
   labs(y = "Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
@@ -554,7 +554,7 @@ p2.poisson.presentation = plot_model(m1.m, type = "int", show.legend = TRUE, tit
 p2.poisson.presentation$labels$colour <- ""
 p2.poisson$labels$colour <- "European Socio-Economic Classification"
 
-p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Women Data") + 
+p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Female Data") + 
   theme_sjplot() + 
   labs(y = "", x = "") + 
   theme(axis.text.y = element_text(size=18), 
@@ -566,7 +566,7 @@ p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Women Data
         plot.title = element_text(size=18),
         strip.text.x = element_text(size = 18)) 
 
-p3.poisson.presentation = plot_model(m1.w, type = "int", show.legend = T, title = "Women Data") + 
+p3.poisson.presentation = plot_model(m1.w, type = "int", show.legend = T, title = "Female Data") + 
   theme_sjplot() + 
   labs(y = "", x = "Candidate's Appearance-Occupation Congruence") + 
   theme(legend.position = "bottom",legend.title.align=0.5) +
