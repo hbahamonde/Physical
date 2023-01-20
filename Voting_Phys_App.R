@@ -69,7 +69,7 @@ dat = merge(dat.temp, electoral.d, by=c("lastname", "party", "city"), all.x = FA
 
 # recoding
 dat$party = as.factor(dat$party)
-dat$gender = recode(dat$gender, Mies = "Man", Nainen = "Woman")
+dat$gender = recode(dat$gender, Mies = "Male", Nainen = "Female")
 
 # 
 dat$municipality = ifelse(is.na(dat$municipality.x), dat$municipality.y, dat$municipality.y)
@@ -201,12 +201,12 @@ ggsave("balance.pdf", plot = balance.p,
 )
 
 # means
-mean(round(mean(dat$phys_occ_cong[dat$esec.r=="Upper" & dat$gender=="Man"], na.rm = T),1),
-round(mean(dat$phys_occ_cong[dat$esec.r=="Middle" & dat$gender=="Man"], na.rm = T),1),
-round(mean(dat$phys_occ_cong[dat$esec.r=="Working" & dat$gender=="Man"], na.rm = T),1),
-round(mean(dat$phys_occ_cong[dat$esec.r=="Upper" & dat$gender=="Woman"], na.rm = T),1),
-round(mean(dat$phys_occ_cong[dat$esec.r=="Middle" & dat$gender=="Woman"], na.rm = T),1),
-round(mean(dat$phys_occ_cong[dat$esec.r=="Working" & dat$gender=="Woman"], na.rm = T),1))
+mean(round(mean(dat$phys_occ_cong[dat$esec.r=="Upper" & dat$gender=="Male"], na.rm = T),1),
+     round(mean(dat$phys_occ_cong[dat$esec.r=="Middle" & dat$gender=="Male"], na.rm = T),1),
+     round(mean(dat$phys_occ_cong[dat$esec.r=="Working" & dat$gender=="Male"], na.rm = T),1),
+     round(mean(dat$phys_occ_cong[dat$esec.r=="Upper" & dat$gender=="Female"], na.rm = T),1),
+     round(mean(dat$phys_occ_cong[dat$esec.r=="Middle" & dat$gender=="Female"], na.rm = T),1),
+     round(mean(dat$phys_occ_cong[dat$esec.r=="Working" & dat$gender=="Female"], na.rm = T),1))
 
 # r1: question 5
 options(scipen=999)
@@ -270,37 +270,37 @@ ggsave("attractiveness.pdf", plot = attractiveness.p,
 # Physical-Occupation Congruence
 ##
 d.p1.p = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                                                  axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                                                  axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                                                  axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                                                  legend.text=element_text(size=18), 
-                                                                                                                                                                                                                                  legend.title=element_text(size=18),
-                                                                                                                                                                                                                                  plot.title = element_text(size=18),
-                                                                                                                                                                                                                                  strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                                                  legend.position = "none")
+                                                                                                                                                                                                                                   axis.text.x = element_text(size=18), 
+                                                                                                                                                                                                                                   axis.title.y = element_text(size=18), 
+                                                                                                                                                                                                                                   axis.title.x = element_text(size=22), 
+                                                                                                                                                                                                                                   legend.text=element_text(size=18), 
+                                                                                                                                                                                                                                   legend.title=element_text(size=18),
+                                                                                                                                                                                                                                   plot.title = element_text(size=18),
+                                                                                                                                                                                                                                   strip.text.x = element_text(size = 18),
+                                                                                                                                                                                                                                   legend.position = "none")
 d.p1.p$labels$fill <- "Candidate Gender"
 d.p1.p$labels$colour <- "Candidate Gender"
 ##
 d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                                           axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                                           axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                                           axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                                           legend.text=element_text(size=18), 
-                                                                                                                                                                                                                           legend.title=element_text(size=18),
-                                                                                                                                                                                                                           plot.title = element_text(size=18),
-                                                                                                                                                                                                                           strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                                           legend.position = "none")
+                                                                                                                                                                                                                            axis.text.x = element_text(size=18), 
+                                                                                                                                                                                                                            axis.title.y = element_text(size=18), 
+                                                                                                                                                                                                                            axis.title.x = element_text(size=22), 
+                                                                                                                                                                                                                            legend.text=element_text(size=18), 
+                                                                                                                                                                                                                            legend.title=element_text(size=18),
+                                                                                                                                                                                                                            plot.title = element_text(size=18),
+                                                                                                                                                                                                                            strip.text.x = element_text(size = 18),
+                                                                                                                                                                                                                            legend.position = "none")
 d.p2.p$labels$colour <- "European Socio-Economic\nClassification"
 ##
 d.p3.p = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                                        axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                                        axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                                        axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                                        legend.text=element_text(size=18), 
-                                                                                                                                                                                                                        legend.title=element_text(size=18),
-                                                                                                                                                                                                                        plot.title = element_text(size=18),
-                                                                                                                                                                                                                        strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                                        legend.position = "none")
+                                                                                                                                                                                                                         axis.text.x = element_text(size=18), 
+                                                                                                                                                                                                                         axis.title.y = element_text(size=18), 
+                                                                                                                                                                                                                         axis.title.x = element_text(size=22), 
+                                                                                                                                                                                                                         legend.text=element_text(size=18), 
+                                                                                                                                                                                                                         legend.title=element_text(size=18),
+                                                                                                                                                                                                                         plot.title = element_text(size=18),
+                                                                                                                                                                                                                         strip.text.x = element_text(size = 18),
+                                                                                                                                                                                                                         legend.position = "none")
 d.p3.p$labels$fill <- "Political Party"
 d.p3.p$labels$colour <- "Political Party"
 ##
@@ -467,25 +467,25 @@ main.model.formula = as.formula(turnout ~ phys_occ_cong*esec.r + party + age + c
 # Poisson
 options(scipen=999)
 baseline.full.0 = glm(turnout ~ phys_occ_cong + esec.r + party + age + city, family="poisson", data=dat) # full
-baseline.m.0 = glm(turnout ~ phys_occ_cong + esec.r + party + age + city, family="poisson", data=dat[dat$gender=="Man",]) # man
-baseline.w.0 = glm(turnout ~ phys_occ_cong + esec.r + party + age + city, family="poisson", data=dat[dat$gender=="Woman",]) # woman
+baseline.m.0 = glm(turnout ~ phys_occ_cong + esec.r + party + age + city, family="poisson", data=dat[dat$gender=="Male",]) # man
+baseline.w.0 = glm(turnout ~ phys_occ_cong + esec.r + party + age + city, family="poisson", data=dat[dat$gender=="Female",]) # woman
 # Attractiveness
 baseline.full.a = glm(turnout ~ phys_occ_cong + esec.r + party + age + attractiveness + city, family="poisson", data=dat) # full
-baseline.m.a = glm(turnout ~ phys_occ_cong + esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Man",]) # man
-baseline.w.a = glm(turnout ~ phys_occ_cong + esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Woman",]) #woman
+baseline.m.a = glm(turnout ~ phys_occ_cong + esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Male",]) # man
+baseline.w.a = glm(turnout ~ phys_occ_cong + esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Female",]) #woman
 # Masculinity
 baseline.full.m = glm(turnout ~ phys_occ_cong + esec.r + party + age + masculinity + city, family="poisson", data=dat) # full
-baseline.m.m = glm(turnout ~ phys_occ_cong + esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Man",]) # man
-baseline.w.m = glm(turnout ~ phys_occ_cong + esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Woman",]) #woman
+baseline.m.m = glm(turnout ~ phys_occ_cong + esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Male",]) # man
+baseline.w.m = glm(turnout ~ phys_occ_cong + esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Female",]) #woman
 # Femininity
 baseline.full.f = glm(turnout ~ phys_occ_cong + esec.r + party + age + femininity + city, family="poisson", data=dat) # full
-baseline.m.f = glm(turnout ~ phys_occ_cong + esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Man",]) # man
-baseline.w.f = glm(turnout ~ phys_occ_cong + esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Woman",]) #woman
+baseline.m.f = glm(turnout ~ phys_occ_cong + esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Male",]) # man
+baseline.w.f = glm(turnout ~ phys_occ_cong + esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Female",]) #woman
 
 
 m0 = glm(main.model.formula, family="poisson", data=dat)
-m1.m = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Man",])
-m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
+m1.m = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Male",])
+m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Female",])
 
 
 ############################## 
@@ -596,10 +596,10 @@ pred.prob.p = cowplot::plot_grid(p1.poisson,p2.poisson,p3.poisson,
 )
 
 pred.prob.p.presentation = cowplot::plot_grid(p2.poisson.presentation,p3.poisson.presentation,
-                                 align = "hv",
-                                 axis = "b", 
-                                 ncol = 2,
-                                 nrow = 1
+                                              align = "hv",
+                                              axis = "b", 
+                                              ncol = 2,
+                                              nrow = 1
 )
 
 
@@ -640,14 +640,14 @@ m2 = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, f
 m3 = glm(turnout ~ phys_occ_cong*esec.r + party + age + masculinity + city, family="poisson", data=dat)
 m4 = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat)
 
-m2.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Man",])
-m2.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Woman",])
+m2.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Male",])
+m2.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + city, family="poisson", data=dat[dat$gender=="Female",])
 
-m3.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Man",])
-m3.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Woman",])
+m3.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + masculinity + city, family="poisson", data=dat[dat$gender=="Male",])
+m3.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + femininity + city, family="poisson", data=dat[dat$gender=="Female",])
 
-m4.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + masculinity + city, family="poisson", data=dat[dat$gender=="Man",])
-m4.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat[dat$gender=="Woman",])
+m4.m = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + masculinity + city, family="poisson", data=dat[dat$gender=="Male",])
+m4.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femininity + city, family="poisson", data=dat[dat$gender=="Female",])
 ## ----
 
 
@@ -682,8 +682,8 @@ round(ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working"))[
 
 options(scipen=999)
 m0.quasi.poisson = glm(main.model.formula, family="quasipoisson", data=dat)
-m1.m.quasi.poisson = glm(main.model.formula, family="quasipoisson", data=dat[dat$gender=="Man",])
-m1.w.quasi.poisson = glm(main.model.formula, family="quasipoisson", data=dat[dat$gender=="Woman",])
+m1.m.quasi.poisson = glm(main.model.formula, family="quasipoisson", data=dat[dat$gender=="Male",])
+m1.w.quasi.poisson = glm(main.model.formula, family="quasipoisson", data=dat[dat$gender=="Female",])
 
 p_load(effects)
 plot(effect("phys_occ_cong*esec.r", m0.quasi.poisson))
@@ -703,8 +703,8 @@ plot(effect("phys_occ_cong*esec.r", m1.w.quasi.poisson))
 
 ## overdispersion test
 # m0 = glm(main.model.formula, family="poisson", data=dat)
-# m1.m = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Man",])
-# m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Woman",])
+# m1.m = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Male",])
+# m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Female",])
 ##
 # p_load(AER)
 # options(scipen=999)
@@ -725,8 +725,8 @@ plot(effect("phys_occ_cong*esec.r", m1.w.quasi.poisson))
 # Negative Binomial
 # p_load(MASS)
 # m0.nb <- glm.nb(turnout ~ phys_occ_cong*esec.r + party + age + city + city, data = dat)
-# m1.m.nb <- glm.nb(turnout ~ phys_occ_cong*esec.r + party + age + city + city, data=dat[dat$gender=="Man",])
-# m1.w.nb <- glm.nb(turnout ~ phys_occ_cong*esec.r + party + age + city + city, data=dat[dat$gender=="Woman",])
+# m1.m.nb <- glm.nb(turnout ~ phys_occ_cong*esec.r + party + age + city + city, data=dat[dat$gender=="Male",])
+# m1.w.nb <- glm.nb(turnout ~ phys_occ_cong*esec.r + party + age + city + city, data=dat[dat$gender=="Female",])
 
 
 ## ---- table:d
@@ -737,17 +737,17 @@ reg.table = texreg( # screenreg texreg
   list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
   custom.header = list(
     "1" = 1,
-                       "2" = 2,
-                       "3" = 3, 
-                       "4" = 4,  
-                       "5" = 5, 
-                       "6" = 6, 
-                       "7" = 7,
-                       "8" = 8,
-                       "9" = 9, 
-                       "10" = 10, 
-                       "11" = 11, 
-                       "12" = 12),
+    "2" = 2,
+    "3" = 3, 
+    "4" = 4,  
+    "5" = 5, 
+    "6" = 6, 
+    "7" = 7,
+    "8" = 8,
+    "9" = 9, 
+    "10" = 10, 
+    "11" = 11, 
+    "12" = 12),
   custom.model.names = c(
     # m0, m1.m, m1.w
     "Full", "Male", "Female", 
@@ -872,8 +872,8 @@ screenreg( # screenreg texreg
 
 ## OLS
 # m0.ols = lm(main.model.formula, data=dat)
-# m1.m.ols = lm(main.model.formula, data=dat[dat$gender=="Man",])
-# m1.w.ols = lm(main.model.formula, data=dat[dat$gender=="Woman",])
+# m1.m.ols = lm(main.model.formula, data=dat[dat$gender=="Male",])
+# m1.w.ols = lm(main.model.formula, data=dat[dat$gender=="Female",])
 ##
 # p_load(sjPlot,ggplot2)
 ##
