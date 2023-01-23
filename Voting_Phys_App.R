@@ -264,6 +264,25 @@ ggsave("attractiveness.pdf", plot = attractiveness.p,
 )
 
 
+attractiveness.p.2 = ggplot(subset(dat, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate Attractiveness")  + theme(axis.text.y = element_text(size=18), 
+                                                                                                                                                                                                axis.text.x = element_text(size=18), 
+                                                                                                                                                                                                axis.title.y = element_text(size=18), 
+                                                                                                                                                                                                axis.title.x = element_text(size=22), 
+                                                                                                                                                                                                legend.text=element_text(size=18), 
+                                                                                                                                                                                                legend.title=element_text(size=0),
+                                                                                                                                                                                                plot.title = element_text(size=18),
+                                                                                                                                                                                                strip.text.x = element_text(size = 18),
+                                                                                                                                                                                                legend.position = "bottom")
+
+ggsave("attractiveness.jpeg", plot = attractiveness.p.2, 
+       width = 1200,
+       height = 600,
+       units = c("px"),
+       dpi = 80,
+       device = "jpeg"
+)
+
+
 # Physical-Occupation Congruence
 ##
 d.p1.p = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
