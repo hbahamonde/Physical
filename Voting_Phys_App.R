@@ -296,17 +296,63 @@ d.p1.p = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gend
                                                                                                                                                                                                                                    legend.position = "none")
 d.p1.p$labels$fill <- "Candidate Gender"
 d.p1.p$labels$colour <- "Candidate Gender"
+
+# Panel A
+d.p1.p2 = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
+                                                                                                                                                                                                                                   axis.text.x = element_text(size=18), 
+                                                                                                                                                                                                                                   axis.title.y = element_text(size=18), 
+                                                                                                                                                                                                                                   axis.title.x = element_text(size=22), 
+                                                                                                                                                                                                                                   legend.text=element_text(size=18), 
+                                                                                                                                                                                                                                   legend.title=element_text(size=18),
+                                                                                                                                                                                                                                   plot.title = element_text(size=18),
+                                                                                                                                                                                                                                   strip.text.x = element_text(size = 18),
+                                                                                                                                                                                                                                   legend.position = "bottom")
+d.p1.p2$labels$fill <- "Candidate Gender"
+d.p1.p2$labels$colour <- "Candidate Gender"
+
+
 ##
-d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                                            axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                                            axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                                            axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                                            legend.text=element_text(size=18), 
-                                                                                                                                                                                                                            legend.title=element_text(size=18),
-                                                                                                                                                                                                                            plot.title = element_text(size=18),
-                                                                                                                                                                                                                            strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                                            legend.position = "none")
+d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) +
+  theme_light() + 
+  labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
 d.p2.p$labels$colour <- "European Socio-Economic\nClassification"
+
+# Panel B
+d.p2.p2 = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) +
+  theme_light() + 
+  labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom")
+
+d.p2.p2$labels$colour <- "European Socio-Economic Classification"
+d.p2.p2$labels$fill <- "European Socio-Economic Classification"
+
+ggsave("ESEC_Class_Panel_B.jpeg", plot = d.p2.p2, 
+       width = 1200,
+       height = 800,
+       units = c("px"),
+       dpi = 80,
+       device = "jpeg"
+)
+
+
 ##
 d.p3.p = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
                                                                                                                                                                                                                          axis.text.x = element_text(size=18), 
@@ -319,6 +365,38 @@ d.p3.p = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party
                                                                                                                                                                                                                          legend.position = "none")
 d.p3.p$labels$fill <- "Political Party"
 d.p3.p$labels$colour <- "Political Party"
+
+# Panel C
+d.p3.p2 = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
+                                                                                                                                                                                                                         axis.text.x = element_text(size=18), 
+                                                                                                                                                                                                                         axis.title.y = element_text(size=18), 
+                                                                                                                                                                                                                         axis.title.x = element_text(size=22), 
+                                                                                                                                                                                                                         legend.text=element_text(size=18), 
+                                                                                                                                                                                                                         legend.title=element_text(size=18),
+                                                                                                                                                                                                                         plot.title = element_text(size=18),
+                                                                                                                                                                                                                         strip.text.x = element_text(size = 18),
+                                                                                                                                                                                                                         legend.position = "bottom")
+d.p3.p2$labels$fill <- "Political Party"
+d.p3.p2$labels$colour <- "Political Party"
+
+## Panels A, B, C
+panels.a.b.c = cowplot::plot_grid(
+  d.p1.p2, # A
+  d.p2.p2, #B
+  d.p3.p2, # C 
+  align = "hv",
+  axis = "b", 
+  ncol = 3
+)
+
+ggsave("panels_abc.jpeg", plot = panels.a.b.c, 
+       width = 1700,
+       height = 600,
+       units = c("px"),
+       dpi = 80,
+       device = "jpeg"
+)
+
 ##
 phys_occ_cong.p = cowplot::plot_grid(
   d.p1.p, d.p2.p, d.p3.p, 
