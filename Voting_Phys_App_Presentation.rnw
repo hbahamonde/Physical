@@ -638,12 +638,12 @@ Candidates that {\color{blue}\bf look like} and actually {\color{red} \bf are} w
 
 \miniframesoff
 \begin{frame}[plain]{\small Marginal Effects of the Interaction Term}
-\centering\includegraphics[scale=0.3]{p_full_poisson_presentation.pdf}
+\centering\includegraphics[scale=0.3]{marginal_fx_plot.pdf}
 \end{frame}
 
 \miniframesoff
 \begin{frame}[plain]{\small Marginal Effects of the Interaction Term}
-\centering\includegraphics[scale=0.35]{pred_prob_presentation_male_fem.pdf}
+\centering\includegraphics[scale=0.35]{marginal_fx_plot_male_fem.pdf}
 \end{frame}
 
 \miniframesoff

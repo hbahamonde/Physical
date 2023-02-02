@@ -172,15 +172,19 @@ load(file = "/Users/hectorbahamonde/research/Physical/dat.Rdata")
 
 # Pacman
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
-p_load(ggplot2,cowplot)
+p_load(ggplot2,cowplot,ggthemes)
 
 # r1: question 4
+
+
 balance.p = ggplot(na.omit(dat), aes(x=esec.r, y=phys_occ_cong, color=gender)) + 
   geom_boxplot() + 
   theme_light() +
   labs(y = "Candidate's Appearance-Occupation Congruence", x = "European Socio-Economic Classification") +
+  # scale_color_grey() + 
   theme(legend.title=element_blank(),
         legend.position = "bottom")
+
 ggsave("balance.pdf", plot = balance.p, 
        width = 500,
        height = 500,
@@ -214,39 +218,57 @@ coefplot(lm(attractiveness ~ esec.r, dat))
 
 # Attractiveness
 ##
-d.p1.a = ggplot(subset(dat, !is.na(gender)), aes(x = attractiveness, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + labs(y = "Density", x = "Candidate Attractiveness") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                               axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                               axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                               axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                               legend.text=element_text(size=18), 
-                                                                                                                                                                                                               legend.title=element_text(size=18),
-                                                                                                                                                                                                               plot.title = element_text(size=18),
-                                                                                                                                                                                                               strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                               legend.position = "none")
+d.p1.a = ggplot(subset(dat, !is.na(gender)), aes(x = attractiveness, color = gender, fill = gender)) + 
+  geom_density(alpha = 0.5) +  
+  theme_light() +  
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate Attractiveness") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
 d.p1.a$labels$fill <- "Candidate Gender"
 d.p1.a$labels$colour <- "Candidate Gender"
 ##
-d.p2.a = ggplot(subset(dat, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate Attractiveness")  + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                         axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                         axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                         axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                         legend.text=element_text(size=18), 
-                                                                                                                                                                                                         legend.title=element_text(size=18),
-                                                                                                                                                                                                         plot.title = element_text(size=18),
-                                                                                                                                                                                                         strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                         legend.position = "none")
+d.p2.a = ggplot(subset(dat, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) +
+  theme_light() +   
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Attractiveness")  + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
 d.p2.a$labels$fill <- "European Socio-Economic\nClassification"
 d.p2.a$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.a = ggplot(subset(dat, !is.na(party)), aes(x = attractiveness, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate Attractiveness") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                     axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                     axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                     axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                     legend.text=element_text(size=18), 
-                                                                                                                                                                                                     legend.title=element_text(size=18),
-                                                                                                                                                                                                     plot.title = element_text(size=18),
-                                                                                                                                                                                                     strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                     legend.position = "none")
+d.p3.a = ggplot(subset(dat, !is.na(party)), aes(x = attractiveness, color = party, fill = party)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Attractiveness") + 
+  theme(axis.text.y = element_text(size=18),
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18),
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18),
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
 d.p3.a$labels$fill <- "Political Party"
 d.p3.a$labels$colour <- "Political Party"
 ##
@@ -264,15 +286,20 @@ ggsave("attractiveness.pdf", plot = attractiveness.p,
 )
 
 
-attractiveness.p.2 = ggplot(subset(dat, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate Attractiveness")  + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                legend.text=element_text(size=18), 
-                                                                                                                                                                                                legend.title=element_text(size=0),
-                                                                                                                                                                                                plot.title = element_text(size=18),
-                                                                                                                                                                                                strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                legend.position = "bottom")
+attractiveness.p.2 = ggplot(subset(dat, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Attractiveness")  + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=0),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom")
 
 ggsave("attractiveness.jpeg", plot = attractiveness.p.2, 
        width = 1200,
@@ -285,35 +312,49 @@ ggsave("attractiveness.jpeg", plot = attractiveness.p.2,
 
 # Physical-Occupation Congruence
 ##
-d.p1.p = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                                                   axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                                                   axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                                                   axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                                                   legend.text=element_text(size=18), 
-                                                                                                                                                                                                                                   legend.title=element_text(size=18),
-                                                                                                                                                                                                                                   plot.title = element_text(size=18),
-                                                                                                                                                                                                                                   strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                                                   legend.position = "none")
+d.p1.p = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + 
+  geom_density(alpha = 0.5) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18),
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
 d.p1.p$labels$fill <- "Candidate Gender"
 d.p1.p$labels$colour <- "Candidate Gender"
 
 # Panel A
-d.p1.p2 = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                                                   axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                                                   axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                                                   axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                                                   legend.text=element_text(size=18), 
-                                                                                                                                                                                                                                   legend.title=element_text(size=18),
-                                                                                                                                                                                                                                   plot.title = element_text(size=18),
-                                                                                                                                                                                                                                   strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                                                   legend.position = "bottom")
+d.p1.p2 = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + 
+  geom_density(alpha = 0.5) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18),
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom")
+
 d.p1.p2$labels$fill <- "Candidate Gender"
 d.p1.p2$labels$colour <- "Candidate Gender"
 
 
 ##
-d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) +
+d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) +
   theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
   labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + 
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
@@ -328,8 +369,10 @@ d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec
 d.p2.p$labels$colour <- "European Socio-Economic\nClassification"
 
 # Panel B
-d.p2.p2 = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) +
+d.p2.p2 = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) +
   theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
   labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + 
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
@@ -354,28 +397,40 @@ ggsave("ESEC_Class_Panel_B.jpeg", plot = d.p2.p2,
 
 
 ##
-d.p3.p = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                                         axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                                         axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                                         axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                                         legend.text=element_text(size=18), 
-                                                                                                                                                                                                                         legend.title=element_text(size=18),
-                                                                                                                                                                                                                         plot.title = element_text(size=18),
-                                                                                                                                                                                                                         strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                                         legend.position = "none")
+d.p3.p = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
 d.p3.p$labels$fill <- "Political Party"
 d.p3.p$labels$colour <- "Political Party"
 
 # Panel C
-d.p3.p2 = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                                         axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                                         axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                                         axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                                         legend.text=element_text(size=18), 
-                                                                                                                                                                                                                         legend.title=element_text(size=18),
-                                                                                                                                                                                                                         plot.title = element_text(size=18),
-                                                                                                                                                                                                                         strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                                         legend.position = "bottom")
+d.p3.p2 = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom")
+
 d.p3.p2$labels$fill <- "Political Party"
 d.p3.p2$labels$colour <- "Political Party"
 
@@ -413,39 +468,57 @@ ggsave("phys_occ_cong.pdf", plot = phys_occ_cong.p,
 
 # Masculinity
 ##
-d.p1.m = ggplot(subset(dat, !is.na(gender)), aes(x = masculinity, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + labs(y = "Density", x = "Candidate Masculinity") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                         axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                         axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                         axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                         legend.text=element_text(size=18), 
-                                                                                                                                                                                                         legend.title=element_text(size=18),
-                                                                                                                                                                                                         plot.title = element_text(size=18),
-                                                                                                                                                                                                         strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                         legend.position = "none")
+d.p1.m = ggplot(subset(dat, !is.na(gender)), aes(x = masculinity, color = gender, fill = gender)) + 
+  geom_density(alpha = 0.5) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate Masculinity") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
 d.p1.m$labels$fill <- "Candidate Gender"
 d.p1.m$labels$colour <- "Candidate Gender"
 ##
-d.p2.m = ggplot(subset(dat, !is.na(esec.r)), aes(x = masculinity, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate Masculinity") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                  axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                  axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                  axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                  legend.text=element_text(size=18), 
-                                                                                                                                                                                                  legend.title=element_text(size=18),
-                                                                                                                                                                                                  plot.title = element_text(size=18),
-                                                                                                                                                                                                  strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                  legend.position = "none")
+d.p2.m = ggplot(subset(dat, !is.na(esec.r)), aes(x = masculinity, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Masculinity") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
 d.p2.m$labels$fill <- "European Socio-Economic\nClassification"
 d.p2.m$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.m = ggplot(subset(dat, !is.na(party)), aes(x = masculinity, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate Masculinity") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                               axis.text.x = element_text(size=18), 
-                                                                                                                                                                                               axis.title.y = element_text(size=18), 
-                                                                                                                                                                                               axis.title.x = element_text(size=22), 
-                                                                                                                                                                                               legend.text=element_text(size=18), 
-                                                                                                                                                                                               legend.title=element_text(size=18),
-                                                                                                                                                                                               plot.title = element_text(size=18),
-                                                                                                                                                                                               strip.text.x = element_text(size = 18),
-                                                                                                                                                                                               legend.position = "none")
+d.p3.m = ggplot(subset(dat, !is.na(party)), aes(x = masculinity, color = party, fill = party)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Masculinity") + 
+  theme(axis.text.y = element_text(size=18),
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
 d.p3.m$labels$fill <- "Political Party"
 d.p3.m$labels$colour <- "Political Party"
 ##
@@ -464,39 +537,59 @@ ggsave("masculinity.pdf", plot = masculinity.p,
 
 # Femininity
 ##
-d.p1.f = ggplot(subset(dat, !is.na(gender)), aes(x = femininity, color = gender, fill = gender)) + geom_density(alpha = 0.5) + theme_light() + labs(y = "Density", x = "Candidate Femininity") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                       axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                       axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                       axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                       legend.text=element_text(size=18), 
-                                                                                                                                                                                                       legend.title=element_text(size=18, face = "bold"),
-                                                                                                                                                                                                       plot.title = element_text(size=18),
-                                                                                                                                                                                                       strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                       legend.position = "bottom") + guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+d.p1.f = ggplot(subset(dat, !is.na(gender)), aes(x = femininity, color = gender, fill = gender)) + 
+  geom_density(alpha = 0.5) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate Femininity") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom") + 
+  guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+
+
 d.p1.f$labels$fill <- "Candidate Gender"
 d.p1.f$labels$colour <- "Candidate Gender"
 ##
-d.p2.f = ggplot(subset(dat, !is.na(esec.r)), aes(x = femininity, color = esec.r, fill = esec.r)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate Femininity") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                                axis.text.x = element_text(size=18), 
-                                                                                                                                                                                                axis.title.y = element_text(size=18), 
-                                                                                                                                                                                                axis.title.x = element_text(size=22), 
-                                                                                                                                                                                                legend.text=element_text(size=18), 
-                                                                                                                                                                                                legend.title=element_text(size=18, face = "bold"),
-                                                                                                                                                                                                plot.title = element_text(size=18),
-                                                                                                                                                                                                strip.text.x = element_text(size = 18),
-                                                                                                                                                                                                legend.position = "bottom") + guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+d.p2.f = ggplot(subset(dat, !is.na(esec.r)), aes(x = femininity, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Femininity") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom") + guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+
 d.p2.f$labels$fill <- "European Socio-Economic\nClassification"
 d.p2.f$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.f = ggplot(subset(dat, !is.na(party)), aes(x = femininity, color = party, fill = party)) + geom_density(alpha = 0.3) + theme_light() + labs(y = "", x = "Candidate Femininity") + theme(axis.text.y = element_text(size=18), 
-                                                                                                                                                                                             axis.text.x = element_text(size=18), 
-                                                                                                                                                                                             axis.title.y = element_text(size=18), 
-                                                                                                                                                                                             axis.title.x = element_text(size=22), 
-                                                                                                                                                                                             legend.text=element_text(size=18), 
-                                                                                                                                                                                             legend.title=element_text(size=18, face = "bold"),
-                                                                                                                                                                                             plot.title = element_text(size=18),
-                                                                                                                                                                                             strip.text.x = element_text(size = 18),
-                                                                                                                                                                                             legend.position = "bottom") + guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+d.p3.f = ggplot(subset(dat, !is.na(party)), aes(x = femininity, color = party, fill = party)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  # scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Femininity") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom") + guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+
 d.p3.f$labels$fill <- "Political Party"
 d.p3.f$labels$colour <- "Political Party"
 ##
@@ -583,7 +676,7 @@ m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Female",]
 
 
 ############################## 
-# Predicted Probabilities Plot
+# Marginal Effects Plot
 ############################## 
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(sjPlot,ggplot2,cowplot,ggeffects)
@@ -591,9 +684,10 @@ p_load(sjPlot,ggplot2,cowplot,ggeffects)
 
 # Poisson
 p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Data") + 
-  theme_sjplot() + 
-  labs(y = "Number of Votes Received", x = "") + 
-  theme(axis.text.y = element_text(size=18), 
+    theme_sjplot() + 
+    #scale_colour_grey() + scale_fill_grey() +
+    labs(y = "Number of Votes Received", x = "") + 
+    theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
         axis.title.y = element_text(size=18), 
         axis.title.x = element_text(size=22), 
@@ -607,6 +701,7 @@ p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Dat
 
 p.full.poisson.presentation = plot_model(m0, type = "int", show.legend = T, title = "Full Data (Males and Females Candidates Combined)") + 
   theme_sjplot() + 
+  # scale_colour_grey() + scale_fill_grey() +
   labs(y = "Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
@@ -624,6 +719,7 @@ p.full.poisson.presentation$labels$colour <- ""
 
 p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Male Data") + 
   theme_sjplot() + 
+  #scale_colour_grey() + scale_fill_grey() +
   theme(legend.position = "bottom",legend.title.align=0.5) + 
   labs(y = "", x = "Candidate's Appearance-Occupation Congruence") + 
   theme(axis.text.y = element_text(size=18), 
@@ -637,6 +733,7 @@ p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Male Da
 
 p2.poisson.presentation = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Male Data") + 
   theme_sjplot() + 
+  #scale_colour_grey() + scale_fill_grey() +
   theme(legend.position = "bottom",legend.title.align=0.5) + 
   labs(y = "Number of Votes Received", x = "Candidate's Appearance-Occupation Congruence") + 
   theme(axis.text.y = element_text(size=18), 
@@ -653,6 +750,7 @@ p2.poisson$labels$colour <- "European Socio-Economic Classification"
 
 p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Female Data") + 
   theme_sjplot() + 
+  #scale_colour_grey() + scale_fill_grey() +
   labs(y = "", x = "") + 
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
@@ -665,6 +763,7 @@ p3.poisson = plot_model(m1.w, type = "int", show.legend = F, title = "Female Dat
 
 p3.poisson.presentation = plot_model(m1.w, type = "int", show.legend = T, title = "Female Data") + 
   theme_sjplot() + 
+  #scale_colour_grey() + scale_fill_grey() +
   labs(y = "", x = "Candidate's Appearance-Occupation Congruence") + 
   theme(legend.position = "bottom",legend.title.align=0.5) +
   theme(axis.text.y = element_text(size=18), 
@@ -697,14 +796,14 @@ pred.prob.p.presentation = cowplot::plot_grid(p2.poisson.presentation,p3.poisson
 )
 
 
-ggsave("pred_prob_plot.pdf", plot = pred.prob.p, 
+ggsave("marginal_fx_plot.pdf", plot = pred.prob.p, 
        width = 1200,
        height = 600,
        units = c("px"),
        dpi = 80
 )
 
-ggsave("pred_prob_presentation_male_fem.pdf", plot = pred.prob.p.presentation, 
+ggsave("marginal_fx_plot_male_fem.pdf", plot = pred.prob.p.presentation, 
        width = 1200,
        height = 600,
        units = c("px"),
@@ -719,7 +818,7 @@ ggsave("p_full_poisson_presentation.pdf", plot = p.full.poisson.presentation,
 )
 
 
-ggsave("pred_prob_plot.jpeg", plot = pred.prob.p, 
+ggsave("marginal_fx_plot.jpeg", plot = pred.prob.p, 
        width = 1200,
        height = 600,
        units = c("px"),
