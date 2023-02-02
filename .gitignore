@@ -288,3 +288,9 @@ dat.dta
 data.dta
 
 .Rapp.history
+
+*.RData
+
+cache/loadings:d_b8806436d896daa83c33b1178ba2c1cf.rdb
+
+*.rdx
