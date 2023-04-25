@@ -639,6 +639,33 @@ ggsave("densities.jpeg", plot = total.plot.p,
 ## ----
 
 
+dat$ps = ifelse(dat$party == "PS", 1, 0)
+dat$routine.manual = ifelse(dat$esec == "Routine" | dat$esec == "Lower technical", 1, 0)
+
+
+logit.m1 = glm(ps ~ routine.manual,family=binomial(link='logit'),data=dat)
+p_load("effects")
+plot(predictorEffects(logit.m1))
+
+#
+dat$ideology.3 = dat$ideology
+p_load("tidyverse")
+dat$ideology.3 = recode(dat$ideology.3, 
+                        "Left" = "Left",
+                        "Center-Left" = "Left", 
+                        "Center" = "Center",
+                        "Center-Right" = "Right",
+                        "Right" = "Right")
+
+logit.m2 = glm(ideology.3 ~ esec.r,family=binomial(link='logit'),data=dat)
+p_load("effects")
+plot(predictorEffects(logit.m2))
+
+logit.m3 = glm(ps ~ esec.r,family=binomial(link='logit'),data=dat)
+p_load("effects")
+plot(predictorEffects(logit.m3))
+
+
 ############################## 
 # Models
 ############################## 
