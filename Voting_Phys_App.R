@@ -161,21 +161,16 @@ save(dat, file = "dat.Rdata")
 ############################## 
 # Descriptive Plots
 ############################## 
-
-
-## ---- loadings:d
 cat("\014")
 rm(list=ls())
 setwd("/Users/hectorbahamonde/research/Physical/")
 
 load(file = "/Users/hectorbahamonde/research/Physical/dat.Rdata")
 
-# Pacman
-if (!require("pacman")) install.packages("pacman"); library(pacman) 
-p_load(ggplot2,cowplot,ggthemes)
 
 # r1: question 4
-
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
+p_load(ggplot2,cowplot,ggthemes)
 
 balance.p = ggplot(na.omit(dat), aes(x=esec.r, y=phys_occ_cong, color=gender)) + 
   geom_boxplot() + 
@@ -213,6 +208,16 @@ if (!require("pacman")) install.packages("pacman"); library(pacman)
 p_load(coefplot)
 coefplot(lm(attractiveness ~ esec.r, dat))
 
+## ---- loadings:d
+cat("\014")
+rm(list=ls())
+setwd("/Users/hectorbahamonde/research/Physical/")
+
+load(file = "/Users/hectorbahamonde/research/Physical/dat.Rdata")
+
+# Pacman
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
+p_load(ggplot2,cowplot,ggthemes)
 
 ## Densities
 
