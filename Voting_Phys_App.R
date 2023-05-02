@@ -639,8 +639,11 @@ ggsave("densities.jpeg", plot = total.plot.p,
 ## ----
 
 
-dat$ps = ifelse(dat$party == "PS", 1, 0)
-dat$routine.manual = ifelse(dat$esec == "Routine" | dat$esec == "Lower technical", 1, 0)
+# Outi Paper #2
+dat$ps = as.factor(ifelse(dat$party == "PS", 1, 0))
+dat$routine.manual = as.factor(ifelse(dat$esec == "Routine" | dat$esec == "Lower technical", 1, 0))
+
+
 
 
 logit.m1 = glm(ps ~ routine.manual,family=binomial(link='logit'),data=dat)
@@ -664,6 +667,75 @@ plot(predictorEffects(logit.m2))
 logit.m3 = glm(ps ~ esec.r,family=binomial(link='logit'),data=dat)
 p_load("effects")
 plot(predictorEffects(logit.m3))
+
+# 
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
+p_load(ggplot2,cowplot,ggthemes)
+
+ggplot(subset(dat, !is.na(routine.manual)), aes(x = phys_occ_cong, color = routine.manual, fill = routine.manual)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  facet_wrap(~party, ncol=3) +
+  # scale_color_grey() + scale_fill_grey() + 
+  #labs(y = "", x = "") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom") + guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+
+lm.m0 = glm(ps ~ routine.manual + gender + age,family=binomial(link='logit'), data=dat)
+options(scipen=999)
+# summary(lm.m0)
+p_load("effects")
+plot(predictorEffects(lm.m0))
+
+
+# try OPROBIT with left-center-right on the RHS, and routine.manual + gender + age ob the left.
+p_load(MASS)
+o.logistic = polr(ideology.3 ~ routine.manual*ps + gender + age, data = dat, method = "logistic")
+
+p_load(effects)
+plot(predictorEffects(o.logistic))
+#
+lm.m1 = lm(phys_occ_cong ~ routine.manual*ps + gender + age,data=dat)
+options(scipen=999)
+# summary(lm.m1)
+# p_load("effects")
+# plot(predictorEffects(lm.m1))
+plot_model(lm.m1, type = "int")
+
+# PS plus all Left-wing parties
+ps.left.d <- dat[which(dat$ideology=='Left' |
+                         dat$ideology=='Center-Left' | 
+                         dat$ps == 1), ]
+
+# exclude NAs
+ps.left.d = ps.left.d[complete.cases(ps.left.d[,c("ideology","ps", "routine.manual")]),]
+p_load("dplyr")
+ps.left.d = filter(ps.left.d, party != "SKP")
+ps.left.d$party = as.factor(as.character(ps.left.d$party))
+
+#
+lm.m2 = lm(phys_occ_cong ~ routine.manual*party + city + gender + age,data=ps.left.d)
+# summary(lm.m2)
+# p_load("effects")
+# plot(predictorEffects(lm.m2))
+plot_model(lm.m2, type = "int")
+
+
+p_load(sjPlot, sjmisc, ggplot2)
+plot_model(lm.m2, type = "int")
+
+# SHOW THIS ONE
+p_load(MASS)
+o.logistic.2 = polr(party ~ routine.manual + gender + age, data = ps.left.d, method = "logistic")
+p_load(effects)
+plot(predictorEffect("routine.manual", o.logistic.2))
 
 
 ############################## 
