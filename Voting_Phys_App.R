@@ -701,8 +701,9 @@ o.logistic = polr(ideology.3 ~ routine.manual*ps + gender + age, data = dat, met
 
 p_load(effects)
 plot(predictorEffects(o.logistic))
-#
-lm.m1 = lm(phys_occ_cong ~ routine.manual*ps + gender + age,data=dat)
+
+# SHOW THIS ONE
+lm.m1 = lm(phys_occ_cong ~ routine.manual*ps + fem_dom_job + age,data=dat)
 options(scipen=999)
 # summary(lm.m1)
 # p_load("effects")
