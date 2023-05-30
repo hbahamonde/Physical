@@ -738,6 +738,11 @@ o.logistic.2 = polr(party ~ routine.manual + gender + age, data = ps.left.d, met
 p_load(effects)
 plot(predictorEffect("routine.manual", o.logistic.2))
 
+#
+summary(lm(as.numeric(ideology) ~ routine.manual + gender + age, data=ps.left.d)) # the more ROUTINE.MANUAL, the more rightist. (WOW!). By class-voting.
+
+summary(lm(phys_occ_cong ~ routine.manual, data=dat)) # the more ROUTINE.MANUAL I am, the less psy-occ congruence I have. That is, routine manual workers (who're predominantly right-wing) try to mask/deceive their appearance. 
+
 
 ############################## 
 # Models
