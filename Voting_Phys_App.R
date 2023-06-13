@@ -301,10 +301,12 @@ attractiveness.p.2 = ggplot(subset(dat, !is.na(esec.r)), aes(x = attractiveness,
         axis.title.y = element_text(size=18), 
         axis.title.x = element_text(size=22), 
         legend.text=element_text(size=18), 
-        legend.title=element_text(size=0),
+        #legend.title=element_text(element_blank()),
         plot.title = element_text(size=18),
         strip.text.x = element_text(size = 18),
-        legend.position = "bottom")
+        legend.position = "bottom",
+        plot.margin = unit(c(1,1,1,1),"cm")
+        ) + scale_fill_discrete(name="") + scale_colour_discrete(name="")
 
 ggsave("attractiveness.jpeg", plot = attractiveness.p.2, 
        width = 1200,
