@@ -236,7 +236,7 @@
 
 \institute[shortinst]{\inst{1} University of Turku, Finland}
 
-\date{April 14th, 2023}
+\date{\today}
 
 %to to see shadows of previous blocks
 %\setbeamercovered{dynamic}
@@ -261,7 +261,7 @@ options(scipen = 99999999999)
 
 @
 
-<<loadings:d, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=TRUE, eval=TRUE>>=
+<<loadings:d, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
 
 @
 
