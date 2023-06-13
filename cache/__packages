@@ -2,10 +2,7 @@ knitr
 pacman
 ggplot2
 cowplot
-sjPlot
-carData
-effects
-texreg
-ggeffects
-coefplot
 ggthemes
+sjPlot
+ggeffects
+texreg
