@@ -213,7 +213,18 @@ cat("\014")
 rm(list=ls())
 setwd("/Users/hectorbahamonde/research/Physical/")
 
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
+
+
 load(file = "/Users/hectorbahamonde/research/Physical/dat.Rdata")
+
+# combine parties with too little observations ()
+dat.recoded = dat
+
+p_load(dplyr)
+dat.recoded$party = recode(dat.recoded$party, 
+                        "PIR" = "Others",
+                        "SKP" = "Others")
 
 # Pacman
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
@@ -223,7 +234,7 @@ p_load(ggplot2,cowplot,ggthemes)
 
 # Attractiveness
 ##
-d.p1.a = ggplot(subset(dat, !is.na(gender)), aes(x = attractiveness, color = gender, fill = gender)) + 
+d.p1.a = ggplot(subset(dat.recoded, !is.na(gender)), aes(x = attractiveness, color = gender, fill = gender)) + 
   geom_density(alpha = 0.5) +  
   theme_light() +  
   # scale_color_grey() + scale_fill_grey() + 
@@ -241,7 +252,7 @@ d.p1.a = ggplot(subset(dat, !is.na(gender)), aes(x = attractiveness, color = gen
 d.p1.a$labels$fill <- "Candidate Gender"
 d.p1.a$labels$colour <- "Candidate Gender"
 ##
-d.p2.a = ggplot(subset(dat, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + 
+d.p2.a = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + 
   geom_density(alpha = 0.3) +
   theme_light() +   
   # scale_color_grey() + scale_fill_grey() + 
@@ -259,7 +270,7 @@ d.p2.a = ggplot(subset(dat, !is.na(esec.r)), aes(x = attractiveness, color = ese
 d.p2.a$labels$fill <- "European Socio-Economic\nClassification"
 d.p2.a$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.a = ggplot(subset(dat, !is.na(party)), aes(x = attractiveness, color = party, fill = party)) + 
+d.p3.a = ggplot(subset(dat.recoded, !is.na(party)), aes(x = attractiveness, color = party, fill = party)) + 
   geom_density(alpha = 0.3) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -291,7 +302,7 @@ ggsave("attractiveness.pdf", plot = attractiveness.p,
 )
 
 
-attractiveness.p.2 = ggplot(subset(dat, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + 
+attractiveness.p.2 = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + 
   geom_density(alpha = 0.3) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -319,7 +330,7 @@ ggsave("attractiveness.jpeg", plot = attractiveness.p.2,
 
 # Physical-Occupation Congruence
 ##
-d.p1.p = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + 
+d.p1.p = ggplot(subset(dat.recoded, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + 
   geom_density(alpha = 0.5) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -338,7 +349,7 @@ d.p1.p$labels$fill <- "Candidate Gender"
 d.p1.p$labels$colour <- "Candidate Gender"
 
 # Panel A
-d.p1.p2 = ggplot(subset(dat, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + 
+d.p1.p2 = ggplot(subset(dat.recoded, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + 
   geom_density(alpha = 0.5) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -358,7 +369,7 @@ d.p1.p2$labels$colour <- "Candidate Gender"
 
 
 ##
-d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + 
+d.p2.p = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + 
   geom_density(alpha = 0.3) +
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -376,7 +387,7 @@ d.p2.p = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec
 d.p2.p$labels$colour <- "European Socio-Economic\nClassification"
 
 # Panel B
-d.p2.p2 = ggplot(subset(dat, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + 
+d.p2.p2 = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + 
   geom_density(alpha = 0.3) +
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -404,7 +415,7 @@ ggsave("ESEC_Class_Panel_B.jpeg", plot = d.p2.p2,
 
 
 ##
-d.p3.p = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + 
+d.p3.p = ggplot(subset(dat.recoded, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + 
   geom_density(alpha = 0.3) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -423,7 +434,7 @@ d.p3.p$labels$fill <- "Political Party"
 d.p3.p$labels$colour <- "Political Party"
 
 # Panel C
-d.p3.p2 = ggplot(subset(dat, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + 
+d.p3.p2 = ggplot(subset(dat.recoded, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + 
   geom_density(alpha = 0.3) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -475,7 +486,7 @@ ggsave("phys_occ_cong.pdf", plot = phys_occ_cong.p,
 
 # Masculinity
 ##
-d.p1.m = ggplot(subset(dat, !is.na(gender)), aes(x = masculinity, color = gender, fill = gender)) + 
+d.p1.m = ggplot(subset(dat.recoded, !is.na(gender)), aes(x = masculinity, color = gender, fill = gender)) + 
   geom_density(alpha = 0.5) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -493,7 +504,7 @@ d.p1.m = ggplot(subset(dat, !is.na(gender)), aes(x = masculinity, color = gender
 d.p1.m$labels$fill <- "Candidate Gender"
 d.p1.m$labels$colour <- "Candidate Gender"
 ##
-d.p2.m = ggplot(subset(dat, !is.na(esec.r)), aes(x = masculinity, color = esec.r, fill = esec.r)) + 
+d.p2.m = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = masculinity, color = esec.r, fill = esec.r)) + 
   geom_density(alpha = 0.3) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -511,7 +522,7 @@ d.p2.m = ggplot(subset(dat, !is.na(esec.r)), aes(x = masculinity, color = esec.r
 d.p2.m$labels$fill <- "European Socio-Economic\nClassification"
 d.p2.m$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.m = ggplot(subset(dat, !is.na(party)), aes(x = masculinity, color = party, fill = party)) + 
+d.p3.m = ggplot(subset(dat.recoded, !is.na(party)), aes(x = masculinity, color = party, fill = party)) + 
   geom_density(alpha = 0.3) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -544,7 +555,7 @@ ggsave("masculinity.pdf", plot = masculinity.p,
 
 # Femininity
 ##
-d.p1.f = ggplot(subset(dat, !is.na(gender)), aes(x = femininity, color = gender, fill = gender)) + 
+d.p1.f = ggplot(subset(dat.recoded, !is.na(gender)), aes(x = femininity, color = gender, fill = gender)) + 
   geom_density(alpha = 0.5) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -564,7 +575,7 @@ d.p1.f = ggplot(subset(dat, !is.na(gender)), aes(x = femininity, color = gender,
 d.p1.f$labels$fill <- "Candidate Gender"
 d.p1.f$labels$colour <- "Candidate Gender"
 ##
-d.p2.f = ggplot(subset(dat, !is.na(esec.r)), aes(x = femininity, color = esec.r, fill = esec.r)) + 
+d.p2.f = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = femininity, color = esec.r, fill = esec.r)) + 
   geom_density(alpha = 0.3) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -582,7 +593,7 @@ d.p2.f = ggplot(subset(dat, !is.na(esec.r)), aes(x = femininity, color = esec.r,
 d.p2.f$labels$fill <- "European Socio-Economic\nClassification"
 d.p2.f$labels$colour <- "European Socio-Economic\nClassification"
 ##
-d.p3.f = ggplot(subset(dat, !is.na(party)), aes(x = femininity, color = party, fill = party)) + 
+d.p3.f = ggplot(subset(dat.recoded, !is.na(party)), aes(x = femininity, color = party, fill = party)) + 
   geom_density(alpha = 0.3) + 
   theme_light() + 
   # scale_color_grey() + scale_fill_grey() + 
@@ -624,6 +635,12 @@ total.plot.p = cowplot::plot_grid(
   nrow = 4,
   labels = c('A', 'B', 'C','D', 'E', 'F','G', 'H', 'I','J', 'K', 'L')
 )
+
+# The "densities.pdf" plot was giving me a hard time. It was that ggsave was missing some fonts. 
+# If the problem persists, load the two lines below.
+# p_load(extrafont)
+# extrafont::font_import() 
+
 ggsave("densities.pdf", plot = total.plot.p, 
        width = 1550,
        height = 1700,
