@@ -411,7 +411,7 @@ options(scipen = 99999999999)
 %
 \begin{frame}[c]{What About Wealthy-looking or Poor-looking Candidates?}
 \begin{itemize}
-  \item However, what happens when candidates \emph{look} \underline{poor/wealthy}.\\ \vspace{0.3cm}
+  \item However, what happens when candidates \emph{look} \underline{poor/wealthy}?\\ \vspace{0.3cm}
    {\color{blue}\bf Does that affect their chances of getting elected?} \vspace{0.3cm}
   \item[\checkmark] This questions is relevant because it touches upon issues of social stratification and voting choices.
 \end{itemize}
@@ -487,11 +487,11 @@ options(scipen = 99999999999)
 \begin{frame}%<presentation:0>
 
 
-\begin{alertblock}{Argument}
-      We argue that information about candidates' {\bf \color{red}occupations} combined with information about candidates' {\bf \color{blue}physical appearance}, function as {\bf cues of status} that have an effect on {\bf voting choices} in low-information elections.
-\end{alertblock}
+%\begin{alertblock}{Argument}
+%      We argue that information about candidates' {\bf \color{red}occupations} combined with information about candidates' {\bf \color{blue}physical appearance}, function as {\bf cues of status} that have an effect on {\bf voting choices} in low-information elections.
+%\end{alertblock}
 
-\begin{exampleblock}{In simple...}
+\begin{exampleblock}{}%In simple...
 Candidates that {\color{blue}\bf look like} and actually {\color{red} \bf are} wealthy (poor) will do better (worse) in elections.
 \end{exampleblock}
 
