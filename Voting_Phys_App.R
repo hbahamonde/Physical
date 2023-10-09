@@ -172,6 +172,7 @@ load(file = "/Users/hectorbahamonde/research/Physical/dat.Rdata")
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(ggplot2,cowplot,ggthemes)
 
+# color
 balance.p = ggplot(na.omit(dat), aes(x=esec.r, y=phys_occ_cong, color=gender)) + 
   geom_boxplot() + 
   theme_light() +
@@ -179,7 +180,16 @@ balance.p = ggplot(na.omit(dat), aes(x=esec.r, y=phys_occ_cong, color=gender)) +
   # scale_color_grey() + 
   theme(legend.title=element_blank(),
         legend.position = "bottom")
+# black and white
+balance.p.b.w = ggplot(na.omit(dat), aes(x=esec.r, y=phys_occ_cong, color=gender)) + 
+  geom_boxplot() + 
+  theme_light() +
+  labs(y = "Candidate's Appearance-Occupation Congruence", x = "European Socio-Economic Classification") +
+  scale_color_grey() + 
+  theme(legend.title=element_blank(),
+        legend.position = "bottom")
 
+# color
 ggsave("balance.pdf", plot = balance.p, 
        width = 500,
        height = 500,
@@ -187,6 +197,21 @@ ggsave("balance.pdf", plot = balance.p,
        dpi = 80
 )
 ggsave("balance.jpg", plot = balance.p, 
+       width = 500,
+       height = 500,
+       units = c("px"),
+       dpi = 80
+)
+
+## FIGURE 2
+# black and white
+ggsave("Figure_2.pdf", plot = balance.p.b.w, 
+       width = 500,
+       height = 500,
+       units = c("px"),
+       dpi = 80
+)
+ggsave("Figure_2.jpg", plot = balance.p.b.w, 
        width = 500,
        height = 500,
        units = c("px"),
@@ -230,7 +255,7 @@ dat.recoded$party = recode(dat.recoded$party,
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(ggplot2,cowplot,ggthemes)
 
-## Densities
+## Densities (in color)
 
 # Attractiveness
 ##
@@ -658,45 +683,343 @@ ggsave("densities.jpeg", plot = total.plot.p,
 ## ----
 
 
-# Outi Paper #2
-dat$ps = as.factor(ifelse(dat$party == "PS", 1, 0))
-dat$routine.manual = as.factor(ifelse(dat$esec == "Routine" | dat$esec == "Lower technical", 1, 0))
+cat("\014")
+rm(list=ls())
+setwd("/Users/hectorbahamonde/research/Physical/")
+
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
 
 
+load(file = "/Users/hectorbahamonde/research/Physical/dat.Rdata")
 
+# combine parties with too little observations ()
+dat.recoded = dat
 
-logit.m1 = glm(ps ~ routine.manual,family=binomial(link='logit'),data=dat)
-p_load("effects")
-plot(predictorEffects(logit.m1))
+p_load(dplyr)
+dat.recoded$party = recode(dat.recoded$party, 
+                           "PIR" = "Others",
+                           "SKP" = "Others")
 
-#
-dat$ideology.3 = dat$ideology
-p_load("tidyverse")
-dat$ideology.3 = recode(dat$ideology.3, 
-                        "Left" = "Left",
-                        "Center-Left" = "Left", 
-                        "Center" = "Center",
-                        "Center-Right" = "Right",
-                        "Right" = "Right")
-
-logit.m2 = glm(ideology.3 ~ esec.r,family=binomial(link='logit'),data=dat)
-p_load("effects")
-plot(predictorEffects(logit.m2))
-
-logit.m3 = glm(ps ~ esec.r,family=binomial(link='logit'),data=dat)
-p_load("effects")
-plot(predictorEffects(logit.m3))
-
-# 
+# Pacman
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(ggplot2,cowplot,ggthemes)
 
-ggplot(subset(dat, !is.na(routine.manual)), aes(x = phys_occ_cong, color = routine.manual, fill = routine.manual)) + 
+
+## Densities (in bw)
+
+# Attractiveness
+##
+d.p1.a.bw = ggplot(subset(dat.recoded, !is.na(gender)), aes(x = attractiveness, color = gender, fill = gender)) + 
+  geom_density(alpha = 0.5) +  
+  theme_light() +  
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate Attractiveness") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
+d.p1.a.bw$labels$fill <- "Candidate Gender"
+d.p1.a.bw$labels$colour <- "Candidate Gender"
+##
+
+d.p2.a.bw = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) +
+  theme_light() +   
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Attractiveness")  + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
+d.p2.a.bw$labels$fill <- "European Socio-Economic\nClassification"
+d.p2.a.bw$labels$colour <- "European Socio-Economic\nClassification"
+##
+d.p3.a.bw = ggplot(subset(dat.recoded, !is.na(party)), aes(x = attractiveness, color = party, fill = party)) + 
   geom_density(alpha = 0.3) + 
   theme_light() + 
-  facet_wrap(~party, ncol=3) +
-  # scale_color_grey() + scale_fill_grey() + 
-  #labs(y = "", x = "") + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Attractiveness") + 
+  theme(axis.text.y = element_text(size=18),
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18),
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18),
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
+d.p3.a.bw$labels$fill <- "Political Party"
+d.p3.a.bw$labels$colour <- "Political Party"
+##
+attractiveness.p.bw = cowplot::plot_grid(
+  d.p1.a.bw, d.p2.a.bw, d.p3.a.bw, 
+  align = "hv",
+  axis = "b", 
+  ncol = 3
+)
+
+
+attractiveness.p.bw.2 = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = attractiveness, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Attractiveness")  + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        #legend.title=element_text(element_blank()),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom",
+        plot.margin = unit(c(1,1,1,1),"cm")
+  ) + scale_fill_discrete(name="") + scale_colour_discrete(name="")
+
+
+# Physical-Occupation Congruence
+##
+d.p1.p.bw = ggplot(subset(dat.recoded, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + 
+  geom_density(alpha = 0.5) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18),
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
+d.p1.p.bw$labels$fill <- "Candidate Gender"
+d.p1.p.bw$labels$colour <- "Candidate Gender"
+
+# Panel A
+d.p1.p.bw2 = ggplot(subset(dat.recoded, !is.na(gender)), aes(x = phys_occ_cong, color = gender, fill = gender)) + 
+  geom_density(alpha = 0.5) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18),
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom")
+
+d.p1.p.bw2$labels$fill <- "Candidate Gender"
+d.p1.p.bw2$labels$colour <- "Candidate Gender"
+
+
+##
+d.p2.p.bw = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) +
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
+d.p2.p.bw$labels$colour <- "European Socio-Economic\nClassification"
+
+# Panel B
+d.p2.p.bw2 = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = phys_occ_cong, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) +
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom")
+
+d.p2.p.bw2$labels$colour <- "European Socio-Economic Classification"
+d.p2.p.bw2$labels$fill <- "European Socio-Economic Classification"
+
+
+##
+d.p3.p.bw = ggplot(subset(dat.recoded, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
+d.p3.p.bw$labels$fill <- "Political Party"
+d.p3.p.bw$labels$colour <- "Political Party"
+
+# Panel C
+d.p3.p.bw2 = ggplot(subset(dat.recoded, !is.na(party)), aes(x = phys_occ_cong, color = party, fill = party)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate's Appearance-Occupation\nCongruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom")
+
+d.p3.p.bw2$labels$fill <- "Political Party"
+d.p3.p.bw2$labels$colour <- "Political Party"
+
+## Panels A, B, C
+panels.a.b.c = cowplot::plot_grid(
+  d.p1.p.bw2, # A
+  d.p2.p.bw2, #B
+  d.p3.p.bw2, # C 
+  align = "hv",
+  axis = "b", 
+  ncol = 3
+)
+
+
+
+##
+phys_occ_cong.p = cowplot::plot_grid(
+  d.p1.p.bw, d.p2.p.bw, d.p3.p.bw, 
+  align = "hv",
+  axis = "b", 
+  ncol = 3
+)
+
+# Masculinity
+##
+d.p1.m.bw = ggplot(subset(dat.recoded, !is.na(gender)), aes(x = masculinity, color = gender, fill = gender)) + 
+  geom_density(alpha = 0.5) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate Masculinity") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
+d.p1.m.bw$labels$fill <- "Candidate Gender"
+d.p1.m.bw$labels$colour <- "Candidate Gender"
+##
+d.p2.m.bw = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = masculinity, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Masculinity") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
+d.p2.m.bw$labels$fill <- "European Socio-Economic\nClassification"
+d.p2.m.bw$labels$colour <- "European Socio-Economic\nClassification"
+##
+d.p3.m.bw = ggplot(subset(dat.recoded, !is.na(party)), aes(x = masculinity, color = party, fill = party)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Masculinity") + 
+  theme(axis.text.y = element_text(size=18),
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
+d.p3.m.bw$labels$fill <- "Political Party"
+d.p3.m.bw$labels$colour <- "Political Party"
+##
+
+masculinity.p = cowplot::plot_grid(
+  d.p1.m.bw, d.p2.m.bw, d.p3.m.bw, 
+  align = "hv",
+  axis = "b", 
+  ncol = 3
+)
+
+
+
+# Femininity
+##
+d.p1.f.bw = ggplot(subset(dat.recoded, !is.na(gender)), aes(x = femininity, color = gender, fill = gender)) + 
+  geom_density(alpha = 0.5) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "Density", x = "Candidate Femininity") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom") + 
+  guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+
+
+d.p1.f.bw$labels$fill <- "Candidate Gender"
+d.p1.f.bw$labels$colour <- "Candidate Gender"
+##
+
+d.p2.f.bw = ggplot(subset(dat.recoded, !is.na(esec.r)), aes(x = femininity, color = esec.r, fill = esec.r)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Femininity") + 
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
         axis.title.y = element_text(size=18), 
@@ -707,61 +1030,68 @@ ggplot(subset(dat, !is.na(routine.manual)), aes(x = phys_occ_cong, color = routi
         strip.text.x = element_text(size = 18),
         legend.position = "bottom") + guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
 
-lm.m0 = glm(ps ~ routine.manual + gender + age,family=binomial(link='logit'), data=dat)
-options(scipen=999)
-# summary(lm.m0)
-p_load("effects")
-plot(predictorEffects(lm.m0))
+d.p2.f.bw$labels$fill <- "European Socio-Economic\nClassification"
+d.p2.f.bw$labels$colour <- "European Socio-Economic\nClassification"
+##
+
+d.p3.f.bw = ggplot(subset(dat.recoded, !is.na(party)), aes(x = femininity, color = party, fill = party)) + 
+  geom_density(alpha = 0.3) + 
+  theme_light() + 
+  scale_color_grey() + scale_fill_grey() + 
+  labs(y = "", x = "Candidate Femininity") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom") + guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+
+d.p3.f.bw$labels$fill <- "Political Party"
+d.p3.f.bw$labels$colour <- "Political Party"
+##
+femininity.p = cowplot::plot_grid(
+  d.p1.f.bw, d.p2.f.bw, d.p3.f.bw, 
+  align = "hv",
+  axis = "b", 
+  ncol = 3
+)
 
 
-# try OPROBIT with left-center-right on the RHS, and routine.manual + gender + age ob the left.
-p_load(MASS)
-o.logistic = polr(ideology.3 ~ routine.manual*ps + gender + age, data = dat, method = "logistic")
+# mega plot
+total.plot.p = cowplot::plot_grid(
+  d.p1.p.bw,d.p2.p.bw,d.p3.p.bw,
+  d.p1.a.bw,d.p2.a.bw,d.p3.a.bw,
+  d.p1.m.bw,d.p2.m.bw,d.p3.m.bw,
+  d.p1.f.bw,d.p2.f.bw,d.p3.f.bw,
+  align = "hv",
+  axis = "b", 
+  ncol = 3,
+  nrow = 4,
+  labels = c('A', 'B', 'C','D', 'E', 'F','G', 'H', 'I','J', 'K', 'L')
+)
 
-p_load(effects)
-plot(predictorEffects(o.logistic))
+# The "densities.pdf" plot was giving me a hard time. It was that ggsave was missing some fonts. 
+# If the problem persists, load the two lines below.
+# p_load(extrafont)
+# extrafont::font_import() 
 
-# SHOW THIS ONE
-lm.m1 = lm(phys_occ_cong ~ routine.manual*ps + fem_dom_job + age,data=dat)
-options(scipen=999)
-# summary(lm.m1)
-# p_load("effects")
-# plot(predictorEffects(lm.m1))
-plot_model(lm.m1, type = "int")
+ggsave("Figure_1.pdf", plot = total.plot.p, 
+       width = 1550,
+       height = 1700,
+       units = c("px"),
+       dpi = 80
+)
 
-# PS plus all Left-wing parties
-ps.left.d <- dat[which(dat$ideology=='Left' |
-                         dat$ideology=='Center-Left' | 
-                         dat$ps == 1), ]
-
-# exclude NAs
-ps.left.d = ps.left.d[complete.cases(ps.left.d[,c("ideology","ps", "routine.manual")]),]
-p_load("dplyr")
-ps.left.d = filter(ps.left.d, party != "SKP")
-ps.left.d$party = as.factor(as.character(ps.left.d$party))
-
-#
-lm.m2 = lm(phys_occ_cong ~ routine.manual*party + city + gender + age,data=ps.left.d)
-# summary(lm.m2)
-# p_load("effects")
-# plot(predictorEffects(lm.m2))
-plot_model(lm.m2, type = "int")
-
-
-p_load(sjPlot, sjmisc, ggplot2)
-plot_model(lm.m2, type = "int")
-
-# SHOW THIS ONE
-p_load(MASS)
-o.logistic.2 = polr(party ~ routine.manual + gender + age, data = ps.left.d, method = "logistic")
-p_load(effects)
-plot(predictorEffect("routine.manual", o.logistic.2))
-
-#
-summary(lm(as.numeric(ideology) ~ routine.manual + gender + age, data=ps.left.d)) # the more ROUTINE.MANUAL, the more rightist. (WOW!). By class-voting.
-
-summary(lm(phys_occ_cong ~ routine.manual, data=dat)) # the more ROUTINE.MANUAL I am, the less psy-occ congruence I have. That is, routine manual workers (who're predominantly right-wing) try to mask/deceive their appearance. 
-
+ggsave("Figure_1.jpeg", plot = total.plot.p, 
+       width = 1550,
+       height = 1700,
+       units = c("px"),
+       dpi = 80,
+       device = "jpeg"
+)
 
 ############################## 
 # Models
@@ -810,7 +1140,7 @@ m1.w = glm(main.model.formula, family="poisson", data=dat[dat$gender=="Female",]
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(sjPlot,ggplot2,cowplot,ggeffects)
 
-
+## color
 # Poisson
 p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Data") + 
     theme_sjplot() + 
@@ -954,6 +1284,89 @@ ggsave("marginal_fx_plot.jpeg", plot = pred.prob.p,
        dpi = 80,
        device = "jpeg"
 )
+
+##
+
+## bw
+# Poisson
+p1.poisson.bw = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Data") + 
+  theme_sjplot() + 
+  scale_colour_grey() + scale_fill_grey() +
+  labs(y = "Number of Votes Received", x = "") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none") + 
+  guides(color = guide_legend(title.position = "bottom", title.hjust = 0.5))
+
+p1.poisson.bw$labels$colour <- "" # European Socio-Economic Classification
+
+
+p2.poisson.bw = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Male Data") + 
+  theme_sjplot() + 
+  scale_colour_grey() + scale_fill_grey() +
+  theme(legend.position = "bottom",legend.title.align=0.5) + 
+  labs(y = "", x = "Candidate's Appearance-Occupation Congruence") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18)) 
+
+p2.poisson.bw$labels$colour <- "" # European Socio-Economic Classification
+
+p3.poisson.bw = plot_model(m1.w, type = "int", show.legend = F, title = "Female Data") + 
+  theme_sjplot() + 
+  scale_colour_grey() + scale_fill_grey() +
+  labs(y = "", x = "") + 
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18)) 
+
+p3.poisson.bw$labels$colour <- "" # European Socio-Economic Classification
+
+
+#p_load(gridExtra)
+#grid.arrange(p1.poisson.bw, p2.poisson.bw, p3.poisson.bw, nrow = 1, ncol= 3)
+
+marg.fx.p = cowplot::plot_grid(p1.poisson.bw,p2.poisson.bw,p3.poisson.bw,
+                               align = "hv",
+                               axis = "b", 
+                               ncol = 3,
+                               nrow = 1
+)
+
+
+
+
+ggsave("Figure_3.pdf", plot = marg.fx.p, 
+       width = 1200,
+       height = 600,
+       units = c("px"),
+       dpi = 80
+)
+
+ggsave("Figure_3.jpeg", plot = marg.fx.p, 
+       width = 1200,
+       height = 600,
+       units = c("px"),
+       dpi = 80,
+       device = "jpeg"
+)
+
 ############################## 
 # robustness checks
 ############################## 
@@ -973,7 +1386,7 @@ m4.w = glm(turnout ~ phys_occ_cong*esec.r + party + age + attractiveness + femin
 ## ----
 
 
-# individual predictions: Predicted Probabilities
+# individual predictions: 
 p_load(ggeffects)
 ggpredict(m1.w, terms = "phys_occ_cong", condition = c(esec.r="Working"))
 ggpredict(m1.m, terms = "phys_occ_cong", condition = c(esec.r="Working"))
@@ -1055,6 +1468,9 @@ plot(effect("phys_occ_cong*esec.r", m1.w.quasi.poisson))
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(texreg)
 
+## ----
+
+# Table 3 (latex)
 reg.table = texreg( # screenreg texreg
   list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
   custom.header = list(
@@ -1106,13 +1522,13 @@ reg.table = texreg( # screenreg texreg
   threeparttable = TRUE,
   scalebox = 0.4,
   custom.note = "\\item %stars. \\item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.")
-## ----
 
 
 # baseline models without interactions requested by r2
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(texreg)
 
+# Table 3
 screenreg( # screenreg texreg
   list(# basic
     baseline.full.0,
@@ -1179,7 +1595,135 @@ screenreg( # screenreg texreg
 
 
 
+####
+# baseline models without interactions requested by r2
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
+p_load(texreg)
 
+# Table 2 (HTML/WORD) for publication
+reg.table2 = htmlreg( # screenreg texreg
+  list(# basic
+    baseline.full.0,
+    baseline.m.0,
+    baseline.w.0,
+    # full
+    baseline.full.a,
+    baseline.full.m,
+    baseline.full.f,
+    # men
+    baseline.m.a,
+    baseline.m.m,
+    baseline.m.f,
+    # women
+    baseline.w.a,
+    baseline.w.m,
+    baseline.w.f),
+  custom.header = list(
+    "1" = 1,
+    "2" = 2,
+    "3" = 3,
+    "4" = 4,
+    "5" = 5,
+    "6" = 6, 
+    "7" = 7,  
+    "8" = 8, 
+    "9" = 9, 
+    "10" = 10,
+    "11" = 11,
+    "12" = 12),
+  custom.model.names = c(
+    #  baseline.full.0, baseline.m.0,baseline.w.0,
+    "Full", "Male", "Female", 
+    # baseline.full.a, baseline.full.m,baseline.full.f,
+    "Full", "Full", "Full", 
+    # baseline.m.a,baseline.m.m,baseline.m.f,
+    "Male","Male","Male",  
+    # baseline.w.a,baseline.w.m,baseline.w.f
+    "Female", "Female", "Female"),
+  #custom.coef.names = NULL,
+  omit.coef = "(city)|(party)",
+  custom.coef.names = c("Intercept",
+                        "Appearance-Occupation Congruence",
+                        "Middle Class",
+                        "Working Class",
+                        "Age",
+                        "Attractiveness",
+                        "Masculinity",
+                        "Femininity"),
+  # custom.header = list( "Poisson" = 1),
+  stars = c(0.001, 0.01, 0.05),
+  include.adjrs = FALSE,
+  #symbol = "\\\\cdot",
+  label = "reg:t",
+  caption = "Table 2. Physical Appearance and Voting in the 2017 Finnish Municipal Elections: Baseline Models Without the Interaction Term",
+  caption.above = T,
+  center = T,
+  float.pos="H",
+  use.packages = FALSE,
+  threeparttable = TRUE,
+  scalebox = 0.4,
+  custom.note = "%stars. Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.",
+  file = "Table2.html"
+)
+
+
+
+# Table 3 (HTML/WORD) for publication
+reg.table3 = htmlreg( # screenreg texreg
+  list(m0, m1.m, m1.w, m2, m3, m4, m2.m, m2.w, m3.m, m3.w, m4.m, m4.w),
+  custom.header = list(
+    "1" = 1,
+    "2" = 2,
+    "3" = 3, 
+    "4" = 4,  
+    "5" = 5, 
+    "6" = 6, 
+    "7" = 7,
+    "8" = 8,
+    "9" = 9, 
+    "10" = 10, 
+    "11" = 11, 
+    "12" = 12),
+  custom.model.names = c(
+    # m0, m1.m, m1.w
+    "Full", "Male", "Female", 
+    # m2, m3, m4 
+    "Full","Full","Full",  
+    # m2.m, m2.w,
+    "Male", "Female", 
+    # m3.m, m3.w
+    "Male", "Female", 
+    # m4.m, m4.w
+    "Male", "Female"),
+  #custom.coef.names = NULL,
+  omit.coef = "(city)|(party)",
+  custom.coef.names = c("Intercept",
+                        "Appearance-Occupation Congruence",
+                        "Middle Class",
+                        "Working Class",
+                        "Age",
+                        "Appearance-Occupation Congruence X Middle Class",
+                        "Appearance-Occupation Congruence X Working Class",
+                        "Attractiveness",
+                        "Masculinity",
+                        "Femininity"),
+  # custom.header = list( "Poisson" = 1),
+  stars = c(0.001, 0.01, 0.05),
+  include.adjrs = FALSE,
+  #symbol = "\\\\cdot",
+  label = "reg:t",
+  caption = "Table 3. Physical Appearance and Voting in the 2017 Finnish Municipal Elections",
+  caption.above = T,
+  center = T,
+  float.pos="H",
+  use.packages = FALSE,
+  threeparttable = TRUE,
+  scalebox = 0.4,
+  custom.note = "\\item %stars. \\item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.",
+  file = "Table3.html")
+
+
+####
 
 
 
