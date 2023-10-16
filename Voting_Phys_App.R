@@ -1663,7 +1663,7 @@ reg.table2 = htmlreg( # screenreg texreg
   threeparttable = TRUE,
   scalebox = 0.4,
   custom.note = "%stars. Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.",
-  file = "Table2.html"
+  file = "Table2.doc"
 )
 
 
@@ -1720,7 +1720,7 @@ reg.table3 = htmlreg( # screenreg texreg
   threeparttable = TRUE,
   scalebox = 0.4,
   custom.note = "\\item %stars. \\item Dependent variable is the number of votes each candidate received. City fixed effects and party variables omitted. The reference category in the ESEC variable is 'Upper Class.' Given the symmetry of the derivatives, changing the reference category does not alter the interpretation of the results. Functional form is Poisson regression for all models.",
-  file = "Table3.html")
+  file = "Table3.doc")
 
 
 ####
