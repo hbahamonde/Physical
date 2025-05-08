@@ -1285,6 +1285,69 @@ ggsave("marginal_fx_plot.jpeg", plot = pred.prob.p,
        device = "jpeg"
 )
 
+## Fixed scales for Outi's presentation
+
+y_limits <- c(30, 360)   # Set consistent y-axis range
+
+p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Data") + 
+  theme_sjplot() + 
+  labs(y = "Number of Votes Received", x = "", color = "ESEC", fill = "ESEC") + 
+  scale_y_continuous(limits = y_limits) +
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "none")
+
+p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Male Data") + 
+  theme_sjplot() + 
+  labs(y = "", x = "Candidate's Appearance-Occupation Congruence", color = "ESEC", fill = "ESEC") + 
+  scale_y_continuous(limits = y_limits) +
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18),
+        legend.position = "bottom") 
+
+p3.poisson = plot_model(m1.w, type = "int", show.legend = FALSE, title = "Female Data") + 
+  theme_sjplot() + 
+  labs(y = "", x = "", color = "ESEC", fill = "ESEC") + 
+  scale_y_continuous(limits = y_limits) +
+  theme(axis.text.y = element_text(size=18), 
+        axis.text.x = element_text(size=18), 
+        axis.title.y = element_text(size=18), 
+        axis.title.x = element_text(size=22), 
+        legend.text=element_text(size=18), 
+        legend.title=element_text(size=18, face = "bold"),
+        plot.title = element_text(size=18),
+        strip.text.x = element_text(size = 18))
+
+pred.prob.p = cowplot::plot_grid(
+  p1.poisson, p2.poisson, p3.poisson,
+  align = "hv",
+  axis = "b", 
+  ncol = 3,
+  nrow = 1,
+  rel_widths = c(1, 1, 1)
+)
+
+ggsave("marginal_fx_plot_Outi.pdf", plot = pred.prob.p, 
+       width = 12,
+       height = 5,
+       units = "in", 
+       device = cairo_pdf,   # Best for embedding fonts and avoiding transparency issues
+       dpi = 300             # Optional for PDF but fine to include
+)
+
+
 ##
 
 ## bw
