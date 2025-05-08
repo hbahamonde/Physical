@@ -1293,6 +1293,7 @@ p1.poisson = plot_model(m0, type = "int", show.legend = FALSE, title = "Full Dat
   theme_sjplot() + 
   labs(y = "Number of Votes Received", x = "", color = "ESEC", fill = "ESEC") + 
   scale_y_continuous(limits = y_limits) +
+  scale_x_continuous(limits = c(1, 5), breaks = 1:5) +
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
         axis.title.y = element_text(size=18), 
@@ -1307,6 +1308,7 @@ p2.poisson = plot_model(m1.m, type = "int", show.legend = TRUE, title = "Male Da
   theme_sjplot() + 
   labs(y = "", x = "Candidate's Appearance-Occupation Congruence", color = "ESEC", fill = "ESEC") + 
   scale_y_continuous(limits = y_limits) +
+  scale_x_continuous(limits = c(1, 5), breaks = 1:5) +
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
         axis.title.y = element_text(size=18), 
@@ -1321,6 +1323,7 @@ p3.poisson = plot_model(m1.w, type = "int", show.legend = FALSE, title = "Female
   theme_sjplot() + 
   labs(y = "", x = "", color = "ESEC", fill = "ESEC") + 
   scale_y_continuous(limits = y_limits) +
+  scale_x_continuous(limits = c(1, 5), breaks = 1:5) +
   theme(axis.text.y = element_text(size=18), 
         axis.text.x = element_text(size=18), 
         axis.title.y = element_text(size=18), 
