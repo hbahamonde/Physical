@@ -1,0 +1,48 @@
+{
+  "source_url": "https://tulospalvelu.vaalit.fi/KV-2017/kv-2017_ehd_maa.csv.zip",
+  "dictionary_url": "https://tulospalvelu.vaalit.fi/KV-2017/ohje/KV2017_CSV-tiedostojen_kuvaus_fi.pdf",
+  "md5_uncompressed_observed": "cc9bda4d65fded02345916dd88a77dee",
+  "md5_published": "cc9bda4d65fded02345916dd88a77dee",
+  "checksum_matches": true,
+  "archive_member": "kv-2017_teat_maa.csv",
+  "archive_zip_md5": "ab9eb437e5c9120c8c1a6013c4b877ca",
+  "archive_records": {
+    "all_records": 702018,
+    "record_type_A": 668400,
+    "record_type_K": 33618
+  },
+  "official_municipal_rows": 33618,
+  "official_unique_city_candidate_keys": 33618,
+  "duplicate_official_keys": 0,
+  "saved_rows": 1389,
+  "saved_unique_cities": 221,
+  "unique_official_matches": 1389,
+  "unmatched_saved_rows": 0,
+  "saved_equals_official": 0,
+  "saved_equals_double_official": 1322,
+  "not_double_official": 67,
+  "firstname_exact": 1320,
+  "lastname_exact": 1389,
+  "name_mismatch_rows": 69,
+  "matched_saved_elected_codes": {
+    "3": 789,
+    "2": 312,
+    "1": 288
+  },
+  "official_count_phase": {
+    "T": 33618
+  },
+  "official_count_status": {
+    "V": 33618
+  },
+  "official_city_count": 295,
+  "official_city_code_count": 295,
+  "source_gender_observed": 1385,
+  "source_gender_matches_official_number": 1385,
+  "source_age_observed": 1385,
+  "source_age_matches_official_number": 1385,
+  "saved_full_name_unique_official_matches": 1389,
+  "saved_counts_double_votes_of_saved_full_name": 1389,
+  "different_person_numbers_given_full_name": 68,
+  "sum_official_votes_all_candidates": 2570768
+}

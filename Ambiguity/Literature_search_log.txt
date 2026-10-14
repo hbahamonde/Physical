@@ -1,0 +1,87 @@
+# Literature search log
+
+Date: 12 October 2026 (Europe/Helsinki).
+
+Method: bounded scoping search through web search indexes, direct journal publisher pages, and published author/institutional copies. The supplied Political Psychology reference list was read completely and used for backward searching. References and citing-paper lists for Hehman (2014), Carpinella (2016), Bauer--Carpinella (2018), and Park--Joo (2023) guided further searches. Exact-title/DOI searches verified final citation years, pages, authors, and closest substantive overlap. Searches were not limited to a starting year; targeted 2024--2026 queries sought newer research. No institutional subscription authentication, correspondence with authors, paid access, or registered database systematic review was performed.
+
+Core executed query families (duplicates and unsuccessful searches retained):
+
+1. candidate facial gender typicality electoral success Carpinella Johnson femininity masculinity
+2. facial masculinity femininity candidate votes election gender ambiguity androgyny
+3. gender atypical candidate appearance electoral votes femininity masculinity 2024 2025 2026
+4. "gender ambiguity" "candidates" election
+5. "femininity" "masculinity" "votes" gender typicality politicians Finland
+6. "The Right Kind of (Gay) Man" electability
+7. "Facing Voters" "Gender Expression" authors study real election
+8. "Effects of masculinity vs. femininity" "election"
+9. "Facing Voters" pdf Wojcik Mullenax
+10. "Facing Voters" Brazil "gender" conformity
+11. "The Right Kind of (Gay) Man?" "Sexuality" journal DOI
+12. "Selecting for Masculinity" Butler Preece Aldridge
+13. "Facing Voters" "Wojcik" filetype:pdf -researchgate -issforum
+14. "Facing Voters" "measurement" "Brazil"
+15. "Facing Voters" "classifier"
+16. Wojcik Mullenax 729958 Brazil elections facial masculinity femininity dataset
+17. Wojcik Mullenax "gender" "face" paper
+18. "Gender Expression, Gender Stereotypes, and Vote Choice" -site:researchgate.net -site:issforum.org -site:weizenbaum-library.de
+19. "Facial sex typicality" vote 2025
+20. "Selecting for Masculinity" site:cambridge.org
+21. "androgyny" "electoral" "appearance"
+22. "gender atypical" politician "2025"
+23. "gender nonconforming" "candidates" "2026" journal
+24. "Selecting for Masculinity" site:cambridge.org/core/journals/american
+25. "androgyny and politics" Carlson Boring
+26. "Gender Stereotyping and the Electoral Success of Women Candidates" Bernhard Anzia
+27. "gender ambiguous faces" "evaluation" peer reviewed
+28. "gender ambiguity" "negative" "faces" categorization
+29. "ambiguous faces" "gender" "fluency" Lick Johnson
+30. "gender-atypical" "faces" discrimination typicality
+31. "Berggren" "The looks of a winner" DOI
+32. "Berggren" "The right look" DOI
+33. "Little" "facial" "political" "2007" dominance masculinity
+34. "role congruity theory of prejudice toward female leaders" DOI
+35. Stefan Wojcik Mullenax "gender" 2017 pdf
+36. "Facing Voters" "729958" github
+37. "Facing Voters" "appendix"
+38. Wojcik Mullenax candidate images Brazil facial gender CNN
+39. Stefan Wojcik personal website research Facing Voters Mullenax
+40. Shawnna Mullenax Facing Voters download
+41. Wojcik Mullenax gender expression 460000 Brazil election "masculinity"
+42. "Facing Voters" dataverse
+43. "Hoss" "2005" "1459" DOI
+44. "The right look: Conservative politicians" "10.1016"
+45. "Little" "Burriss" "Jones" "Roberts" "2007" "10.1016"
+46. "Bem" "1974" "measurement" "androgyny" DOI
+47. "Little" "2007" "Facial appearance affects voting decisions" DOI
+48. "Fluency of visual processing explains prejudiced evaluations" DOI
+49. "Bem" "independent dimensions" "1977" androgyny high low
+50. "The Gendered Face of Partisan Politics" "Study 1" "separate" masculinity femininity
+51. "Selecting for Masculinity" "S0003055423000783" -site:researchgate.net -site:colab.ws -site:scilove.app
+52. "Bauer" "Carpinella" "2018" "328" visual information
+53. "gender-atypical" "votes" Finland
+54. "masculinity" "femininity" "response surface" political candidates
+55. "Carpinella" "The Gendered Face" "Freeman" "21--38"
+56. "Femininity Is Favorable" "10." leadership
+57. "Caring or daring?" "10.1371"
+58. "Gender Stereotyping" "Anzia" "10.1017" 2022 1544
+59. "Early Processing" "Gendered Facial" filetype:pdf -site:citeseerx.ist.psu.edu
+60. "Facing Voters" "femininity" -researchgate
+61. "Facing Voters" "classifier" -researchgate
+62. "Facing Voters" "Brazil" -researchgate
+63. "Facial appearance and electoral success of male" Jaeger 2020
+64. "Voting for a Male Warrior or Female Peacekeeper" DOI
+65. "Selecting for Masculinity: Women's Under-Representation in the Republican Party" cambridge pdf full
+66. "The Gendered Face" "ambiguous" "2016"
+67. "femininity masculinity" "municipal" "elections" study
+
+Screening rules:
+
+- Included journal articles on candidate visual gender cues and electoral performance, relevant peer-reviewed categorization/measurement studies, and tightly related appearance-election studies from the supplied article.
+- Required primary publisher or published-paper evidence for substantive claims. A publisher abstract establishes only the claims/design it actually states. Repository copies were used only when clearly identifiable as the published/refereed paper.
+- Excluded dissertations, conference abstracts/programmes, preprints, books/chapters, press coverage, general web pages, and irrelevant gender-in-work studies as review evidence. They sometimes served as leads.
+- Did not conflate vote intention, election-result prediction, candidate impressions, actual binary winning, margins of victory, vote shares, or personal vote counts.
+- Did not treat indexed upload/crawl timestamps as publication dates. For example, Bahamonde--Sarpila is final-volume 2024 despite 2023 first-online/filename; Carpinella et al. is 2016 issue/2015 first online; Naunov is final 2026 despite an aggregator labeling 2025.
+
+Evidence coverage: 25 complete BibTeX records saved separately; the attached article was fully read, Carpinella2016 full published PDF was read for measurements/model/outcomes, Park--Joo2023 publisher full text was read for measurements and analysis, and the PLOS/EJSP/Scientific Reports mechanisms were inspected in full accessible text. Other rows explicitly distinguish publisher-abstract/metadata support from full-text inspection. Monk was read in full by the parallel theory reviewer and exact metadata supplied to this reviewer.
+
+Outstanding access limitation: no accessible full text or usable supplementary appendix for Wojcik--Mullenax2024 was obtained. Its abstract/metadata establish a close predecessor. The project must acknowledge it and keep any direct comparison of exact operationalization provisional until the paper is retrieved.

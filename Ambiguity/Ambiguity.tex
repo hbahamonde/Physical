@@ -1,0 +1,867 @@
+% !TEX program = pdflatex
+% Named R chunks are imported from Ambiguity.R.
+\documentclass[11pt,a4paper]{article}\usepackage[]{graphicx}\usepackage[]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[margin=0.82in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,graphicx,booktabs}
+\usepackage[bottom]{footmisc}
+\usepackage{placeins}
+\usepackage[hidelinks]{hyperref}
+\renewcommand*{\appendixautorefname}{Section}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage[backend=biber,style=authoryear,giveninits=true,maxcitenames=2,maxbibnames=10,
+  uniquename=init,doi=true,url=false,isbn=false,sorting=nyt]{biblatex}
+\addbibresource{Ambiguity.bib}
+\renewcommand*{\multicitedelim}{\addcomma\space}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{doi}{\mkbibacro{DOI}\addspace\ifhyperref{\href{https://doi.org/#1}{\nolinkurl{#1}}}{\nolinkurl{#1}}}
+\AtEveryBibitem{\clearfield{month}\clearfield{issn}\clearfield{language}}
+\DeclareFieldFormat[article]{title}{#1}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.12em}
+\setlength{\emergencystretch}{2em}
+\raggedbottom
+\setcounter{topnumber}{4}
+\setcounter{bottomnumber}{4}
+\setcounter{totalnumber}{6}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.90}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.80}
+\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{12pt plus 2pt minus 2pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
+\renewcommand{\baselinestretch}{1.02}
+\renewcommand*{\bibfont}{\fontsize{9}{10.4}\selectfont}
+\setlength{\bibitemsep}{0.45em}
+\title{\vspace{-1.4em}{\bf Atypical looks, unequal votes?}\\
+  \large {\bf Gendered electoral inequality in a natural experiment}}
+\author{\begin{tabular}[t]{c}
+  Outi Sarpila\\[0.2em]
+  \small\href{mailto:outi.sarpila@utu.fi}{\texttt{outi.sarpila@utu.fi}}\\[0.5em]
+  \small Department of Social Research\\
+  \small University of Turku
+  \end{tabular}\and
+  \begin{tabular}[t]{c}
+  Hector Bahamonde\\[0.2em]
+  \small\href{mailto:hector.bahamonde@utu.fi}{\texttt{hector.bahamonde@utu.fi}}\\[0.5em]
+  \small INVEST Research Flagship Centre\\
+  \small University of Turku\\
+  \small Social Science Research Institute\\
+  \small \AA bo Akademi University
+  \end{tabular}}
+\newcommand{\ManuscriptWordCount}{8,274}
+\newcommand{\AbstractWordCount}{214}
+\date{\today\\[0.4em]{\small {\bf \ManuscriptWordCount{} words}\\\footnotesize Excluding references and Online Appendix}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\maketitle \thispagestyle{empty}
+\begingroup
+\renewcommand{\thefootnote}{}
+\makeatletter
+\renewcommand{\@makefntext}[1]{\noindent #1}
+\makeatother
+\footnotetext{This research was supported by the INVEST Research Flagship Centre and funded by the Research Council of Finland (decision number 345546) and Sarpila's Academy of Finland project (decision number 325813).}
+\endgroup
+\vspace{1em}
+\begin{abstract}
+% AMBIGUITY_ABSTRACT_START
+Does departure from gender stereotypes carry an electoral penalty, and does that penalty depend on political context? We exploit an observational natural experiment to examine electoral inequality within gender categories. This classification rests on the assumption that naturally arising facial variation introduces a probabilistic component into gendered appearance beyond candidates' precise control. It does not establish exchangeability or causal identification. We built an original dataset linking separate femininity, masculinity, and attractiveness ratings to official personal-vote counts in Finland's 2017 open-list municipal elections. Exploiting complete records for 1384 candidates, we estimate Poisson conditional-mean models with municipality and party fixed effects, adjusting for age and attractiveness. A gender-relative cue contrast increases with femininity relative to masculinity among men and the reverse among women. A one-standard-deviation increase is associated with differences in expected votes of 20.7\% (95\% CI 8.0\% to 35.0\%) for men and -8.8\% (95\% CI -31.1\% to 20.8\%) for women. Appearance-associated vote inequality favors more gender-atypical male profiles. The female estimate remains uncertain, without establishing electoral equality. Party-specific estimates further indicate that pooled within-gender associations in personal votes conceal variation across electoral contexts. Many individual party contrasts remain imprecise. These findings connect infracategorical inequality to the distribution of personal support across gendered appearance profiles and political contexts, without identifying the causal processes producing those differences.
+% AMBIGUITY_ABSTRACT_END
+\end{abstract}
+\begin{center}\small {\bf Abstract word count}: \AbstractWordCount{}\end{center}
+\vspace{0.7em}
+\begin{center}
+\begin{minipage}{0.9\textwidth}
+\small\noindent\textbf{Keywords} electoral inequality, gender typicality, natural experiment, candidate appearance, personal votes, Finland.
+\end{minipage}
+\end{center}
+\end{titlepage}
+\pagenumbering{arabic}
+\hypersetup{pageanchor=true}
+
+% AMBIGUITY_MAIN_START
+\section{The problem of inequality within gender categories}
+\label{sec:introduction}
+
+If attractive candidates tend to receive more votes \parencite{BerggrenEtAl2010}, can a \emph{departure} from gender stereotypes nevertheless carry an electoral \emph{penalty}? Consider a woman with a relatively masculine face or a man with a relatively feminine face: both may be attractive, yet their appearances depart from the cues expected of their gender. This departure raises a question about who benefits from appearance, beyond who is considered ``good-looking.'' The distinction matters because appearance advantages are already distributed unequally by gender. In Finnish municipal elections, \textcite{Bahamonde2024} find that attractiveness is more strongly associated with votes among men. Related electoral research likewise finds that appearance-based trait inferences have different implications for male and female candidates \parencite{DitontoMattes2018}. These asymmetries motivate asking whether conformity to gender stereotypes is itself a source of unequal support among candidates within each gender category.
+
+Moreover, does a penalty for gender-atypical appearance persist across ideological audiences, or can political context turn the same departure into an advantage? There is reason to expect the answer to vary: beauty premiums differ across political camps \parencite{BerggrenEtAl2017}, and the electoral associations of facial sex typicality differ by candidate gender and party \parencite{Carpinella2016}. Audience ideology also changes the value of facial dominance \parencite{LaustsenPetersen2016}. These findings suggest that a cue's electoral meaning depends on who evaluates it and what they expect from political leaders. A uniform conformity penalty may therefore miss contexts in which a gender-atypical cue conveys a desirable leadership trait.
+
+This possibility shifts the inequality question from differences between men and women to distinctions \emph{within} each category. A femininity--masculinity balance that confers an advantage on one man can distinguish him from other men, just as a different balance can distinguish one woman from other women. Such distinctions fit \textcite{Monk2022}'s infracategorical perspective. Shared category membership need not imply shared opportunities or evaluations. Applied to elections, this perspective locates inequality in \emph{the unequal allocation of personal support associated with different appearance profiles among candidates who share a gender category}. The issue is therefore not simply whether men outperform women, but which men and which women receive more support and how political context conditions those differences.
+
+Existing research makes this within-category question tractable. \textcite{Hehman2014} relate competition between perceived gender categories to female politicians' electoral outcomes, while studies of gender expression document associations with election returns \parencite{Wojcik2024} and experimentally induced presentation penalties for male candidates \parencite{Naunov2026}. \textcite{Park2023} further show how separately rated masculinity and femininity in campaign photographs relate to vote share. Building on these approaches, we construct a continuous within-gender contrast of greater femininity relative to masculinity among men and greater masculinity relative to femininity among women. This measure allows a comparison of departure from gender expectations while preserving the distinction between atypicality and the value of either cue alone.
+
+To connect that comparison to electoral inequality, we built an original dataset combining separate appearance ratings with candidate characteristics and official personal-vote counts in Finland's 2017 municipal elections. We exploit this dataset in a setting where voters select individual candidates within party lists. Because personal votes determine candidates' rank within those lists, while list totals determine the allocation of seats, unequal personal support can matter for access to representation \parencite{Bahamonde2024,HolliWass2010,SoderlundVonSchoultz2024}. The separate ratings and linked returns allow us to examine inequality within gender and then within gender--party groups, conditional on other candidate attributes and electoral context.
+
+We exploit naturally arising variation in gendered appearance as an \emph{observational natural experiment} \parencite[118--119]{Titiunik2021}. The classification rests on an explicit assignment assumption that inherited and developmental variation introduces an element of chance into candidates' gender-atypical cue profiles beyond their precise control. Finnish municipal elections provide a substantive setting for this assumption because parties recruit ordinary residents to extensive candidate lists and campaign communication prominently uses headshots \parencite[628--629]{Bahamonde2024}. These practices make it plausible that naturally arising differences remain visible in electoral competition. The external probabilistic component distinguishes this design as a subtype of observational study, while its assignment probabilities remain unknown. Causal identification would additionally require comparability and a well-defined intervention. We therefore investigate conditional inequalities in personal support rather than treating natural assignment as evidence of exchangeability.\footnote{\autoref{sec:oa-natural-experiment} of the Online Appendix formalizes the assignment argument for the continuous appearance contrast, distinguishes assignment from measurement, and sets out the additional assumptions that causal inference would require.}
+
+Our argument is that the electoral consequences of departing from gendered appearance expectations depend on what voters want from a candidate. Conformity to those expectations could bring more votes if voters prefer men who look conventionally masculine and women who look conventionally feminine. A man who appears more feminine, or a woman who appears more masculine, could then receive less support than other candidates of the same gender. Yet the same departure could bring more votes if it suggests qualities that voters value in political leadership. For example, a relatively feminine male appearance might suggest warmth or cooperation. Because voters may value these qualities differently across political settings, we expect the relationship between gendered appearance and electoral support to vary across parties.
+
+We assess this argument by exploiting the observational natural experiment through an original dataset that links separate appearance ratings to personal votes for 1384 candidates in 221 municipalities. We estimate Poisson count models with municipality and party fixed effects and adjust for candidate age and attractiveness. We first compare candidates within gender categories and then allow the appearance association to differ by party. A one-standard-deviation increase in the gender-atypical index is associated with differences in expected personal votes of 20.7\% (95\% CI 8.0\% to 35.0\%) for men and -8.8\% (95\% CI -31.1\% to 20.8\%) for women. The baseline pattern is consistent with an unequal distribution of expected personal votes within male candidacies, with an appearance-associated advantage for more gender-atypical cue profiles. The female cue association remains imprecisely estimated. Its uncertainty does not establish an absence of inequality within female candidacies. Party-specific estimates further indicate that pooled within-gender associations in personal votes conceal variation across electoral contexts. These findings locate electoral inequality among candidates who share a gender category. Because personal votes help determine candidates' positions on electoral lists, differences in that support can matter for access to representation. They also show why gender issues in electoral appearance cannot be understood solely through a comparison of men as a group with women as a group.
+
+Our contribution is to examine whether the relative balance of separately perceived femininity and masculinity is associated with electoral disadvantage or advantage \emph{within gender categories and party contexts}. Existing studies establish gender-by-party differences, but their measurement choices constrain the comparisons they can make. The human ratings in \textcite[26]{Carpinella2016} use a scale from ``1 = very masculine to 9 = very feminine'', placing the two cues at opposite ends of one dimension. \textcite[6,11--12]{Park2023} rate femininity and masculinity separately but report that ``we exclude the traits with low agreement'', which excludes attractiveness from the traits available for their vote-share regressions. We exploit an original dataset of separately elicited, gender-referenced human ratings from a population-based survey and actual personal-vote counts in Finnish open-list elections to examine relative cue balance while accounting for measured attractiveness, age, party, and municipality. Methodologically, we develop an observational natural-experiment argument that makes the external assignment premise and its limits explicit. This assignment argument connects naturally arising appearance variation to electoral inequality without claiming that the design identifies causal effects. The baseline model reveals an appearance-associated inequality that is unexpected under the category-conformity account, with more gender-atypical male profiles receiving greater expected personal votes. The female association remains uncertain, and the estimates do not establish a gender difference. Party estimates suggest advantages in some settings and disadvantages in others, although many contrasts remain imprecise. Together, these findings locate electoral inequality within gender categories and party settings.
+
+This paper proceeds as follows. In \autoref{sec:theory}, we develop the competing expectations about conformity to gendered appearance and the qualities voters seek in leaders. In \autoref{sec:data}, we describe the original dataset, the rating procedure, and the gender-atypical index. In \autoref{sec:strategy}, we develop the observational natural-experiment classification, explain the Poisson specification, and distinguish statistical from causal identification. In \autoref{sec:results}, we present the main findings, examine differences across parties, and assess whether measured attractiveness accounts for the observed appearance-associated inequality. In \autoref{sec:discussion}, we consider the implications for gender and electoral representation, the limitations of the study, and directions for future research.
+
+\section{Gender typicality and electoral evaluation}
+\label{sec:theory}
+
+Candidates who share a gender category can differ in how masculine and feminine they appear. \textcite{Monk2022} explains why a shared category does not imply that its members are perceived in the same way. Some members look more typical of that category than others, and these differences can be associated with unequal evaluations. For candidates, the relevant comparison is therefore among men or among women whose appearances differ. Research on gender variation also supports considering femininity and masculinity separately rather than reducing them to one male--female scale \parencite{Magliozzi2016}. We use separate ratings to describe their relative balance within each gender category. This allows us to ask why some balances might be associated with more electoral support than others.
+
+Voters may prefer candidates who conform to gendered appearance expectations by looking conventionally masculine as men or conventionally feminine as women. The \emph{category-conformity account} predicts that men with more feminine-relative-to-masculine appearances and women with more masculine-relative-to-feminine appearances will receive fewer votes than more gender-typical candidates of the same gender. Rewarding conformity would therefore distribute support unequally among men and among women.
+
+Such a preference could arise if appearances that match gender expectations make candidates easier to classify as male or female. \textcite{Owen2016} show that faces combining gender cues can become less appealing when observers are required to categorize them. Categorization difficulty need not, however, produce disapproval. \textcite{Ansani2024} find positive judgments of androgynous faces despite uncertainty about their category. For difficulty classifying a candidate's apparent gender to contribute to fewer votes, it would also have to lead voters to evaluate that candidate less favorably. Our ratings do not measure categorization difficulty, so it remains a possible explanation rather than an observed process.
+
+Voters may instead value an appearance that suggests desirable leadership qualities even when it departs from expectations about men and women. The \emph{leadership fit account} consequently concerns the match between the qualities attributed to a candidate and those sought in a leader \parencite{Eagly2002}. Experiments by \textcite[1]{Walker2017} illustrate this possibility. After manipulating the faces of clearly male and female targets, they report that ``Masculine-looking persons were seen as colder and more competent than feminine-looking persons.'' An appearance can therefore suggest both a favorable and an unfavorable trait without making the person's gender unclear. Evidence from politicians' portraits shows that these judgments can also differ across political contexts. \textcite[775]{CarpinellaJohnson2013b} found that less sex-typical, more feminine male liberal politicians were judged ``as significantly warmer than their more sex-typical counterparts''. The corresponding warmth association was not established for conservative men.
+
+Whether these impressions bring more votes depends on which qualities voters want. \textcite[5]{SpisakWarriors2012} examined this question in mock elections that varied whether leaders faced war or peacekeeping demands. They summarize their findings as follows. ``In sum, irrespective of their sex, masculine-looking leaders were preferred during war and feminine-looking leaders during peacekeeping.'' Their experiment varied facial cues within male and female targets, showing that the preferred appearance could change with the task. If voters seek cooperation, a relatively feminine male appearance could seem better suited to leadership even though it departs from masculine appearance expectations. Such a preference could favor some male appearance profiles over others. This explanation of inequality among men depends on the qualities voters seek rather than on conformity alone.
+
+The audience provides another reason for the same appearance to be evaluated differently. \textcite[abstract]{LaustsenPetersen2016} find that ``a non-dominant face constitutes a winning face among liberal audiences'', while the advantage reverses among conservatives. Their study concerns dominance, which is different from our femininity--masculinity contrast. It nevertheless shows that an appearance cue can have different electoral value depending on who evaluates it. Evidence from exit-poll respondents also indicates that appearance associations differ across audiences. Republican voters favored candidates with stereotypically conservative-looking faces, whereas Democratic voters showed no corresponding association \parencite{Olivola2018}. These findings provide a reason to examine political context when studying unequal support within gender categories.
+
+Together, this research suggests a possible explanation for an advantage associated with a gender-atypical male appearance. Relatively feminine cues might suggest warmth or cooperation that some voters value in a leader. That possibility concerns perceived appearance and should not be assumed to apply to every form of gender presentation.\footnote{In experiments on campaign language, \textcite[1195]{Wang2023} found that presenting male candidates in communal terms emphasizing relationships and others' needs reduced overall warmth and likability without a significant vote-choice effect. Different forms of gender presentation therefore cannot be assumed to produce the same evaluations.} Its application to Finnish municipal elections remains a hypothesis. The institutional setting alone does not establish that voters prioritized cooperation, and our electoral associations do not show which qualities voters inferred from candidates' photographs.
+
+\subsection{Theoretical expectations}
+
+The preceding accounts imply three expectations about inequality within gender categories. The \emph{conformity expectation} predicts that a more gender-atypical appearance will be associated with fewer votes among both men and women. Men whose appearance is more feminine relative to masculine should receive less support than more conventionally masculine men. Women whose appearance is more masculine relative to feminine should receive less support than more conventionally feminine women. In each comparison, conformity would distinguish candidates who receive more support from others of the same gender.
+
+Under the \emph{cooperative-leadership expectation}, an appearance suggesting warmth or cooperation will be favored where voters seek those qualities in a leader. If voters favor a more feminine-relative-to-masculine balance in both genders, that balance should be associated with more votes among men and among women. It would represent a more gender-atypical appearance among men but a more gender-typical appearance among women. The same preference could therefore reward atypicality among men and conformity among women. Where voters instead seek qualities associated with masculine appearance in competitive leadership, the expected pattern reverses \parencite{SpisakWarriors2012}. These expectations remain conditional because municipal office alone does not establish which leadership qualities voters wanted.
+
+The \emph{contextual expectation} predicts that the relationship between appearance and votes will differ across parties if voters in those settings value different leadership qualities. Earlier findings of candidate gender-by-party differences in facial typicality and campaign imagery support examining this possibility \parencite{Carpinella2016,Park2023}. Party comparisons therefore ask whether an overall association among men or among women conceals different patterns of support within those categories. This expectation does not require a single left--right ordering of appearance advantages. A candidate's party, a voter's ideology, and the qualities inferred from appearance are different attributes. Electoral associations matching an expectation would be consistent with the relevant account, but they would not establish that account's causal explanation. Evidence on voter perceptions and evaluations would be needed to determine how appearance contributes to unequal support.
+
+\section{Data and measurement}
+\label{sec:data}
+The argument requires measures of how citizens perceive candidates and electoral support for those same candidates. We therefore built an original dataset by linking official candidate records and personal-vote counts from Finland's 2017 municipal elections to evaluations of campaign photographs. The Ministry of Justice's returns provide the electoral information.\footnote{Ministry of Justice, 2017 municipal-election results are available in the \href{https://tulospalvelu.vaalit.fi/KV-2017/fi/ladattavat_tiedostot.html}{candidate-level electoral data}.} The photographs are the official campaign portraits that candidates used on election posters and in newspaper advertisements alongside their names and party affiliations \parencite{Bahamonde2024,BerggrenEtAl2010,BerggrenEtAl2017}. Using these images connects the appearance measurements to the visual information available during an actual campaign.
+
+The collection began with more than 10,000 photographs from a universe of 33,618 candidates. We randomly selected 1,500 photographs with the aim of covering candidate gender and backgrounds across Finland \parencite{Bahamonde2024}. Image editing removed identifying information, and a pilot excluded photographs of insufficient quality. These steps prepared a set of campaign portraits for evaluation without relying on names or party labels to convey the appearance attributes.
+
+To obtain the evaluations, we fielded a population-based survey in 2020. Invitations and a reminder were sent to a random sample of 26,500 Finnish-speaking adults aged 18--64 from the population register. A total of 7,920 people participated. We exploit attractiveness, masculinity, and femininity ratings supplied by separate attribute-specific respondent groups. Each respondent evaluated 50 randomly assigned photographs for the assigned attribute \parencite{Bahamonde2024}. Separate groups therefore supplied the three sets of judgments, while random photograph assignment distributed the images across raters. These randomization procedures concern sampling and measurement. The natural-experiment classification instead concerns the assumed probabilistic component in the formation of candidates' appearance before electoral competition.
+
+Direct citizen ratings capture the perceptions central to our argument by assessing how masculine or feminine a candidate appears relative to others of the same age and gender. A software-based classification of facial structure or inferred sex would require further validation before it could be interpreted as the same gender-referenced judgment. Recruiting raters from a population sample also widens the range of citizens contributing evaluations compared with the convenience samples common in earlier electoral appearance research \parencite{Mattes2010,Rosar2008,WiggintonStockemer2021,Bahamonde2024}. The method thus brings the appearance measure closer to the evaluations relevant to our argument.
+
+The survey also took steps to reduce the influence of candidate recognition and uneven exposure. Respondents did not evaluate candidates from their own electoral district. Images recognized by a majority of their raters were excluded, amounting to 4 photographs. The assignment procedure gave priority to images that had received fewer ratings, helping distribute evaluations across the photograph pool. A neutral screen with a university logo appeared between images, and respondents could take as much time as needed to provide their judgments \parencite{Bahamonde2024}. These procedures supported evaluations of appearance while limiting cues from familiarity with the candidate.
+
+The femininity and masculinity questions asked how the person looked relative to \emph{others of the same age and gender}, using separate 1--5 scales \parencite{Bahamonde2024,HossEtAl2005}. Respondents were reminded that men and women can both appear masculine or feminine. These reference categories are central to our question: a high masculinity rating for a woman locates her relative to other women, while a high femininity rating for a man locates him relative to other men. The questions therefore describe variation within gender categories without treating the appearance ratings as measures of gender identity.
+
+Attractiveness was rated relative to others of the same age and gender as a separate attribute, following the measurement precedents used in \textcite{Bono2017,GriffinLanglois2006,Tu2022}. This separation is important because a gendered appearance might also be judged attractive. It allows us to exploit the original dataset to examine whether the appearance-associated difference in votes remains after accounting for measured attractiveness. \autoref{sec:attractiveness} develops that comparison.
+
+We average each attribute's ratings for each candidate, following electoral appearance research that aggregates multiple observers' judgments \parencite{BerggrenEtAl2010}. Matching the available candidate averages with electoral records gives an original dataset of 1389 candidates with separate appearance measurements and personal-vote counts. We exploit complete observations on the baseline model's variables for 810 men and 574 women in 221 municipalities. Linking these judgments to support for the same candidates makes it possible to examine electoral inequality within gender and political context.
+
+We construct the \emph{gender-atypical cue contrast} in \autoref{eq:axes} from femininity and masculinity ratings standardized separately within each gender category. Centering each trait on its gender-group mean and scaling it by its gender-group standard deviation yields candidate $i$'s scores $z^F_i$ and $z^M_i$. The direction factor $s_g=+1$ for men and $s_g=-1$ for women orients the contrast toward femininity relative to masculinity among men and masculinity relative to femininity among women. The resulting index is
+\begin{equation}
+ A_i=\frac{s_g(z^F_i-z^M_i)}{\operatorname{sd}_g(z^F-z^M)}.
+ \label{eq:axes}
+\end{equation}
+Higher $A$ therefore captures a more feminine-relative-to-masculine appearance among men and a more masculine-relative-to-feminine appearance among women. Scaling the contrast by the within-gender standard deviation of $z^F-z^M$ expresses these departures in a common unit, with one unit of $A$ corresponding to one standard deviation within either gender category.
+
+For illustration, a man whose masculinity rating is average among men and whose femininity rating is one standard deviation above the male average has $A=0.55$ in \autoref{eq:axes}. A woman whose femininity rating is average among women and whose masculinity rating is one standard deviation above the female average has $A=0.54$. The positive values capture the relatively feminine male profile and the relatively masculine female profile as departures from their respective gender groups' appearance expectations.
+
+Because the ratings are gender-referenced, $A=0$ denotes an average relative contrast within the candidate's gender category. It does not mark a boundary at which observers become uncertain about gender. The index thus measures one aspect of perceived appearance rather than gender identity or categorization difficulty.\footnote{Figure~\ref{fig:oa-support} in the Online Appendix shows the underlying femininity and masculinity ratings. We also estimate balance between the raw ratings, controlling for their mean intensity. \autoref{sec:oa-balance} provides this alternative measure's definition and estimates.}
+
+Because the contrast locates candidates within their gender category, Table~\ref{tab:summary} reports the outcome, appearance measures, and covariates separately for men and women in the sample that we exploit below. This organization shows the variation within each category on which the subsequent comparison of electoral inequality rests.
+
+\begin{table}[!htbp]
+\centering\small
+\caption{Summary statistics by candidate gender}
+\label{tab:summary}
+\begin{tabular}{@{}lrrc@{\hspace{1.5em}}rrc@{}}
+\toprule
+ & \multicolumn{3}{c}{Men ($N=810$)} & \multicolumn{3}{c}{Women ($N=574$)} \\
+\cmidrule(lr){2-4}\cmidrule(l){5-7}
+Variable & Mean & SD & Min.--Max. & Mean & SD & Min.--Max. \\
+\midrule
+Personal votes & 88.93 & 267.74 & $1$--$4,653$ & 95.22 & 224.34 & $1$--$3,642$ \\
+Gender-atypical cue contrast ($A$) & 0.00 & 1.00 & $-2.33$--$3.70$ & 0.00 & 1.00 & $-2.49$--$2.78$ \\
+Femininity rating & 1.84 & 0.40 & $1.06$--$3.41$ & 3.35 & 0.47 & $2.16$--$4.61$ \\
+Masculinity rating & 3.10 & 0.40 & $1.80$--$4.36$ & 2.11 & 0.36 & $1.24$--$3.35$ \\
+Attractiveness rating & 2.76 & 0.45 & $1.44$--$4.02$ & 3.03 & 0.50 & $1.32$--$4.35$ \\
+Candidate age (years) & 46.20 & 10.62 & $18$--$63$ & 45.13 & 10.30 & $20$--$63$ \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\linewidth}\footnotesize
+$N=1,384$ candidates in 221 municipalities and 10 parties. Summary statistics include means, standard deviations (SD), and observed ranges (Min.--Max.). Appearance measures are candidate averages of 1--5 ratings. Appearance judgments are referenced to people of the same gender and age, so their means do not measure absolute differences between men and women. Within-gender standardization gives $A$ a mean of zero and a standard deviation of one in each category. Candidate age refers to the 2017 election. Personal votes have a median of 37.50 among men (first--third quartiles, 18.00--74.00) and 44.00 among women (19.00--97.75).
+\end{minipage}
+\end{table}
+
+\section{Empirical strategy}
+\label{sec:strategy}
+\subsection{An observational natural experiment}
+\label{sec:natural-experiment}
+We treat naturally arising gendered appearance as an observational natural experiment, conditional on the assignment premise set out below \parencite[118--119]{Titiunik2021}. Researchers neither designed nor implemented the processes that generated candidates' appearance, and the full probabilities of alternative appearance allocations cannot be recovered. The premise is that these processes include a probabilistic component outside candidates' precise control. This argument concerns the origin of appearance variation. It does not imply equal assignment probabilities or independence from potential electoral outcomes because external chance can coexist with systematic differences in candidates' electoral prospects.
+
+For our application, candidates are the units and the continuous gender-atypical cue contrast describes their appearance condition. The external factor is naturally arising variation in inherited facial morphology and development. Genetic contributions to normal facial morphology are documented by \textcite{LiuEtAl2012}. We make the further assignment assumption that an uncontrollable component of this variation affects the balance of gendered cues visible in campaign portraits, leaving candidates with nondegenerate ex ante possibilities for the gender-atypical contrast itself. The biological evidence motivates this premise but does not verify the assignment law for our index. Candidates can influence grooming, expression, and portrait selection while remaining unable to choose every feature of their face precisely. An external chance component can therefore persist alongside systematic presentation choices \parencite[118--119]{Titiunik2021}. The counterfactual allocation probabilities cannot be reconstructed from the portraits, ratings, and returns available in the study. Our natural-experiment claim accordingly rests on a substantive assignment assumption, rather than a recovered or implemented randomization protocol.
+
+The Finnish municipal setting supports the plausibility that naturally arising differences remain visible among candidates. Parties have incentives to assemble extensive lists and actively recruit ordinary residents, including individuals who are not pursuing professional political careers \parencite[628]{Bahamonde2024}. The emphasis on functionality and frugality is also reflected in portraits showing everyday clothing alongside formal attire. Campaign communication prominently relies on headshots in posters and newspaper advertisements, with limited individual television and radio campaigning \parencite[628--629]{Bahamonde2024}\parencite[80,83]{BerggrenEtAl2017}. These features provide contextual support for the assignment premise by linking a broad candidate pool to routine representations of appearance. They do not establish random entry into politics, equal candidate exposure, or the absence of strategic presentation. The assignment assumption must therefore apply to the candidates who enter our sample, independently of the contextual evidence supporting it.
+
+We exploit this natural experiment to characterize conditional electoral inequality. Probabilistic appearance assignment does not establish unconfoundedness or equiprobable assignment, and the study has no known randomization distribution for inference \parencite[119,122--126]{Titiunik2021}. We consequently do not assume that candidates with different cue profiles are causally exchangeable. Municipality and party fixed effects and candidate controls define the statistical comparison, while uncertainty is estimated from the observed vote model. \autoref{sec:oa-natural-experiment} formalizes the extension from binary treatment assignment to a continuous appearance condition, the distinction between latent appearance and its ratings, and the additional restrictions that causal identification would require. The main estimates remain conditional associations in personal support.
+
+\subsection{Conditional vote-count specification}
+\label{sec:vote-model}
+The outcome \texttt{Votes}$_i$ is the number of personal votes received by candidate $i$. Finnish municipal elections use open-list proportional representation. Each voter selects an individual candidate, and the vote also contributes to the candidate's electoral list. Pooled list votes determine the allocation of seats, while personal votes determine candidates' positions within the list \parencite[604,626]{HolliWass2010}. These rules make personal support important for competition among candidates on the same list and for access to representation \parencite[13,16]{SoderlundVonSchoultz2024}. Votes therefore provide a substantive measure of how electoral support is distributed among candidates. This choice also connects our measurement of electoral support to appearance research using actual election returns \parencite{Efran1974,Bahamonde2024}.
+
+We exploit the original dataset to estimate the expected number of votes conditional on candidate appearance and electoral context. Following \textcite{Bahamonde2024}, we use Poisson pseudo-maximum likelihood (PPML) to estimate the conditional expected vote count. The Poisson specification relates that expectation to the gender-atypical index, while municipality fixed effects account for differences in the scale and shared context of local elections. Party fixed effects account for differences in support across parties. Age and attractiveness enter as candidate controls, and an interaction allows the association between atypicality and votes to differ between men and women.
+
+\begin{equation}
+\begin{aligned}
+ \mu_i &= \mathrm{E}[\texttt{Votes}_i\mid
+ \texttt{Atypicality}_i,\texttt{Woman}_i,\mathbf{X}_i,c(i),p(i)],
+ \\[-0.1em]
+ \log\mu_i &= \alpha_{c(i)}+\lambda_{p(i)}+\beta_1\texttt{Woman}_i
+ +\beta_2\texttt{Atypicality}_i
+ +\beta_3(\texttt{Woman}_i\times\texttt{Atypicality}_i)
+ \\[-0.1em]
+ &\quad+\beta_4\texttt{Age}_i+\beta_5\texttt{Attractiveness}_i.
+\end{aligned}
+\label{eq:model}
+\end{equation}
+With \texttt{Atypicality} given by $A$ in \autoref{eq:axes} and \texttt{Woman} indicating a female candidate, the index's association with log expected votes is $\beta_2$ among men and $\beta_2+\beta_3$ among women. The log link yields positive expected vote counts and expresses the appearance association proportionally, allowing percentage differences in support to be compared across municipalities of different sizes. Estimation uses the observed vote counts in their original units.
+
+Statistical identification of the model coefficients relies on variation in appearance and votes after accounting for municipality and party differences, mean-centered age, and measured attractiveness. The fixed effects remove common differences across municipalities and parties, but they do not remove every candidate-specific influence on support. In particular, recognition, campaign resources, and selection into candidacy can remain related to both appearance and votes. The model therefore estimates appearance-associated differences in expected support conditional on the observed controls. Causal identification would additionally require a well-defined appearance intervention and restrictions ensuring exchangeability, adequate support, and consistency. The specification does not establish those restrictions or identify the effect of changing a candidate's appearance.\footnote{We also adjust for joint cue level, separating the combined rating levels from their contrast in Online Appendix Figures~\ref{fig:oa-joint-votes} and~\ref{fig:oa-joint-share}. Quadratic terms allow the appearance association to change across index values and depend on how the cues combine. Table~\ref{tab:oa-quadratic} reports the coefficients, Table~\ref{tab:oa-nonlinear-tests} their joint tests, and Figure~\ref{fig:oa-surface} the fitted surface.}
+
+The Poisson specification targets this conditional mean without requiring the outcome's entire distribution to be Poisson when the mean is correctly specified \parencite{SantosSilva2006}. The conditional variance may therefore differ from the mean. We also allow outcomes to be dependent among candidates in the same municipality, using municipality-clustered sandwich standard errors with a finite-sample correction and $t_{G-1}$ intervals, where $G$ is the number of municipalities. These intervals condition on the candidate mean ratings used to construct the contrast and do not propagate uncertainty in those estimated means. \autoref{sec:oa-diagnostics} of the Online Appendix reports dispersion and sample diagnostics.
+
+We use the fitted model to express the appearance association as expected personal votes. At each value of the gender-atypical index, we predict votes for every candidate while retaining the candidate's observed age, attractiveness, party, and municipality. We then average these predictions separately among men and among women.\footnote{Predictions for the $n_g$ candidates in gender group $g$ are averaged at index value $a$, retaining each candidate's other observed characteristics. The resulting average is \begin{equation}\overline{\mu}_g(a)=\frac{1}{n_g}\sum_{i:g(i)=g}\widehat{\mu}_i(a).\label{eq:predictions}\end{equation}} The resulting curves compare expected support across appearance values while keeping the other observed characteristics in each gender group constant. Figure~\ref{fig:predicted-votes} presents these differences as appearance-associated electoral inequality within gender.\footnote{Online Appendix \autoref{eq:share-predictions} defines average municipal vote shares, and Figure~\ref{fig:predicted-share} expresses the same fitted model on that scale.} These predictions describe the allocation of personal votes. They do not estimate the probability of winning a council seat.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/predicted_votes.pdf}
+\caption{Predicted expected personal votes in the observational natural experiment, with baseline controls. Curves vary the atypical cue contrast over the within-gender 10th--90th percentile range and average over observed candidate characteristics, parties, and municipalities. Shading gives municipality-clustered 95\% confidence intervals for the conditional mean. Rug strips beneath each panel show observed candidates within the displayed cue range. Panel headings report the full gender-group sample sizes. Predictions describe conditional associations.}
+\label{fig:predicted-votes}
+\end{figure}
+
+\section{Results}
+\label{sec:results}
+Figure~\ref{fig:predicted-votes} presents the observational natural experiment's main results as unequal expected personal support within gender categories.\footnote{Table~\ref{tab:oa-baseline-regression} in the Online Appendix presents the corresponding Poisson regression table, reporting coefficients and municipality-clustered standard errors for the baseline model underlying Figure~\ref{fig:predicted-votes}.} Table~\ref{tab:main} quantifies appearance-associated inequality within gender using the contrast in \autoref{eq:model}. A one-SD increase in the contrast is associated with differences in expected votes of 20.7\% (95\% CI 8.0\% to 35.0\%) for men and -8.8\% (95\% CI -31.1\% to 20.8\%) for women. The interval for men lies entirely above zero. The interval for women includes zero. The estimated appearance-associated advantage indicates an unequal distribution of expected personal votes within male candidacies. These estimates do not support a uniform electoral penalty for a gender-atypical cue balance. To distinguish inequality within gender from differences in its appearance association across genders, we compare the two associations directly. The interaction test gives $p=0.054$. This test does not provide sufficient evidence that the percentage change in expected personal votes associated with a one-standard-deviation increase in the index differs between men and women.
+\par
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Gender-atypical appearance and expected personal votes with baseline controls}
+\label{tab:main}
+\begin{tabular}{lcc}
+\toprule
+Cue & Men (\%) & Women (\%) \\
+\midrule
+Gender-atypical contrast ($A$) & 20.7 [8.0, 35.0] & -8.8 [-31.1, 20.8] \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{\linewidth}\footnotesize
+Entries are percentage differences in expected votes for a one-SD increase in the atypical cue contrast, with municipality-clustered 95\% confidence intervals in brackets. The model includes 1384 candidates in 221 municipalities, with municipality and party fixed effects, age, and attractiveness.
+\end{minipage}
+\end{table}
+
+Figure~\ref{fig:predicted-votes} shows how these estimates distribute expected personal support among candidates sharing a gender category. Among men, the baseline model associates greater expected personal votes with more feminine-relative-to-masculine cue profiles at the same values of the observed controls. This association describes an unequal distribution of personal votes within this gender category. For women, the confidence interval accommodates both advantages and disadvantages in expected personal votes. The cue association remains imprecisely estimated. This uncertainty does not establish an absence of appearance-associated inequality within this gender category. Within male candidacies, the positive baseline association locates an appearance-associated advantage in the distribution of expected personal votes. This finding runs against the conformity expectation that a more gender-atypical cue balance should reduce personal votes. The inequality among male candidacies therefore challenges an account in which conformity always concentrates support among more gender-typical candidates. Instead, expected votes can be higher for a profile that departs from masculine appearance expectations. This gives Monk's argument an electoral implication. Atypicality can mark advantage as well as disadvantage within a shared category \parencite{Monk2022}.
+
+Explaining this distribution of expected votes requires asking why a less gender-typical male profile could be favored. The cooperative-leadership account supplies one possibility. More feminine liberal men were judged warmer in \textcite{CarpinellaJohnson2013b}, while \textcite{SpisakWarriors2012} experimentally showed that feminine-looking leadership gained value in peacekeeping rather than war scenarios. Those findings identify a possible route from cue balance to unequal support among men if some voters infer and value cooperation. They do not establish that Finnish voters made those inferences. The association within female candidacies leaves the full cooperative-leadership benchmark unresolved. Its interval accommodates both favorable and unfavorable associations in expected personal votes. This uncertainty does not establish an absence of appearance-associated inequality among women. The interaction test likewise leaves a distinct male--female association unestablished, so this inequality pattern does not identify a mechanism confined to male candidates.
+
+This interpretation also explains why the result cannot be reduced to a separate masculinity premium. \textcite{Park2023} report a positive overall association between perceived masculinity and US vote share, whereas our contrast concerns the balance of masculinity and femininity relative to same-gender peers. The two results therefore concern different sources of appearance-associated inequality.\footnote{Our index can increase through higher femininity, lower masculinity, or both, so its association does not identify a separate return to either cue. \textcite{Park2023} evaluate whole campaign photographs and enter the cues separately.} A within-gender average can nevertheless combine contexts in which different appearance profiles carry different value. We therefore ask whether the appearance-associated inequality in Figure~\ref{fig:predicted-votes} extends across party settings.
+
+\subsection{Party-specific associations}
+The contextual expectation implies that inequality within a gender category may take a different direction or magnitude across political settings. We exploit the dataset's party information to examine this implication, allowing cue slopes and gender intercepts to vary by candidate party while retaining the baseline controls. Let $\log\mu_i^{\mathrm{baseline}}$ denote the linear predictor in \autoref{eq:model}. The secondary specification is
+\begin{equation}
+\begin{aligned}
+ \log\mu_i^{\mathrm{party}} &= \log\mu_i^{\mathrm{baseline}}
+ +\sum_{p\ne p_0}\mathbf{1}(\texttt{Party}_i=p)
+ \left[\delta_p\texttt{Woman}_i+\kappa_p\texttt{Atypicality}_i\right.
+ \\[-0.1em]
+ &\qquad\left.+\tau_p(\texttt{Woman}_i\times\texttt{Atypicality}_i)\right],
+\end{aligned}
+\label{eq:party-model}
+\end{equation}
+Relative to reference party $p_0$, the additional terms allow the atypicality association to vary across parties and by gender within each party. All coefficients are re-estimated in the expanded Poisson specification, which retains the baseline log link and expresses these associations as proportional differences in expected votes. Party disaggregation exploits the same observational natural experiment and does not introduce a separate source of assignment. Estimation still uses candidate-level variation conditional on the observed controls and fixed effects, with the same limits on causal identification as the baseline specification. Candidate party identifies the political setting of the comparison, but it does not identify the ideology of the voters who cast the ballots. The atypicality scale remains the within-gender scale defined in \autoref{eq:axes}. The model includes 1380 candidates in 8 parties and 221 municipalities.\footnote{We restrict party-specific comparisons to parties with at least 5 candidates in each gender category. This excludes PIR (2 men, 1 woman) and SKP (1 man, 0 women), totaling 4 candidates. They remain in the primary analysis. Online Appendix Table~\ref{tab:oa-party} reports the party-specific contrasts and candidate and municipality counts.}
+
+Figure~\ref{fig:party-votes} disaggregates the appearance-associated inequality summarized in Figure~\ref{fig:predicted-votes}.\footnote{Figure~\ref{fig:party-votes} expresses these associations as expected personal votes, averaging over the observed candidate characteristics and municipalities within each party and gender. Rug strips show the distribution of observed cue profiles. Confidence bands are omitted to focus on substantive point-estimate patterns. Full municipality-clustered intervals for the one-SD contrasts and joint heterogeneity tests are reported in \autoref{sec:oa-party} of the Online Appendix. Differences in panel levels also reflect the composition of these groups, and the panels use separate vertical scales. Proportional contrasts in Table~\ref{tab:oa-party} therefore provide the direct comparison of slopes. Cells with few candidates or municipalities offer limited information about their party-specific association. Their separate levels do not estimate a gender gap in support.} Within the National Coalition Party, a more feminine appearance relative to masculine appearance is associated with more expected personal votes among both men and women. This pattern favors departure from masculine appearance expectations among men and conformity to feminine appearance expectations among women. The one-standard-deviation estimates for the gender-atypical index are 22.1\% among men and -38.0\% among women, with opposite signs reflecting the gender-specific orientation of the index. These associations describe appearance-associated electoral inequality within each gender category and are consistent with a preference for feminine cues in this party.
+
+Among women, a more masculine-relative-to-feminine profile is associated with greater expected personal votes in the Centre Party and fewer in the Green League. The corresponding one-standard-deviation contrasts are 63.0\% in the Centre Party and -46.7\% in the Green League. These opposing point estimates illustrate how an imprecise pooled female association can coexist with appearance-associated electoral inequality within party contexts. This is the inequality implication of the contextual expectation. The same relative cue shift can be associated with advantage in one party context and disadvantage in another, so gender membership alone cannot describe the appearance-linked distribution of electoral support.
+
+Because these contrasts allow the value of a cue to differ within gender and across parties, they speak to the candidate gender-by-party differences reported by \textcite{Carpinella2016}. In their actual-election models, less masculine Republican men and more feminine Republican women were more likely to win. Their results therefore also separate a feminine-cue advantage from a uniform atypicality penalty. Their vote-margin analysis did not reproduce that binary-election pattern, reinforcing the distinction between gaining support and winning office. Our personal-vote counts and gender-relative contrast extend the question to support allocated within Finnish party lists, rather than reproducing their US party pattern or binary election outcome.
+
+The difference between receiving votes and winning office does not remove the question of why cue value changes across political settings. The varying associations fit the contextual argument in \textcite{LaustsenPetersen2016}, but their dominance measure and ideological audiences differ from our appearance contrast and candidate-party groups. A possible leadership-fit explanation consequently remains a claim about why the cue's value might vary, rather than an identified explanation of these party associations.
+
+Of the 16 party--gender one-SD contrasts in expected personal votes, 9 are not statistically significant at the 5\% level. The panels thus inform the contextual account of inequality, while uncertainty limits claims about individual party advantages. That qualification also applies to the distribution of expected support among men, whose apparent advantages depend on covariate and sample choices.\footnote{Online Appendix Table~\ref{tab:oa-party-sensitivity} reports these comparisons. The National Coalition male contrast changes from 22.1\% to -4.9\% with prior-office controls. The Green male contrast changes from 27.9\% to -27.7\% after excluding the highest-vote 1\% of candidates. Within Social Democratic male candidacies, the fitted one-SD contrast in expected personal votes changes from 213.5\% to 28.9\% after adjustment for prior office, illustrating the sensitivity of its magnitude.} The party breakdown therefore qualifies the inequality in Figure~\ref{fig:predicted-votes}. Its within-male association varies across parties, and the uncertain pooled female association does not establish an absence of appearance-associated inequality within female candidacies.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/party_predicted_votes.pdf}
+\caption{Predicted expected personal votes by party and gender, with baseline controls. Curves vary the cue contrast over each party--gender group's 10th--90th percentile range and average over that group's observed candidate contexts. Each solid curve shows the continuous fitted predictions throughout this range. Confidence bands are omitted to make the fitted personal-vote associations easier to compare. 9 of the 16 party--gender contrasts are not statistically significant at the 5\% level. Online Appendix Table~\ref{tab:oa-party} reports intervals for the corresponding one-SD contrasts. Rug strips show observed candidates within the displayed cue range, with men (M) above women (W). Panel headings report full group sample sizes. Vertical scales differ between panels.}
+\label{fig:party-votes}
+\end{figure}
+
+
+\subsection{Distinguishing gendered appearance from attractiveness}
+\label{sec:attractiveness}
+Does the appearance-associated inequality simply reflect differences in attractiveness? This is a consequential alternative because attractive candidates can receive more votes \parencite{BerggrenEtAl2010,Bahamonde2024}. If the gender-atypical index merely captured attractiveness, it would add little to the explanation of unequal support. Our original dataset allows us to examine that possibility directly because attractiveness, masculinity, and femininity were rated separately. We exploit these measurements to compare how the scores relate to one another and whether accounting for attractiveness explains the appearance-associated differences in votes.
+
+Figure~\ref{fig:attractiveness-pairs} pairs each candidate's gender cue balance with that candidate's attractiveness rating, separately for men and women. This comparison shows whether relatively feminine appearance is associated with greater measured attractiveness among candidates of the same gender. We use the signed cue balance $B=A$ among men and $B=-A$ among women. This orientation places relatively masculine profiles at lower values and relatively feminine profiles at higher values in both groups, with zero corresponding to each group's average balance.
+
+Among men, the two measurements have little linear or rank-order relationship. The Pearson correlation is 0.064, and the Spearman correlation is 0.056. A more feminine appearance relative to masculine appearance therefore does not simply pick out the men rated as more attractive. Among women, the corresponding correlations are 0.764 and 0.744. Women rated as more feminine relative to masculine are also commonly rated as more attractive. The data therefore distinguish these appearance dimensions more clearly among men than among women.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/attractiveness_cue_pairs.pdf}
+\caption{Gender cue balance and attractiveness by recorded gender. Each point pairs one candidate's signed cue balance $B$ with that candidate's mean attractiveness rating. Lines summarize the paired relationships using descriptive least-squares fits. $B$ increases with femininity relative to masculinity within either gender. $B=A$ for men and $B=-A$ for women. Headings report group sample sizes. Attractiveness uses the 1--5 rating scale.}
+\label{fig:attractiveness-pairs}
+\end{figure}
+
+The next comparison asks whether attractiveness adjustment accounts for the observed difference in electoral support. Table~\ref{tab:attractiveness-adjustment} compares three Poisson specifications on the same 1384 candidates. The first omits attractiveness, the baseline includes it as a linear control, and the third allows the attractiveness association to vary by gender and take a nonlinear form. The flexible specification uses natural cubic splines with 3 degrees of freedom, interacted with gender. All three retain the same age, party, and municipality controls and the same gender-atypical index. This comparison changes the treatment of measured attractiveness while holding the other parts of the comparison constant.
+
+\begin{table}[!htbp]
+\centering\small
+\caption{Atypicality contrasts under alternative attractiveness adjustments}
+\label{tab:attractiveness-adjustment}
+\begin{tabular}{p{0.40\linewidth}rcc}
+\toprule
+Attractiveness adjustment & $N$ & Men (\%) & Women (\%) \\
+\midrule
+Attractiveness omitted & 1384 & 18.7 [3.7, 35.9] & -32.6 [-44.5, -18.2] \\
+Baseline linear attractiveness & 1384 & 20.7 [8.0, 35.0] & -8.8 [-31.1, 20.8] \\
+Gender-specific attractiveness spline & 1384 & 21.0 [8.1, 35.5] & -16.4 [-34.6, 7.0] \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{\linewidth}\footnotesize
+Entries are percentage differences in expected personal votes for a one-SD increase in $A$, with municipality-clustered 95\% intervals in brackets. All specifications use the same 1384 candidates and retain all other baseline controls. The flexible adjustment uses gender-specific natural cubic splines for attractiveness.
+\end{minipage}
+\end{table}
+
+Among men, the estimated change in expected personal votes for a one-standard-deviation increase in the index is 18.7\% without attractiveness adjustment, 20.7\% with the baseline adjustment, and 21.0\% under nonlinear attractiveness adjustment that varies by gender. The male cue association is positive under nonlinear attractiveness adjustment that varies by gender, with its confidence interval entirely above zero. Appearance-associated electoral inequality among men is therefore evident even under the flexible attractiveness specification. Together with the weak relationship between the two ratings among men, this result weighs against treating the gender-atypical index as a proxy for measured attractiveness.
+
+Among women, the estimated change is -32.6\% without attractiveness adjustment and -8.8\% with the baseline adjustment. With the flexible adjustment, it is -16.4\% (95\% CI -34.6\% to 7.0\%). The confidence interval includes both an advantage and a disadvantage in expected votes. Because women rated as more feminine relative to masculine are also commonly rated as more attractive, the data provide less separation between these appearance dimensions among women. The direction of the adjusted difference in support remains uncertain. That uncertainty does not establish an equal distribution of electoral support among female candidates.
+
+These findings give attractiveness different implications for the interpretation of inequality among men and among women. Among men, the cue balance has little relationship with measured attractiveness, and the appearance-associated advantage remains after the flexible adjustment. The evidence therefore weighs against explaining this inequality solely through the attractiveness scores available in the dataset. Among women, the close relationship between the ratings makes their separate contributions harder to distinguish. This comparison strengthens the interpretation of a distinct conditional appearance association among men while preserving the uncertainty surrounding support among women. Causal identification of the underlying process remains a further task. Conditioning on attractiveness does not identify a direct effect of gendered appearance or rule out a pathway through attractiveness. The adjusted associations also leave open whether unmeasured aspects of attractiveness or shared perceptual judgments contribute to the votes candidates receive.
+
+\section{Discussion}
+\label{sec:discussion}
+Does departure from gender stereotypes carry an electoral penalty? We exploit an observational natural experiment through an original dataset of separately rated appearance cues and linked electoral returns to frame the answer as a question about inequality within gender. In the baseline comparison, expected support is distributed unequally among male candidacies, favoring a cue profile that departs from masculine appearance expectations. The corresponding female association remains uncertain. That uncertainty does not establish an equal distribution of support among women. Party disaggregation further shows that a gender-level average can conceal different appearance associations within political contexts. Thus, the conditional patterns do not show a uniform conformity penalty, while locating the question of advantage within categories and settings.
+
+This location of inequality develops the infracategorical perspective \parencite{Monk2022}. Treating men as a comparatively advantaged category does not determine which male appearance profiles receive the most support. Similarly, uncertainty about a pooled female association does not exhaust the distinctions among female candidates. The relevant question is how candidates are positioned within their gender category and how that position acquires value in a political context. Warmth and cooperative leadership provide one possible explanation of the distribution of expected votes among men \parencite{CarpinellaJohnson2013b,SpisakWarriors2012}. Because the party profiles vary, however, any such explanation must account for differences in what audiences infer and value. It cannot assume a common meaning for every departure.
+
+Personal votes determine candidates' positions within electoral lists \parencite{HolliWass2010,SoderlundVonSchoultz2024}. Unequal support associated with appearance can therefore matter for representation, although our model does not estimate seat-winning probabilities. Because these differences arise within gender and party contexts, comparing men and women as groups can overlook inequalities among candidates of the same gender.
+
+Our natural-experiment claim concerns an external probabilistic component in appearance, while our empirical findings concern the unequal distribution of support conditional on observed attributes. Making this distinction explicit allows naturally arising variation to inform an infracategorical account without treating the natural-experiment label as a substitute for causal identification. The Finnish recruitment and campaign setting provides contextual grounds for the assignment premise \parencite[628--629]{Bahamonde2024}. The interpretation nevertheless depends on whether the assumed external variation remains present in the photographed cues and among the candidates represented by the dataset.
+
+Several limitations qualify the natural-experiment classification itself. Neither a genetic contribution to facial morphology nor candidates' incomplete control of their appearance demonstrates a nondegenerate assignment distribution for our perceived cue contrast. The external probabilistic component is an explicit substantive assumption whose unit-level probabilities cannot be recovered from these data \parencite[118,125]{Titiunik2021}. Grooming, facial expression, camera angle, and portrait selection may affect the same ratings. These choices are compatible with the framework if an uncontrollable component remains, but a measure dominated by strategic presentation would weaken the classification. Broad recruitment of residents reduces concern about an exclusively professional candidate pool. It does not rule out selective entry, nomination, or photograph availability. Conditioning on candidacy can also induce dependence between appearance and vote-relevant resources, even if some earlier appearance variation arose by chance. The appearance-assignment premise must therefore apply within the selected candidate population, rather than being inferred from biological variation in the population at large.
+
+Further limitations concern causal identification within this observational subtype. External assignment need not imply exchangeability, and inherited or developmental determinants of appearance may also be related to family background, health, or other determinants of electoral support \parencite[119,122--124]{Titiunik2021}. Recognition and campaign resources can likewise remain associated with both cues and votes. The index can increase through different combinations of femininity and masculinity, so equal index values need not represent a single well-defined intervention. Attractiveness, party affiliation, and prior political office are also not automatically pre-assignment covariates when the proposed external component originates before a candidate's political career. Their adjustment does not identify a direct appearance effect. Finally, candidates compete for votes within shared elections, leaving potential interference across candidates relevant to any future causal estimand. For these reasons, the fixed effects, controls, and natural-experiment classification do not establish conditional unconfoundedness, treatment-version consistency, or an identified causal response to appearance.
+
+The scope and precision of the observed inequality require additional qualifications. Estimates depend on prior-office adjustment and unusually high-vote candidates.\footnote{Online Appendix Table~\ref{tab:oa-sensitivity} compares municipality-by-party fixed effects, separate-gender specifications, and upper-tail vote exclusions. Figures~\ref{fig:oa-votes} and~\ref{fig:oa-share} compare predictions with and without incumbency and parliamentary-office controls. Table~\ref{tab:oa-party-sensitivity} reports the corresponding party comparisons.} The post-election ratings reflect Finnish-speaking adults in the survey's age range, rather than the impressions or ideology of actual voters. The vote-model intervals omit uncertainty in candidates' mean ratings. The displayed cue ranges document observed support, but they do not establish counterfactual positivity for every candidate \parencite[125--126]{Titiunik2021}. Neither recorded gender nor the index measures gender identity or categorization uncertainty. These limits concern the cause, measurement, and scope of inequality. They do not establish that support is distributed equally.
+
+Future research can strengthen the assignment argument by comparing repeated portraits and facial-structure measures to determine how much of the rated cue variation persists across presentation choices. Information on prospective candidates and party recruitment would also clarify whether selection changes the distribution of naturally arising profiles. Such evidence would address the external assignment premise without, by itself, establishing exchangeability. Experiments can then strengthen causal identification by varying gendered appearance and attractiveness separately in matched portraits. Cooperative and competitive leadership tasks would test when voters favor each appearance. Warmth, competence, and dominance ratings would identify inferred qualities. Gender-categorization confidence and response time would distinguish these judgments from uncertainty about whether a person appears male or female. Measuring voter ideology and varying party labels would separate audience preferences from party context. Replication across elections, including older and Swedish-speaking raters, would test how widely the findings apply.
+
+% AMBIGUITY_MAIN_END
+\newpage
+
+\FloatBarrier
+\printbibliography[title={References}]
+
+\newpage
+
+
+\FloatBarrier
+\appendix
+\section*{Online Appendix}
+\addcontentsline{toc}{section}{Online Appendix}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\renewcommand{\thefigure}{OA~\arabic{figure}}
+\renewcommand{\thetable}{OA~\arabic{table}}
+\renewcommand{\theequation}{OA~\arabic{equation}}
+\renewcommand{\theHfigure}{oa.\arabic{figure}}
+\renewcommand{\theHtable}{oa.\arabic{table}}
+\renewcommand{\theHequation}{oa.\arabic{equation}}
+\renewcommand{\thesection}{OA~\arabic{section}}
+\setcounter{section}{0}
+
+\section{Natural assignment and the scope of identification}
+\label{sec:oa-natural-experiment}
+
+We formalize the natural-experiment claim as an observational assignment argument \parencite[118--119]{Titiunik2021}. This classification rests on an explicit assumption about the source of variation in the campaign portraits. We assume that inherited and developmental processes contribute a stochastic component beyond candidates' precise control, while recruitment and presentation choices can contribute systematic components. Broad recruitment of ordinary residents and the prominent use of headshots in posters and newspaper advertisements support this interpretation in Finnish municipal elections \parencite[628--629]{Bahamonde2024}. The classification neither establishes exchangeability nor identifies a causal effect on personal votes.
+
+\subsection{The appearance contrast and its assignment mechanism}
+
+Let $C_i$ indicate candidacy and $I_i$ indicate inclusion in the estimation sample, with $I_i=1$ implying $C_i=1$. The selected indices in recorded gender category $g$ are $\mathcal I_g=\{i\mid I_i=1,g_i=g\}$. All assignment statements below concern this selected candidate population. Let $E_i$ summarize naturally arising appearance components, $L_i$ presentation choices, and $H_i$ other features of portrait production. The portrait $P_i$ gives rise to population-level femininity and masculinity impressions $F_i^\ast$ and $M_i^\ast$. Their gender-relative contrast $A_i^\ast$ is the appearance quantity approximated by the observed rating-based index $A_i$. A conceptual representation is
+\begin{equation}
+\begin{aligned}
+ P_i&=h_g(E_i,L_i,H_i),\\
+ (F_i^\ast,M_i^\ast)&=r_g(P_i),\\
+ A_i^\ast&=\phi_g(F_i^\ast,M_i^\ast;\vartheta_g).
+\end{aligned}
+\label{eq:ne-generation}
+\end{equation}
+
+The mapping $\phi_g$ preserves the orientation of \autoref{eq:axes}. For a fixed reference distribution, collect its centering and scaling constants in $\vartheta_g=(\mu_g^F,\sigma_g^F,\mu_g^M,\sigma_g^M,\sigma_g^\Delta)$. The final constant $\sigma_g^\Delta$ is the reference standard deviation of the difference between the two standardized ratings. With $s_g=+1$ for men and $s_g=-1$ for women, the mapping is
+\begin{equation}
+ \phi_g(f,m;\vartheta_g)
+ =\frac{s_g}{\sigma_g^\Delta}
+ \left(\frac{f-\mu_g^F}{\sigma_g^F}
+       -\frac{m-\mu_g^M}{\sigma_g^M}\right).
+\label{eq:ne-contrast}
+\end{equation}
+
+The empirical index uses the sample counterparts of these constants. The conceptual assignment discussion holds the reference distribution fixed, so that a different appearance realization does not redefine every candidate's scale. The distinction between $A_i^\ast$ and $A_i$ formalizes the difference between appearance and its survey measurement. It does not introduce a fitted latent-variable model or change the index used in estimation.
+
+Let $\mathbf X_g^0$ collect characteristics determined before the relevant appearance-assignment process. This set need not coincide with the regression controls. Let $\mathcal V_g=\{\mathbf V_g(\mathbf p)\mid\mathbf p\in\mathcal P\}$ denote potential personal-vote profiles under fully specified campaign-presentation assignments. The complete portrait-assignment vector $\mathbf p$ covers the relevant competitors as well as the focal candidates. Indexing these profiles by $\mathbf p$ avoids assuming either that every portrait yielding the same scalar contrast has the same consequences or that competitors' presentations cannot affect a candidate's votes. The potential-outcome notation distinguishes assignment from exchangeability and is not an identified causal parameter. Write the joint appearance-assignment law as
+\begin{equation}
+ Q_g\!\left(d\mathbf a\mid
+ \mathbf X_g^0,\mathcal V_g,\mathbf I_g=\mathbf 1\right).
+\label{eq:ne-assignment-law}
+\end{equation}
+
+Condition $\widetilde D$ concerns the generation of $A_i^\ast$. Researchers did not design or implement the allocation of candidates' underlying appearance features. Designing the contrast and its standardization is a measurement operation rather than an allocation of those features.
+
+Condition $\widetilde K$ concerns knowledge of the full law in \autoref{eq:ne-assignment-law}. The algebra defining $\phi_g$ is known, but the probabilities generating alternative appearance allocations are unknown and cannot be reconstructed from the available candidate records. Unknown and unknowable allocation probabilities distinguish this assignment mechanism from an external lottery with a recoverable allocation protocol \parencite[118--119]{Titiunik2021}. The requirement concerns the full assignment law for this design, rather than a claim that every underlying biological process is beyond scientific investigation. Known coding rules and an estimated distribution of realized scores do not reveal the joint allocation probabilities conditional on potential vote profiles.
+
+Condition $\widetilde P$ is the substantive probabilistic-assignment assumption. We assume that variation in $E_i$ induces a nondegenerate assignment distribution for $A_i^\ast$ through the mappings in \autoref{eq:ne-generation}, even though candidates can influence $L_i$ and $H_i$. This assumption must concern the cue contrast itself. Variation confined to other facial features or to the joint level of the ratings would not establish it. The externality is relative to candidates' precise control, allowing systematic presentation choices to coexist with an external chance component \parencite[118--119]{Titiunik2021}. The Finnish recruitment and campaign practices support the assumption that naturally arising variation remains visible in the portraits. They do not establish the magnitude of the biological contribution, equal assignment probabilities, or independence from potential electoral support.
+
+\subsection{Probabilistic assignment for a continuous contrast}
+
+The binary requirement that each unit have a positive probability of either treatment condition has a local support analogue for $A_i^\ast$. Let $Q_{ig}$ be the marginal assignment law for candidate $i$. For two distinct cue values $a_0$ and $a_1$, choose disjoint neighborhoods $J_0$ and $J_1$ within the range relevant to the proposed comparison. The probabilistic assumption for this comparison is
+\begin{equation}
+ 0<Q_{ig}\!\left(J_k\mid
+ \mathbf X_g^0,\mathcal V_g,\mathbf I_g=\mathbf 1\right)<1,
+ \qquad k\in\{0,1\},\quad i\in\mathcal I_g.
+\label{eq:ne-probabilistic-support}
+\end{equation}
+
+The probability-kernel formulation does not require an absolutely continuous distribution. If a density exists, the neighborhood probabilities can be written as
+\begin{equation}
+ Q_{ig}\!\left(J_k\mid
+ \mathbf X_g^0,\mathcal V_g,\mathbf I_g=\mathbf 1\right)
+ =\int_{J_k}q_{ig}\!\left(a\mid
+ \mathbf X_g^0,\mathcal V_g,\mathbf I_g=\mathbf 1\right)\,da.
+\label{eq:ne-assignment-density}
+\end{equation}
+
+Positive density on the neighborhoods is a sufficient support condition, without implying a uniform density or common probabilities across candidates. Positive probability at each exact real-valued score is not required. The observed rating averages may be discretized, which further motivates expressing the condition through neighborhoods. Neither the sample range nor a rug plot establishes \autoref{eq:ne-probabilistic-support} for each candidate. The probabilistic condition rests on an assignment argument and is not verified by observed score variation alone \parencite[118,125--126]{Titiunik2021}.
+
+\subsection{Survey randomization and appearance measurement}
+
+Let $\mathcal R_i^F$ and $\mathcal R_i^M$ contain the raters assigned to evaluate the femininity and masculinity of candidate $i$. For their attribute-specific ratings $R_{ri}^F$ and $R_{ri}^M$, the observed quantities are
+\begin{equation}
+\begin{aligned}
+ F_i&=\frac{1}{|\mathcal R_i^F|}
+       \sum_{r\in\mathcal R_i^F}R_{ri}^F,\\
+ M_i&=\frac{1}{|\mathcal R_i^M|}
+       \sum_{r\in\mathcal R_i^M}R_{ri}^M,\\
+ A_i&=\phi_g(F_i,M_i;\widehat\vartheta_g).
+\end{aligned}
+\label{eq:ne-rating-measurement}
+\end{equation}
+
+Random photograph assignment operates on the rater--portrait pairing, according to researcher-designed survey rules. It does not assign $E_i$, $L_i$, or $P_i$ among candidates and does not assign portraits to actual voters. The rating survey followed the election, so this randomization cannot identify an effect on votes already cast. It supports appearance measurement, while random photograph sampling concerns the composition of the available portrait sample. Neither procedure supplies the appearance-assignment law in \autoref{eq:ne-assignment-law}. The vote-model intervals condition on the realized candidate averages rather than propagating their measurement uncertainty.
+
+\subsection{Exchangeability and candidate selection}
+
+The natural-experiment classification does not impose conditional exchangeability. For an unconfoundedness-based interpretation under a specified presentation intervention and target population, an additional necessary restriction would have the form
+\begin{equation}
+ \mathcal V_g\ \perp\!\!\!\perp\ \mathbf A_g^\ast
+ \mid\mathbf X_g^0,\mathbf I_g=\mathbf 1.
+\label{eq:ne-exchangeability}
+\end{equation}
+
+We do not assume \autoref{eq:ne-exchangeability}. The restriction would not by itself define a causal contrast for the scalar index $A$. Different portrait versions can produce the same index value, and interference among competing candidates can affect the allocation of votes. A causal interpretation would additionally require a specified presentation intervention and assumptions about how other candidates' presentations enter the potential vote profiles. Neither requirement is imposed here. An external stochastic component can generate probabilistic assignment while the probabilities remain related to potential outcomes. Nor do candidate-level covariate adjustments recover an unknown assignment law merely by being included in the regression. Information about the assignment process and genuinely predetermined covariates would be required to support a conditional comparability argument \parencite[122--126]{Titiunik2021}.
+
+Selection into candidacy is especially relevant when the external component precedes recruitment. Let $U_i$ summarize other determinants of nomination and electoral support, and consider a density for $E_i$ conditional on genuinely prior characteristics $X_i^0=x$. Bayes' rule gives
+\begin{equation}
+ f(e\mid C_i=1,x,u)
+ =\frac{\Pr(C_i=1\mid E_i=e,x,u)f(e\mid x,u)}
+ {\displaystyle\int
+   \Pr(C_i=1\mid E_i=t,x,u)f(t\mid x,u)\,dt}.
+\label{eq:ne-candidacy-selection}
+\end{equation}
+
+Even if $f(e\mid x,u)=f(e\mid x)$ before nomination, the selected distribution can depend on $u$ through the nomination probability. Broad resident recruitment supports the argument that naturally arising appearance variation enters competition, but does not establish independence after conditioning on $C_i=1$. Photograph availability, usability, recognition exclusions, and complete observations impose further selection through $I_i$. The probabilistic support condition must therefore concern the selected population actually analyzed. The study does not recover an always-candidate population whose membership would remain fixed under alternative lifelong appearance realizations.
+
+\subsection{Assignment time and the descriptive estimand}
+
+The inherited component begins before candidacy, while presentation choices and developmental influences can occur at later points. Let $t_0$ denote the origin of that inherited component, $t_C$ candidacy, $t_E$ the election, and $t_R$ survey measurement. Let $t_P$ denote the availability of the campaign portrait to voters. The relevant temporal relations are
+\begin{equation}
+ t_0<t_C<t_E<t_R,
+ \qquad t_P<t_E.
+\label{eq:ne-chronology}
+\end{equation}
+
+This ordering does not imply that the entire adult cue profile was fixed at $t_0$, nor that its full assignment process has an observed time stamp. A hypothetical lifelong appearance intervention and an intervention on a campaign portrait would have different time origins and interpretations. Political resources, party affiliation, office holding, and attractiveness may lie downstream of earlier appearance components. They cannot automatically be treated as pretreatment covariates for a lifelong appearance contrast. Falsification and adjustment therefore require distinguishing genuinely prior characteristics from variables on later pathways \parencite[122--126]{Titiunik2021}.
+
+The fitted model retains the descriptive conditional mean in \autoref{eq:model}. Writing the sample restrictions explicitly, its target is
+\begin{equation}
+ m_g(a,\mathbf x,c,p)
+ =\mathrm E\!\left[
+ \texttt{Votes}_i\mid A_i=a,g_i=g,\mathbf X_i=\mathbf x,
+ c(i)=c,p(i)=p,I_i=1\right].
+\label{eq:ne-observational-mean}
+\end{equation}
+
+Variation conditional on the observed controls identifies the regression's appearance association under its conditional-mean specification. It does not convert \autoref{eq:ne-observational-mean} into an interventional expectation or separate the biological component from presentation choices. The natural-experiment classification concerns the proposed source of probabilistic appearance variation. The figures and contrasts continue to describe unequal expected personal support within the selected candidate population, without estimating causal effects of changing appearance.
+
+\section{Appearance measurement}
+\label{sec:oa-measurement}
+The primary contrast is constructed from separate femininity and masculinity ratings. Figure~\ref{fig:oa-support} displays their candidate averages by recorded gender, showing the cue profiles from which that contrast is derived.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/cue_support.pdf}
+\caption{Joint distribution of perceived femininity and masculinity. Each point is a candidate's mean rating. The diagonal marks equal raw ratings. Rating anchors run from 1 to 5.}
+\label{fig:oa-support}
+\end{figure}
+
+\subsection{Balance between raw ratings}
+\label{sec:oa-balance}
+An alternative specification assesses whether balance between the raw femininity and masculinity ratings is associated with electoral support. It replaces the directional contrast of within-gender standardized ratings with raw cue balance and raw cue intensity, defined in \autoref{eq:raw-balance}.
+\begin{equation}
+\begin{aligned}
+ \texttt{RawBalance}_i &= 1-\frac{|F_i-M_i|}{4},\\
+ \texttt{RawIntensity}_i &= (F_i+M_i)/2.
+\end{aligned}
+\label{eq:raw-balance}
+\end{equation}
+We standardize each index within gender. The balance associations are 39.0\% (95\% CI 17.2\% to 64.8\%) for men and -10.3\% (95\% CI -30.9\% to 16.4\%) for women. This alternative concerns equality of raw ratings, which is distinct from equality relative to gender-specific means and does not establish categorical uncertainty.
+
+\section{Joint cue level as an additional adjustment}
+The directional contrast summarizes relative cue balance but omits the combined rating level. Candidates can have the same directional difference while their combined femininity and masculinity rating levels vary. To assess whether this additional variation changes the atypicality association, we define joint cue level as
+\begin{equation}
+ S_i=\frac{z^F_i+z^M_i}{\operatorname{sd}_g(z^F+z^M)}.
+ \label{eq:joint-level}
+\end{equation}
+As a standardized sum, $S$ can be elevated when either rating exceeds its gender-specific mean, even if the other falls below it. Conditional on a fixed atypicality contrast, an increase in $S$ corresponds to equal increases in both standardized ratings. The adjusted specification includes $S$ and its gender interaction.
+\begin{equation}
+\begin{aligned}
+ \log\mu_i^{\mathrm{joint}}&=\log\mu_i^{\mathrm{baseline}}
+ +\rho_1\texttt{JointCueLevel}_i\\
+ &\quad+\rho_2(\texttt{Woman}_i\times\texttt{JointCueLevel}_i).
+\end{aligned}
+\label{eq:joint-model}
+\end{equation}
+All baseline coefficients are re-estimated. This adjustment relaxes the equal-magnitude, opposite associations assigned to standardized femininity and masculinity by the primary contrast specification. The adjusted atypicality associations are 20.4\% (95\% CI 7.9\% to 34.4\%) for men and -13.5\% (95\% CI -37.7\% to 20.3\%) for women. The joint-level associations are 8.9\% (95\% CI -11.0\% to 33.1\%) and 15.6\% (95\% CI -10.1\% to 48.5\%), respectively. Figures~\ref{fig:oa-joint-votes} and~\ref{fig:oa-joint-share} compare the predictions from both specifications. Table~\ref{tab:oa-sensitivity} reports the corresponding atypicality contrasts. With joint cue level held constant, the model associates more gender-atypical cue profiles with greater expected personal votes within male candidacies. This conditional association describes an appearance-associated advantage in the unequal distribution of personal votes. The joint cue level intervals include zero for both gender categories, leaving their separate associations imprecisely estimated. This uncertainty does not establish that expected personal votes are distributed equally along joint cue level.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/oa_joint_predicted_votes.pdf}
+\caption{Predicted expected personal votes with and without joint cue level. The adjusted curve holds $S=0$. The baseline model does not include $S$. Both specifications average predictions over the same gender-specific observed candidate contexts. Shading denotes municipality-clustered 95\% confidence intervals.}
+\label{fig:oa-joint-votes}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/oa_joint_predicted_vote_probability.pdf}
+\caption{Average predicted municipal vote share with and without joint cue level. Predictions and confidence intervals follow Figure~\ref{fig:oa-joint-votes}. Denominators include all valid personal votes in each municipality.}
+\label{fig:oa-joint-share}
+\end{figure}
+
+\FloatBarrier
+\section{Quadratic cue configurations}
+The joint-level adjustment permits the directional contrast and combined rating level to vary independently. Its linear predictor nevertheless estimates constant slopes of log expected votes for both cue indices within gender. To allow curvature and an atypicality slope that varies with joint level, the quadratic specification adds squared indices, their product, and gender interactions to \autoref{eq:joint-model}.
+\begin{equation}
+\begin{aligned}
+ \log\mu_i^{\mathrm{quadratic}} &= \log\mu_i^{\mathrm{joint}}
+ +\eta_1\texttt{Atypicality}_i^2+\eta_2\texttt{JointCueLevel}_i^2
+ \\
+ &\quad+\eta_3\texttt{Atypicality}_i\texttt{JointCueLevel}_i \\
+ &\quad+\texttt{Woman}_i\left(
+ \eta_4\texttt{Atypicality}_i^2+\eta_5\texttt{JointCueLevel}_i^2
+ \right)\\
+ &\quad+\eta_6\texttt{Woman}_i\texttt{Atypicality}_i\texttt{JointCueLevel}_i.
+\end{aligned}
+\label{eq:quadratic}
+\end{equation}
+All coefficients of the joint-level-adjusted linear predictor are re-estimated, so the added terms describe curvature and interaction conditional on the same controls. Table~\ref{tab:oa-quadratic} reports these nonlinear coefficients by gender. A joint Wald test evaluates whether the 6 added terms equal zero. It gives $F=2.50$ with 6 and 220 degrees of freedom ($p=0.023$). Table~\ref{tab:oa-nonlinear-tests} applies the same test after upper-tail exclusions, connecting the assessment of nonlinearity to dependence on high-vote candidates. Figure~\ref{fig:oa-surface} shows the fitted cue surface only where nearby candidate profiles provide empirical support. Figure~\ref{fig:oa-support} shows the underlying raw ratings. The full-sample joint test supports additional quadratic or interaction structure relative to the joint-level-adjusted linear specification. This omnibus result concerns the added terms jointly. It does not establish nonlinearity in both gender groups. The evidence is not retained under either upper-tail exclusion, making support for nonlinear structure sensitive to the candidate population represented by the estimate. The fitted surface therefore describes conditional differences in expected personal votes whose shape must be assessed alongside these sample comparisons.
+
+\begin{table}[!htbp]
+\centering
+\caption{Quadratic cue coefficients by candidate gender}
+\label{tab:oa-quadratic}
+\begin{tabular}{llrrr}
+\toprule
+Gender & Term & Coefficient & Cluster SE & $p$ \\
+\midrule
+Men & $A^2$ & -0.143 & 0.058 & 0.014 \\
+Men & $S^2$ & 0.012 & 0.066 & 0.855 \\
+Men & $A S$ & 0.108 & 0.088 & 0.221 \\
+Women & $A^2$ & -0.036 & 0.049 & 0.469 \\
+Women & $S^2$ & -0.040 & 0.044 & 0.362 \\
+Women & $A S$ & -0.196 & 0.103 & 0.059 \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{\linewidth}\footnotesize
+Coefficients are on the log conditional-mean scale. Female coefficients combine each nonlinear term with its gender interaction. Standard errors and $p$-values use the full municipality-clustered covariance matrix. The model includes 1384 candidates in 221 municipalities.
+\end{minipage}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{Joint tests of the quadratic terms}
+\label{tab:oa-nonlinear-tests}
+\begin{tabular}{lrrrrr}
+\toprule
+Specification & $N$ & $F$ & $df_1$ & $df_2$ & $p$ \\
+\midrule
+Quadratic, full sample & 1384 & 2.504 & 6 & 220 & 0.023 \\
+Excluding top 1\% of votes & 1370 & 1.654 & 6 & 220 & 0.134 \\
+Excluding top 5\% of votes & 1314 & 1.058 & 6 & 220 & 0.389 \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{\linewidth}\footnotesize
+Wald $F$ tests use municipality-clustered standard errors and the joint null that all added quadratic terms equal zero. The numerator degrees of freedom equal the number of tested terms. Denominator degrees of freedom equal $G-1$.
+\end{minipage}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/response_surface.pdf}
+\caption{Quadratic cue surface. Colors represent the log expected-vote ratio relative to mean within-gender cues, at the same values of other covariates. Displayed configurations have at least 5 candidates within radius 0.65 in the standardized cue space.}
+\label{fig:oa-surface}
+\end{figure}
+
+\section{Dispersion and sample diagnostics}
+\label{sec:oa-diagnostics}
+The conditional-mean approach also requires inference that allows overdispersion. The baseline-controls model's Pearson dispersion is 186.8, which describes variation beyond the Poisson mean--variance restriction. Municipality-clustered inference allows this variation and dependence among candidates in the same municipality. There are also 42 singleton municipalities in the primary sample. Removing them leaves 1342 candidates across 179 municipalities that contribute slope information.
+
+\section{Municipal vote-share representation}
+The main analysis presents unequal expected personal support in vote-count units. To express the same fitted model relative to the size of each local electorate, we divide each candidate-context prediction by the municipality's valid-vote total $N_c$ and average within gender.
+\begin{equation}
+ \overline{p}_g(a)=\frac{1}{n_g}\sum_{i:g(i)=g}\frac{\widehat\mu_i(a)}{N_{c(i)}}.
+ \label{eq:share-predictions}
+\end{equation}
+The contextual share expresses the modeled probability that a valid municipal ballot is cast for a candidate. Averaging these shares weights candidates' observed contexts equally. It does not give the probability for a randomly sampled Finnish voter or the probability of winning a council seat. Because normalization occurs before averaging, municipalities enter with different scaling than in the vote-count representation. Figure~\ref{fig:predicted-share} therefore provides an alternative electoral scale for the baseline association, without constituting a separate model or an independent test of the appearance--support relationship.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/oa_baseline_predicted_vote_share.pdf}
+\caption{Average predicted municipal vote share with baseline controls. Denominators include all valid personal votes in each municipality. Curves and municipality-clustered 95\% confidence intervals follow Figure~\ref{fig:predicted-votes}.}
+\label{fig:predicted-share}
+\end{figure}
+
+\section{Baseline regression underlying the main results}
+\label{sec:oa-baseline-regression}
+Table~\ref{tab:oa-baseline-regression} reports the estimated coefficients of \autoref{eq:model}, the baseline Poisson model used to construct the predictions in Figure~\ref{fig:predicted-votes}. On the log conditional-mean scale, the male atypicality association is the coefficient on \texttt{Atypicality}, while the female association is its sum with the \texttt{Woman} $\times$ \texttt{Atypicality} coefficient. Table~\ref{tab:main} translates these associations into percentage differences in expected personal votes, whereas Figure~\ref{fig:predicted-votes} shows the resulting inequality in expected personal support across cue values.
+
+\begin{table}[!htbp]
+\centering\small
+\caption{Baseline Poisson regression corresponding to Figure~\ref{fig:predicted-votes}}
+\label{tab:oa-baseline-regression}
+\begin{tabular}{@{}lrrcr@{}}
+\toprule
+Variable & Coefficient & Clustered SE & 95\% CI & $p$ \\
+\midrule
+\texttt{Atypicality} & 0.188 & 0.057 & [0.077, 0.300] & 0.001 \\
+\texttt{Woman} & -0.312 & 0.125 & [-0.558, -0.066] & 0.013 \\
+\texttt{Woman} $\times$ \texttt{Atypicality} & -0.280 & 0.145 & [-0.566, 0.005] & 0.054 \\
+\texttt{Age} (mean centered) & 0.005 & 0.007 & [-0.008, 0.019] & 0.411 \\
+\texttt{Attractiveness} & 1.048 & 0.140 & [0.771, 1.324] & $<0.001$ \\
+\midrule
+Municipality fixed effects & \multicolumn{4}{c}{Yes} \\
+Party fixed effects & \multicolumn{4}{c}{Yes} \\
+Candidates ($N$) & \multicolumn{4}{c}{1,384} \\
+Municipalities ($G$) & \multicolumn{4}{c}{221} \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\linewidth}\footnotesize
+The dependent variable is personal votes. Coefficients and confidence intervals are on the log conditional-mean scale. Municipality-clustered standard errors (SE) incorporate a finite-sample correction. Confidence intervals (CI) and two-sided $p$-values use a $t$ reference distribution with 220 degrees of freedom. \texttt{Woman} indicates female candidates, with men as the reference category. Its coefficient compares genders at $A=0$. \texttt{Age} is centered at the sample mean of 45.76 years. \texttt{Attractiveness} enters in its original rating units. Municipality and party coefficients and the intercept are omitted from the table. The female atypicality association is the sum of the \texttt{Atypicality} and interaction coefficients. Its uncertainty uses their full covariance.
+\end{minipage}
+\end{table}
+
+\FloatBarrier
+\section{Party-specific contrasts and sensitivity analyses}
+\label{sec:oa-party}
+The baseline model pools the appearance-associated inequality across parties. The party-specific specification in \autoref{eq:party-model} allows the cue association and gender intercept to differ across parties. Table~\ref{tab:oa-party} reports the corresponding one-SD contrasts from the full municipality-clustered covariance matrix. Candidate and municipality counts describe the observations available within each party--gender cell. Inference uses the pooled model's 221 municipality clusters.
+
+Because individual intervals do not test a common slope across parties, we also test whether the atypicality slopes are equal within each gender, using the full municipality-clustered covariance matrix. The joint test gives $F_{14,220}=10.07$ ($p<0.001$). The corresponding tests within men and women give $F_{7,220}=5.98$ ($p<0.001$) and $F_{7,220}=9.73$ ($p<0.001$), respectively. The joint test provides evidence that appearance-associated differences in expected personal votes vary across parties within one or both gender categories. The pooled within-gender association therefore does not describe a common association in every party context.
+
+\begin{table}[!htbp]
+\centering\small
+\caption{Party-specific atypicality contrasts}
+\label{tab:oa-party}
+\begin{tabular}{llrrcr}
+\toprule
+Party & Gender & Candidates & Cell cities & Association (\%) & $p$ \\
+\midrule
+KD & Men & 134 & 66 & -19.6 [-41.2, 10.0] & 0.172 \\
+KD & Women & 137 & 92 & 43.1 [-5.5, 116.9] & 0.090 \\
+KESK & Men & 31 & 9 & -7.9 [-27.3, 16.7] & 0.493 \\
+KESK & Women & 23 & 10 & 63.0 [30.8, 103.1] & $<0.001$ \\
+KOK & Men & 59 & 17 & 22.1 [4.2, 43.1] & 0.014 \\
+KOK & Women & 52 & 14 & -38.0 [-56.6, -11.4] & 0.009 \\
+PS & Men & 357 & 154 & 19.1 [-5.6, 50.3] & 0.140 \\
+PS & Women & 150 & 100 & -9.5 [-37.7, 31.4] & 0.598 \\
+RKP & Men & 77 & 31 & 19.2 [-21.3, 80.7] & 0.405 \\
+RKP & Women & 63 & 26 & -13.7 [-49.3, 46.8] & 0.585 \\
+SDP & Men & 78 & 26 & 213.5 [84.9, 431.7] & $<0.001$ \\
+SDP & Women & 63 & 27 & 0.4 [-27.6, 39.1] & 0.982 \\
+VAS & Men & 53 & 17 & -3.1 [-21.3, 19.3] & 0.762 \\
+VAS & Women & 49 & 18 & -26.1 [-42.8, -4.4] & 0.021 \\
+VIHR & Men & 18 & 5 & 27.9 [11.5, 46.7] & $<0.001$ \\
+VIHR & Women & 36 & 9 & -46.7 [-68.1, -11.2] & 0.016 \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{\linewidth}\footnotesize
+Associations are percentage differences in expected personal votes for a one-SD increase in the cue contrast, with pointwise municipality-clustered 95\% intervals in brackets. The model uses 1380 candidates in 8 parties. Cell cities count municipalities represented in each gender--party group. Party codes correspond to the names in Figure~\ref{fig:party-votes}.
+\end{minipage}
+\end{table}
+
+A joint difference across parties can coexist with sensitivity in any one party's estimated magnitude. Table~\ref{tab:oa-party-sensitivity} therefore examines whether party heterogeneity and the male contrasts discussed in the main text depend on prior political office or candidates with unusually many votes. Panel A reports the heterogeneity tests. Panel B compares the Social Democratic, National Coalition, and Green male contrasts. The office adjustment adds incumbent-councillor and national-MP indicators. The upper-tail exclusion uses the vote cutoff from the 99th percentile of the primary sample. Both retain the eligible party set and the primary sample's within-gender atypicality scaling. The joint tests continue to provide evidence of variation in within-gender personal-vote associations across parties under both adjustments. This persistence does not imply that individual party contrasts retain the same magnitude.
+
+\begin{table}[!htbp]
+\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Sensitivity of the party-specific specification}
+\label{tab:oa-party-sensitivity}
+\textit{Panel A. Party heterogeneity tests}\par\smallskip
+\begin{tabular}{p{0.32\linewidth}rrccc}
+\toprule
+Specification & $N$ & Cities & Joint $p$ & Men $p$ & Women $p$ \\
+\midrule
+Party-specific baseline & 1380 & 221 & $<0.001$ & $<0.001$ & $<0.001$ \\
++ Incumbency and parliamentary office & 1380 & 221 & $<0.001$ & 0.006 & $<0.001$ \\
+Excluding top 1\% of votes & 1366 & 221 & $<0.001$ & $<0.001$ & $<0.001$ \\
+\bottomrule
+\end{tabular}\par\medskip\textit{Panel B. Selected male contrasts (\%)}\par\smallskip
+\begin{tabular}{p{0.25\linewidth}p{0.22\linewidth}p{0.22\linewidth}p{0.22\linewidth}}
+\toprule
+Specification & Social Democrats & National Coalition & Green League \\
+\midrule
+Party-specific baseline & 213.5 [84.9, 431.7] & 22.1 [4.2, 43.1] & 27.9 [11.5, 46.7] \\
++ Incumbency and parliamentary office & 28.9 [-8.6, 81.7] & -4.9 [-18.4, 10.8] & 24.6 [7.7, 44.1] \\
+Excluding top 1\% of votes & 79.8 [18.3, 173.1] & 23.0 [0.5, 50.7] & -27.7 [-40.8, -11.6] \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{\linewidth}\footnotesize
+Heterogeneity tests use the full municipality-clustered covariance and test equal cue slopes across parties within gender. Each model includes $N$ candidates in $G$ municipality clusters. Panel B entries are percentage differences in expected votes with 95\% intervals. Adjustments do not identify a causal appearance effect.
+\end{minipage}
+\end{table}
+
+\FloatBarrier
+\section{Sensitivity analyses}
+\label{sec:oa-sensitivity}
+The pooled inequality may also depend on the comparison setting, target sample, and restrictions on control coefficients. Table~\ref{tab:oa-sensitivity} varies these features. Municipality-by-party fixed effects restrict comparisons to candidates on the same local party list. Singleton lists consequently do not identify cue slopes. To assess dependence on candidates with unusually many votes, upper-tail exclusions remove 14 candidates above the 99th percentile and 70 above the 95th percentile. These exclusions change the candidate population represented by the estimate. Finally, separate-gender models allow all coefficients, including the control associations, to differ between men and women.
+
+\begin{table}[!htbp]
+\centering
+\caption{Atypical cue contrast under alternative adjustments}
+\label{tab:oa-sensitivity}
+\small\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{0.32\linewidth}rrcc}
+\toprule
+Specification & $N$ & Cities & Men (\%) & Women (\%) \\
+\midrule
+Baseline controls & 1384 & 221 & 20.7 [8.0, 35.0] & -8.8 [-31.1, 20.8] \\
++ Joint cue level & 1384 & 221 & 20.4 [7.9, 34.4] & -13.5 [-37.7, 20.3] \\
++ Incumbency and parliamentary office & 1384 & 221 & 0.6 [-7.2, 9.1] & -10.7 [-26.2, 8.1] \\
+Municipality-by-party fixed effects & 1211 & 160 & 31.4 [13.2, 52.6] & -8.8 [-40.0, 38.4] \\
+Excluding top 1\% of votes & 1370 & 221 & 9.1 [-2.3, 21.8] & -7.0 [-21.9, 10.7] \\
+Excluding top 5\% of votes & 1314 & 221 & -4.8 [-11.5, 2.3] & -7.0 [-15.9, 2.8] \\
+Separate model for men & 810 & 191 & 20.2 [6.0, 36.3] & -- \\
+Separate model for women & 574 & 178 & -- & -7.0 [-29.9, 23.4] \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{\linewidth}\footnotesize
+Entries are percentage differences in expected votes for a one-SD increase in the atypical cue contrast, with municipality-clustered 95\% confidence intervals. Each model includes $N$ candidates in $G$ municipalities.
+\end{minipage}
+\end{table}
+
+\FloatBarrier
+\section{Political-experience adjustment}
+Political experience provides a further reason candidates may attract different numbers of votes even conditional on age, appearance ratings, party, and municipality. We therefore add indicators for incumbent municipal councillors and members of the national parliament, referring to office held before the election. Holding the sample and baseline controls fixed, the expanded specification adds
+\begin{equation}
+ \log\mu_i^{\mathrm{office}}=\log\mu_i^{\mathrm{baseline}}
+ +\rho_1\texttt{IncumbentCouncillor}_i+\rho_2\texttt{NationalMP}_i.
+ \label{eq:office}
+\end{equation}
+The baseline linear predictor $\log\mu_i^{\mathrm{baseline}}$ follows \autoref{eq:model}, with all coefficients re-estimated in the expanded specification. The resulting one-SD atypicality associations are 0.6\% (95\% CI -7.2\% to 9.1\%) for men and -10.7\% (95\% CI -26.2\% to 8.1\%) for women. Figures~\ref{fig:oa-votes} and~\ref{fig:oa-share} express these associations as expected votes and municipal vote shares alongside the baseline predictions. Both specifications average over the same observed candidate contexts. With prior office included, the cue association within male candidacies is imprecisely estimated. The evidence for the baseline appearance-associated inequality is therefore sensitive to this conditioning choice. Its point estimate lies closer to zero than in the baseline model. The adjustment does not identify a causal role for prior office. The imprecise adjusted association does not establish an absence of inequality within male candidacies.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/oa_predicted_votes.pdf}
+\caption{Predicted expected personal votes with and without incumbency and parliamentary-office controls. Predictions are standardized over the same gender-specific observed candidate contexts. Shading denotes municipality-clustered 95\% confidence intervals.}
+\label{fig:oa-votes}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/oa_predicted_vote_probability.pdf}
+\caption{Average predicted municipal vote share with and without incumbency and parliamentary-office controls. Denominators include all valid personal votes in each municipality. Predictions and confidence intervals follow Figure~\ref{fig:oa-votes}.}
+\label{fig:oa-share}
+\end{figure}
+\end{document}

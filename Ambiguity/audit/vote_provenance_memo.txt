@@ -1,0 +1,72 @@
+# Vote provenance audit: two demonstrated original errors
+
+12 October 2026. Read-only investigation. `Voting_Phys_App.R` was read but never sourced. `dat.Rdata`, `id.xls`, and `phys_cong.dta` were never edited. All diagnostic outputs are under `work/vote_origin`; the Ministry archive was downloaded and independently validated by the parallel data-audit reviewer under `work/vote_audit`.
+
+## Conclusion
+
+The doubled counts arise from summing **precinct totals together with the municipal total**, after the original eight-column electoral source removed the fields identifying these levels. A second error attaches another same-surname candidate's name and votes to the photographed candidate's ID. Dividing all saved counts by two resolves the first error but leaves the second error intact. Restore the analysis outcome with the official municipality-plus-candidate-number key, preserving the canonical saved dataset and its photo ratings.
+
+## Evidence chain for the doubling
+
+1. `Voting_Phys_App.R:59` imports [this Seafile CSV](https://seafile.utu.fi/f/295e920af4084e0c8102/?dl=1). Downloaded bytes: 254 MB approximately, 702,018 data rows, eight columns. SHA-256: `481c189580989646ea3ad7e6c10837ec239cc5c582412739e3305c9f8d9e479e`.
+2. The original source is a row-aligned projection of the Ministry's [national candidate archive](https://tulospalvelu.vaalit.fi/KV-2017/kv-2017_ehd_maa.csv.zip). Both have 702,018 rows in the same order. Every single vote value matches the official file's field 35; seven projected fields match every row exactly. First-name values also match after disregarding quote marks; default CSV quote parsing yields 121 row differences involving quoted nicknames.
+3. The official rows comprise 668,400 records of type `A` (precinct) and 33,618 records of type `K` (municipality). The [Ministry data dictionary](https://tulospalvelu.vaalit.fi/KV-2017/ohje/KV2017_CSV-tiedostojen_kuvaus_fi.pdf), pp.23--26, defines type and precinct code, explains that higher-level records follow the constituent precinct records, and labels field 35 total votes. The projection drops both record type and precinct code.
+4. `Voting_Phys_App.R:62--64` groups by `municipality, party, city, firstname, lastname, occup.elect.off` and uses `summarise(turnout = sum(turnout))`. Therefore both levels enter the sum.
+5. Applying only this aggregation diagnostically gives 33,618 candidate groups. **All 33,618 groups satisfy** `sum(turnout) == 2 * last(turnout)` and `last(turnout) == max(turnout)`. There are no exceptions. Each final row is the municipal total; the preceding precinct counts sum to the same number.
+6. All 1,389 saved rows uniquely match their saved city/party/first-name/last-name to one original-source group, and all saved vote values equal that group's doubled sum.
+
+Concrete example: Antti Lindtman in Vantaa has 65 precinct rows summing to 4,653, followed by one municipal row of 4,653. Original aggregation yields 9,306. Jan Vapaavuori has 166 precinct rows plus one municipal row: total 29,745, original aggregate 59,490.
+
+This is **not** summation of advance votes, election-day votes, and their total: the projected outcome is already official field 35 at each geographic level. Double counting occurs across geographic levels.
+
+## Additional source-column mislabel
+
+The source field called `candidate.number` is not a candidate number. Its values match official field 21, **age on election day**, in all 702,018 rows. The real candidate number is official field 15, which the projection omits. For example, the original source labels Lindtman's age 34 as `candidate.number`; his official candidate number is 2. This source field must never be used to join candidates. The saved `candidate_number` instead comes from `id.xls`, and is the correct official-number key for the photo identity.
+
+The exact source projection is:
+
+| Source column | Official field | Meaning |
+|---|---:|---|
+| municipality | 6 | Electoral district abbreviation |
+| party | 12 | Party abbreviation |
+| firstname | 18 | First name |
+| lastname | 19 | Last name |
+| candidate.number | 21 | Age on election day |
+| occup.elect.off | 22 | Occupation |
+| city | 24 | Candidate home municipality name |
+| turnout | 35 | Total votes at the row's geographic level |
+
+## Evidence chain for the identity crossmatch
+
+1. The image/rating identity is `phys_cong.dta$id`. `Voting_Phys_App.R:67` first joins that ID with `id.xls`, which provides city, party, surname, and official candidate number.
+2. **The faulty electoral join is line 68:** `merge(dat.temp, electoral.d, by=c("lastname", "party", "city"), all.x = FALSE)`. This is not a unique candidate key. It omits the official candidate number and first name; first name is absent from `id.xls`.
+3. At line 129 the script uses `distinct(candidate.number, ideology, age, masculinity, attractiveness, femininity, .keep_all=TRUE)`. After the ambiguous join, two different named candidates have the same photo metadata. This deduplication can keep an arbitrary first name and vote outcome from a different candidate while retaining the photographed candidate's ID and official number.
+4. There are 130 saved rows whose original surname/party/city join key matches multiple named candidates in the complete electoral source. Only 18 ambiguous surname keys contain multiple IDs in the sampled `id.xls`; this smaller number understates the exposure because other same-surname candidates were outside the photograph sample.
+5. All 1,389 saved ID/city/party/surname/candidate-number combinations match `id.xls`. For all 1,385 records with nonmissing original `phys_cong.dta` age and gender, **both age and gender exactly match the Ministry candidate identified by city and official candidate number**. The four missing-metadata cases are Paavo Arhinmäki, Petteri Orpo, Jethro Rostedt, and Anna-Maja Henriksson; they are excluded from the complete-case main model.
+6. The parallel complete official audit identifies 67 saved vote counts that are not twice the vote total of the official-number candidate. All occur among first-name mismatches. One additional genuine identity crossmatch happens to have equal votes for the two people; one further first-name mismatch is a quote-formatting difference. Thus 68 actual person crossmatches and one formatting discrepancy require different treatment. See the parallel audit's final summary for main-model complete-case counts.
+
+## A concrete proof row
+
+| Stage | Verified value for photo ID 4647 |
+|---|---|
+| Original photo/rating source | Male (`Mies`), age 39; femininity 2.422222; masculinity 2.652174; attractiveness 2.877551 |
+| `id.xls` photo ID crosswalk | Vantaa, KD, surname Haverinen, official candidate number 104 |
+| Ministry number 104 | **Jarmo Haverinen**, male, age 39, 15 personal votes |
+| Saved dataset row | ID 4647, number 104, male, age 39, but first name **Soili** and vote count **550** |
+| Other original electoral candidate | **Soili Haverinen**, official number 105, female, age 56, 275 municipal votes; source aggregate 550 |
+
+The saved ratings/age/gender concern Jarmo; the saved name and doubled votes concern Soili. A uniform halving would give 275 votes for Jarmo, whereas the official outcome is 15. This is a large nonconstant outcome error, not an overall scale issue.
+
+## Deliverable evidence files
+
+- `exact_official_projection_comparison.json`: all-row projection checks and official column mapping.
+- `raw_candidate_aggregation_diagnostic.csv`: all 33,618 candidate source groups and exact doubling identities.
+- `saved_to_raw_provenance_match.csv`: every saved row versus the matching original-source named candidate.
+- `photo_identity_official_audit.csv`: rating-source ID metadata, crosswalk key, saved name/outcome, and official-number identity/outcome.
+- `identity_chain_specimens.csv`: compact examples, including ID 4647.
+- `saved_surname_ambiguous_merge_keys.csv`: 130 saved rows exposed to the nonunique original join.
+- `check_original_aggregation.R` and `compare_official_projection.py`: read-only reproducible diagnostics.
+
+Canonical `dat.Rdata` SHA-256 after inspection: `5c79b46816ffe6db741974c9aa8b28b0926ab3639771233ea78f50294a90c2d1`.
+
+For the new project, use the already-cleaned photo ratings and controls, attach the verified official municipality-level vote total by the existing city/candidate-number key in memory, and retain both the old outcome and correction flags in an audit output. Do not rerun cleaning or overwrite the existing file. The old appearance models must be re-estimated with the corrected outcome before drawing conclusions; robust standard errors cannot correct the identity mislink.

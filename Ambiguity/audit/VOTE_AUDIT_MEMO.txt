@@ -1,0 +1,91 @@
+Read-only audit of dat.Rdata vote counts and candidate identity
+12 October 2026
+
+Conclusion
+The saved voting variable contains two distinct errors. For every saved full name,
+the saved turnout equals exactly twice that person's official municipal vote count.
+In addition, 68 saved first names identify another person than the photograph's
+candidate number and municipality. In 67 of those cases the mistaken person has a
+different vote total. Dividing every saved value by two therefore does not fully
+repair the vote variable for the photographed candidates.
+
+Coverage and official source
+The Ministry of Justice official national 2017 candidate-results archive contains
+702,018 records: 668,400 polling-district records (type A) plus 33,618 municipal
+candidate totals (type K). The official dictionary defines field 4's area types,
+field 15's candidate number, fields 18/19's first/last names, fields 20/21's sex/age,
+and field 35's total votes. Only type K records were used for the verification.
+All 33,618 municipal city/candidate-number keys are unique.
+
+Downloads:
+https://tulospalvelu.vaalit.fi/KV-2017/fi/ladattavat_tiedostot.html
+https://tulospalvelu.vaalit.fi/KV-2017/kv-2017_ehd_maa.csv.zip
+https://tulospalvelu.vaalit.fi/KV-2017/kv-2017_ehd_maa.csv.chk
+https://tulospalvelu.vaalit.fi/KV-2017/ohje/KV2017_CSV-tiedostojen_kuvaus_fi.pdf
+
+Uncompressed archive-member MD5 matches the published checksum:
+cc9bda4d65fded02345916dd88a77dee
+Archive zip MD5: ab9eb437e5c9120c8c1a6013c4b877ca
+All municipal results are count-phase T (verification count), status V (complete).
+
+All 1,389 saved rows across 221 cities matched exactly one official municipality
+and candidate-number record. There were no unmatched rows or duplicate keys.
+Every saved surname matched that official surname exactly. Among these records,
+1,322 saved counts are exactly twice the official count and 67 are not.
+
+Photograph identity validation
+All 1,389 saved IDs matched uniquely to id.xls. In every case, saved municipality
+name (city), candidate number, party, and surname equal the corresponding metadata
+fields. All 1,389 IDs also matched the original phys_cong.dta appearance file.
+The saved age, ISCO code, occupation-congruent appearance, femininity, masculinity,
+attractiveness, and fem_dom_job values remain identical to that appearance ID.
+All 1,385 nonmissing saved gender and age observations match the official person
+identified by municipality and candidate number exactly. The four missing
+appearance profiles are Arhinmaki, Henriksson, Orpo, and Rostedt.
+This verifies city + candidate_number as the photographed candidate's official
+identity. The saved firstname field is not a reliable photo-identity key.
+
+First-name discrepancy details
+69 literal first-name discrepancies were found. One is only quotation escaping
+(Anne ""Kikkis"" versus Anne "Kikkis"). The remaining 68 are different people
+with the same surname, party and municipality. One of those two people happens
+to have the same vote total, leaving 67 nonconstant vote discrepancies.
+Every saved full name (with quotation escaping normalized) uniquely matches an
+official person, and all 1,389 saved counts equal twice that named person's votes.
+
+Concrete example
+Photo ID 4647: Vantaa, candidate 104, surname Haverinen, male, age 39. Metadata and
+official returns identify Jarmo Haverinen, 15 official votes. The saved merged row
+instead says Soili Haverinen, turnout 550. Soili is candidate 105, female, age 56,
+275 official votes. The saved appearance measures belong to Jarmo. Merely halving
+550 would assign Soili's 275 votes to Jarmo's photograph.
+
+Municipal denominators and election status
+Summing official municipal candidate totals gives 2,570,768 valid ballots across
+295 municipalities, with 8,999 elected councillors. Each matched candidate's
+city_valid_votes is that municipality's sum across ALL official candidates, not
+the photographed sample. The verified photo sample contains 288 elected, 312
+alternate, and 789 not elected candidates. Official election-status code 1 is
+elected; 2 is alternate; 3 is not elected. A vote share is a share of valid ballots,
+not a probability of winning a seat.
+
+Portable crosswalk for an in-memory repair
+verified_photo_candidate_crosswalk.csv contains all 1,389 IDs, municipalities and
+candidate numbers, official votes, city_valid_votes, vote share, election status,
+official first/last names, party, gender, age, incumbency/MP indicators, and metadata
+verification flags. Join on id PLUS city PLUS candidate_number; assert unique keys
+and unchanged row order before estimation. Do not join on contaminated firstname.
+The source dataset need not be recreated or overwritten.
+
+Other files
+vote_count_audit_all_saved_candidates.csv: complete comparison, including the
+different official person selected by the saved full name.
+appearance_id_metadata_check.csv: source photo and metadata values for each ID.
+official_municipal_candidate_returns.csv: all 33,618 official municipal totals.
+official_municipality_vote_totals.csv: complete municipal valid-vote denominators.
+not_double_official.csv: the 67 nonconstant discrepancies.
+name_mismatches.csv: the 69 literal first-name discrepancies.
+audit_summary.json: machine-readable coverage, hashes and validation counts.
+
+Original files were only read. dat.Rdata remains MD5:
+01ce19c680957edb649e1c35c2a72060

@@ -1,0 +1,4 @@
+Full corrected CSV: 1389 candidates; all official vote/name checks passed.
+Analysis CSV: 1384 candidates; reloaded and used for estimation.
+turnout = corrected official votes; turnout_saved = original corrupted counts.
+All appearance/control measurements retained from the original saved data.

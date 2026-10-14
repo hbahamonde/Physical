@@ -1,0 +1,25 @@
+Ambiguity. Verified analysis summary
+Source: /Users/hectorbahamonde/research/Physical/dat.Rdata
+Source MD5: 01ce19c680957edb649e1c35c2a72060
+Complete cases: 1384 . Men: 810 . Women: 574 . Cities: 221
+Municipality-by-party FE sample: 1211 . Dropped singleton lists: 173
+Primary +1 SD A, men: 20.7\% (95\% CI 8.0\% to 35.0\%)
+Primary +1 SD A, women: -8.8\% (95\% CI -31.1\% to 20.8\%)
+Difference in standardized gender slopes p: 0.05431
+Secondary party sample: 1380 candidates; 8 eligible parties; 4 excluded candidates.
+Secondary joint party-slope heterogeneity p: 2.575e-17
+Quadratic terms joint F p: 0.02305
+Main Pearson dispersion: 186.79
+Raw F/M vs appendix joint A+S model maximum prediction discrepancy: 1.48e-11
+All saved counts even: TRUE . Vantaa no.2 saved/official: 9306 / 4653
+Official audit: 1389 unique verified photograph matches. Wrong-person counts after halving: 67 . Other-person first names: 68
+Wrong-person counts in complete main sample: 67
+Main outcome is official_votes joined by verified photograph ID, municipality and candidate number.
+Exported and reloaded analysis CSV: /Users/hectorbahamonde/research/Physical/Ambiguity/Ambiguity_analysis.csv
+Uniform outcome x2 slope discrepancy: 5.81e-15 . Cluster covariance discrepancy: 7.57e-14
+No causal interpretation. Uncertainty conditions on saved mean ratings.
+Primary specification uses atypicality only, with the existing baseline controls. Joint cue level is an appendix adjustment.
+A is relative gendered appearance atypicality. S is joint cue level. Neither is gender identity.
+The interval for men lies entirely above zero. The interval for women includes zero.
+The estimated appearance-associated advantage indicates an unequal distribution of expected personal votes within male candidacies. These estimates do not support a uniform electoral penalty for a gender-atypical cue balance.
+Raw high-high support: 1 man and 1 woman . F and M >= 3

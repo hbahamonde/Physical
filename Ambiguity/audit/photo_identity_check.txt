@@ -1,0 +1,27 @@
+Metadata rows 1836 unique ids 1836 saved rows found 1389 
+All saved candidate numbers/city/party/lastname same as idmetadata: TRUE TRUE TRUE TRUE 
+      id party municipality   city  lastname candidate_number
+825 4647    KD          UUS Vantaa Haverinen              104
+Physical dataset dimension 1417 10 
+ [1] "id"                        "phys_occ_cong"            
+ [3] "femininity"                "masculinity"              
+ [5] "attractiveness"            "gender"                   
+ [7] "age"                       "ISCO_code"                
+ [9] "occupation_phys_cong_data" "fem_dom_job"              
+       id phys_occ_cong femininity masculinity attractiveness gender age
+339  4647      3.504202   2.422222    2.652174       2.877551   Mies  39
+NA     NA            NA         NA          NA             NA   <NA>  NA
+NA.1   NA            NA         NA          NA             NA   <NA>  NA
+     ISCO_code              occupation_phys_cong_data fem_dom_job
+339       4419 Toimisto- ja asiakaspalvelutyöntekijät    73.01664
+NA          NA                                   <NA>          NA
+NA.1        NA                                   <NA>          NA
+all saved ids found in appearance data 1389 
+id same TRUE 
+age same TRUE 
+ISCO_code same TRUE 
+phys_occ_cong same TRUE 
+femininity same TRUE 
+masculinity same TRUE 
+attractiveness same TRUE 
+fem_dom_job same TRUE 
