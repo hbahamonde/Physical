@@ -1016,7 +1016,7 @@ cue_illustrations$gender <- factor(cue_illustrations$gender, levels = levels(d$g
 cue_illustrations$example_F <- with(cue_illustrations, F_mean + (gender == "Male") * F_sd)
 cue_illustrations$example_M <- with(cue_illustrations, M_mean + (gender == "Female") * M_sd)
 cue_illustrations$example_A <- 1 / (2 * cue_illustrations$A0_sd)
-# Overlay the raw ratings and illustrations in one square panel. Keep this
+# Overlay the raw ratings and group means in one square panel. Keep this
 # figure's pink color local so the palettes of every other figure are unchanged.
 cue_support_palette <- c(Male = "#245B78", Female = "#D27A9E")
 cue_support_labels <- setNames(vapply(levels(d$gender), function(g) {
@@ -1025,16 +1025,9 @@ cue_support_labels <- setNames(vapply(levels(d$gender), function(g) {
 support_plot <- ggplot(d, aes(femininity, masculinity, color = gender)) +
   geom_abline(slope = 1, intercept = 0, color = "grey55", linetype = 2, linewidth = .45) +
   geom_point(alpha = .32, size = 1) +
-  geom_segment(data = cue_illustrations,
-    aes(x = F_mean, y = M_mean, xend = example_F, yend = example_M),
-    inherit.aes = FALSE, color = "grey15", linewidth = .6,
-    arrow = grid::arrow(length = grid::unit(.10, "inches")), show.legend = FALSE) +
   geom_point(data = cue_illustrations, aes(x = F_mean, y = M_mean),
     inherit.aes = FALSE, color = "grey15", shape = 3, size = 3.3, stroke = .9,
     show.legend = FALSE) +
-  geom_point(data = cue_illustrations, aes(x = example_F, y = example_M),
-    inherit.aes = FALSE, color = "grey15", fill = "white", shape = 23,
-    size = 3.1, stroke = .9, show.legend = FALSE) +
   scale_x_continuous(breaks = seq(paper_values$scale_min, paper_values$scale_max)) +
   scale_y_continuous(breaks = seq(paper_values$scale_min, paper_values$scale_max)) +
   coord_equal(xlim = c(paper_values$scale_min, paper_values$scale_max),
@@ -1146,14 +1139,14 @@ primary_interval_text <- paste0(
 primary_evidence_text <- if (any(primary$lower > 1)) {
   paste0(
     if (primary$lower[primary$gender == "Male"] > 1)
-      "The estimated appearance-associated advantage indicates an unequal distribution of expected personal votes within male candidacies."
+      "The baseline comparison locates an appearance-associated advantage within male candidacies."
     else
-      "The estimated appearance-associated advantage indicates an unequal distribution of expected personal votes within female candidacies.",
-    " These estimates do not support a uniform electoral penalty for a gender-atypical cue balance.")
+      "The baseline comparison locates an appearance-associated advantage within female candidacies.",
+    " Gender atypicality can therefore coincide with electoral advantage within a shared category.")
 } else if (all(primary$upper < 1)) {
-  "Both estimates locate an appearance-associated disadvantage in the distribution of expected personal votes within gender categories. They are consistent with fewer expected personal votes for a more gender-atypical cue balance."
+  "The baseline estimates associate more gender-atypical profiles with fewer expected personal votes within both gender categories."
 } else {
-  "The estimates do not establish a common direction of association across gender groups. This uncertainty concerns the appearance-associated differences in expected personal votes. It does not establish an absence of inequality within either gender category."
+  "The baseline comparison is inconclusive about a common direction of appearance-associated inequality across gender categories."
 }
 # Interpret the primary contrasts from their current confidence intervals, so the
 # manuscript's substantive statements change with the estimates as well as its numbers.
@@ -1166,12 +1159,9 @@ primary_profile_description <- function(g) {
     direction <- if (r$lower > 1) "greater" else "lower"
     paste0("Among ", group, ", the baseline model associates ", direction,
            " expected personal votes with more ", cue,
-           " cue profiles at the same values of the observed controls. ",
-           "This association describes an unequal distribution of personal votes within this gender category.")
+           " profiles, locating appearance-associated inequality within the gender category.")
   } else {
-    paste0("For ", group, ", the confidence interval accommodates both advantages and disadvantages ",
-           "in expected personal votes. The cue association remains imprecisely estimated. ",
-           "This uncertainty does not establish an absence of appearance-associated inequality within this gender category.")
+    paste0("The appearance association among ", group, " is inconclusive.")
   }
 }
 primary_inequality_text <- paste(primary_profile_description("Male"),
@@ -1179,7 +1169,7 @@ primary_inequality_text <- paste(primary_profile_description("Male"),
 male_primary <- primary[primary$gender == "Male", ]
 female_primary <- primary[primary$gender == "Female", ]
 primary_abstract_text <- if (male_primary$lower > 1 && female_primary$lower <= 1 && female_primary$upper >= 1) {
-  "The baseline pattern is consistent with an unequal distribution of expected personal votes within male candidacies, with an appearance-associated advantage for more gender-atypical cue profiles. The female cue association remains imprecisely estimated. Its uncertainty does not establish an absence of inequality within female candidacies."
+  "Within male candidacies, expected personal votes favor more gender-atypical cue profiles. The female association is inconclusive."
 } else {
   primary_evidence_text
 }
@@ -1192,14 +1182,14 @@ primary_abstract_short_male <- if (male_primary$lower > 1) {
 } else if (male_primary$upper < 1) {
   "Appearance-associated vote inequality disadvantages more gender-atypical male profiles."
 } else {
-  "The male appearance association remains uncertain, without establishing electoral equality."
+  "The male association is inconclusive."
 }
 primary_abstract_short_female <- if (female_primary$lower > 1) {
   "Appearance-associated vote inequality favors more gender-atypical female profiles."
 } else if (female_primary$upper < 1) {
   "Appearance-associated vote inequality disadvantages more gender-atypical female profiles."
 } else {
-  "The female estimate remains uncertain, without establishing electoral equality."
+  "The female association is inconclusive."
 }
 primary_abstract_short_text <- paste(primary_abstract_short_male, primary_abstract_short_female)
 primary_theory_text <- if (male_primary$lower > 1) {
@@ -1243,18 +1233,18 @@ party_point_text <- function(p, g, nm = "party_heterogeneity") {
   paste0(fmt(100 * (r$ratio - 1)), "\\%")
 }
 primary_conformity_interpretation <- if (male_primary$lower > 1) {
-  "Within male candidacies, the positive baseline association locates an appearance-associated advantage in the distribution of expected personal votes. This finding runs against the conformity expectation that a more gender-atypical cue balance should reduce personal votes."
+  "This within-male advantage runs against the conformity expectation that departure from masculine appearance norms reduces personal support."
 } else if (male_primary$upper < 1) {
-  "Within male candidacies, the negative baseline association links a more gender-atypical cue balance with fewer expected personal votes. This unequal distribution is consistent with the conformity expectation that a more gender-atypical cue balance should reduce personal votes."
+  "This within-male disadvantage accords with the conformity expectation that departure from masculine appearance norms reduces personal support."
 } else {
-  "Within male candidacies, uncertainty about the baseline association leaves the conformity expectation unresolved. An imprecise cue association does not establish an absence of appearance-associated inequality in the distribution of personal votes."
+  "The male estimate leaves the conformity expectation inconclusive."
 }
 primary_cooperative_benchmark <- if (female_primary$lower <= 1 && female_primary$upper >= 1) {
-  "The association within female candidacies leaves the full cooperative-leadership benchmark unresolved. Its interval accommodates both favorable and unfavorable associations in expected personal votes. This uncertainty does not establish an absence of appearance-associated inequality among women."
+  "The female association is inconclusive for the proposed shared feminine-cue advantage."
 } else if (female_primary$upper < 1 && male_primary$lower > 1) {
-  "The opposite baseline associations within male and female candidacies match the directional benchmark for a shared advantage associated with a more feminine-relative-to-masculine balance. They locate this advantage in unequal distributions of expected personal votes within each gender category."
+  "The opposing index slopes are consistent with an advantage for more feminine cue balances within both gender categories."
 } else {
-  "The association within female candidacies does not complete the directional benchmark for a shared advantage associated with a more feminine-relative-to-masculine balance. The proposed common direction of appearance-associated differences in personal votes consequently remains unestablished."
+  "The female comparison leaves the proposed shared feminine-cue advantage unconfirmed."
 }
 party_named_contrast <- function(p, g) {
   r <- party_contrasts[party_contrasts$party == p & party_contrasts$gender == g, ]
@@ -1266,26 +1256,26 @@ kok_female <- party_named_contrast("KOK", "Female")
 centre_female <- party_named_contrast("KESK", "Female")
 green_female <- party_named_contrast("VIHR", "Female")
 party_profile_interpretation <- if (kok_male$ratio > 1 && kok_female$ratio < 1) {
-  paste0("Within the National Coalition Party, a more feminine appearance relative to masculine appearance is associated with more expected personal votes among both men and women. This pattern favors departure from masculine appearance expectations among men and conformity to feminine appearance expectations among women. The one-standard-deviation estimates for the gender-atypical index are ",
+  paste0("Within the National Coalition Party, the fitted associations favor a more feminine-relative-to-masculine profile in both gender groups. The one-standard-deviation atypicality contrasts are ",
     party_point_text("KOK", "Male"), " among men and ", party_point_text("KOK", "Female"),
-    " among women, with opposite signs reflecting the gender-specific orientation of the index. These associations describe appearance-associated electoral inequality within each gender category and are consistent with a preference for feminine cues in this party.",
+    " among women. The opposing index signs reflect departure from male appearance norms and conformity to female appearance norms.",
     if ((kok_female$lower <= 1 && kok_female$upper >= 1) ||
         (kok_male$lower <= 1 && kok_male$upper >= 1))
-      " At least one confidence interval includes zero, so the evidence does not establish this pattern for both genders."
+      " These are descriptive point-estimate patterns."
     else "")
 } else {
-  paste0("Within the National Coalition Party, a one-standard-deviation increase in the gender-atypical index is associated with a change in expected personal votes of ",
+  paste0("Within the National Coalition Party, the one-standard-deviation atypicality contrasts are ",
     party_point_text("KOK", "Male"), " among men and ", party_point_text("KOK", "Female"),
-    " among women. The gender-specific orientation of the index makes these contrasts distinct comparisons of appearance-associated electoral inequality among men and among women.")
+    " among women. These estimates compare the distribution of cue-associated support within each gender category.")
 }
 party_female_context_interpretation <- if (centre_female$ratio > 1 && green_female$ratio < 1) {
-  paste0("Among women, a more masculine-relative-to-feminine profile is associated with greater expected personal votes in the Centre Party and fewer in the Green League. The corresponding one-standard-deviation contrasts are ",
+  paste0("Among women, the fitted association favors more masculine-relative-to-feminine profiles in the Centre Party and more feminine-relative-to-masculine profiles in the Green League. The one-standard-deviation atypicality contrasts are ",
     party_point_text("KESK", "Female"), " in the Centre Party and ",
-    party_point_text("VIHR", "Female"), " in the Green League. These opposing point estimates illustrate how an imprecise pooled female association can coexist with appearance-associated electoral inequality within party contexts.")
+    party_point_text("VIHR", "Female"), " in the Green League. These opposing point estimates locate potential appearance advantages within gender and party contexts.")
 } else {
-  paste0("Among women, a one-standard-deviation increase in the gender-atypical index is associated with a change in expected personal votes of ",
+  paste0("Among women, the one-standard-deviation atypicality contrasts are ",
     party_point_text("KESK", "Female"), " in the Centre Party and ",
-    party_point_text("VIHR", "Female"), " in the Green League. These comparisons describe appearance-associated electoral inequality among women within party contexts. The accompanying confidence intervals delimit the precision of the party-specific associations.")
+    party_point_text("VIHR", "Female"), " in the Green League. These party-specific estimates locate the cue comparison within female candidacies.")
 }
 party_test_summary <- function(test) {
   r <- party_slope_test[party_slope_test$test == test, ]
@@ -1295,16 +1285,16 @@ party_test_summary <- function(test) {
 }
 party_heterogeneity_text <- if (party_slope_test$p[party_slope_test$test == "All genders"] <
                                 1 - paper_values$confidence_level) {
-  "The joint test provides evidence that appearance-associated differences in expected personal votes vary across parties within one or both gender categories. The pooled within-gender association therefore does not describe a common association in every party context."
+  "The joint test indicates that appearance-associated inequality varies across parties within one or both gender categories."
 } else {
-  "The joint test does not provide sufficient evidence that appearance-associated differences in expected personal votes vary across parties within gender categories. Differences between individual point estimates consequently remain uncertain."
+  "The joint test is inconclusive about party variation in the within-gender appearance association."
 }
 paper_values$party_heterogeneity_text <- party_heterogeneity_text
 party_abstract_context_text <- if (party_slope_test$p[party_slope_test$test == "All genders"] <
                                    1 - paper_values$confidence_level) {
-  "Party-specific estimates further indicate that pooled within-gender associations in personal votes conceal variation across electoral contexts."
+  "Party comparisons reveal variation in within-gender appearance associations across electoral contexts."
 } else {
-  "Party-specific estimates examine whether the pooled within-gender associations in personal votes extend across electoral contexts."
+  "Party comparisons examine the electoral contexts of within-gender appearance associations."
 }
 paper_values$party_abstract_context_text <- party_abstract_context_text
 join_party_names <- function(parties) {
@@ -1333,12 +1323,12 @@ party_direction_text <- paste(vapply(c("Male", "Female"), function(g) {
 paper_values$party_n_contrasts <- nrow(party_contrasts)
 paper_values$party_n_nonsignificant <- sum(party_contrasts$p >= 1 - paper_values$confidence_level)
 party_precision_text <- paste0("Of the ", paper_values$party_n_contrasts,
-  " party--gender one-SD contrasts in expected personal votes, ", paper_values$party_n_nonsignificant,
+  " party--gender contrasts, ", paper_values$party_n_nonsignificant,
   " are not statistically significant at the ", fmt(100 * (1 - paper_values$confidence_level), 0),
   "\\% level.")
 party_uncertainty_text <- paste0(party_precision_text,
-  " The curves describe appearance-associated differences in the distribution of personal votes within candidacies, while uncertainty limits conclusions about particular parties.")
-party_band_note <- paste0("Confidence bands are omitted to make the fitted personal-vote associations easier to compare. ",
+  " Individual contrasts and intervals are reported in the Online Appendix.")
+party_band_note <- paste0("Confidence bands are omitted. ",
   paper_values$party_n_nonsignificant, " of the ", paper_values$party_n_contrasts,
   " party--gender contrasts are not statistically significant at the ",
   fmt(100 * (1 - paper_values$confidence_level), 0), "\\% level.")
@@ -1363,16 +1353,16 @@ party_sdp_sensitivity_text <- paste0(
   party_effect_text("SDP", "Male", "party_experience"),
   " after adjustment for prior office. ",
   if (sdp_office$lower <= 1 && sdp_office$upper >= 1)
-    "The office-adjusted interval includes zero, so the large baseline magnitude requires particular caution."
-  else "The office-adjusted interval excludes zero, although its magnitude depends on the adjustment.")
+    "The office-adjusted contrast is inconclusive."
+  else "The adjusted interval excludes zero.")
 party_sdp_magnitude_note <- paste0("Within Social Democratic male candidacies, the fitted one-SD contrast in expected personal votes changes from ",
   fmt(100 * (sdp_baseline$ratio - 1)), "\\% to ", fmt(100 * (sdp_office$ratio - 1)),
-  "\\% after adjustment for prior office, illustrating the sensitivity of its magnitude.")
+  "\\% after prior-office adjustment.")
 party_sensitivity_interpretation <- if (all(party_sensitivity_tests$p[
   party_sensitivity_tests$test == "All genders"] < 1 - paper_values$confidence_level)) {
-  "The joint tests continue to provide evidence of variation in within-gender personal-vote associations across parties under both adjustments. This persistence does not imply that individual party contrasts retain the same magnitude."
+  "Party heterogeneity persists under both adjustments, although individual contrasts change in magnitude."
 } else {
-  "The evidence for variation in within-gender personal-vote associations across parties depends on the adjustment, as do the magnitudes of individual party contrasts."
+  "The heterogeneity evidence and individual contrast magnitudes depend on the adjustment."
 }
 paper_values$party_direction_text <- party_direction_text
 paper_values$party_sdp_sensitivity_text <- party_sdp_sensitivity_text
@@ -1385,34 +1375,34 @@ n_singleton_lists <- sum(list_size == 1)
 dispersion_main <- diagnostics$pearson_dispersion[diagnostics$model == "main"]
 gender_diff_p <- gender_difference$p
 primary_gender_comparison_text <- if (gender_diff_p < 1 - paper_values$confidence_level) {
-  "The interaction test indicates that the percentage change in expected personal votes associated with a one-standard-deviation increase in the index differs between men and women."
+  "The interaction test indicates different appearance slopes for men and women."
 } else {
-  "This test does not provide sufficient evidence that the percentage change in expected personal votes associated with a one-standard-deviation increase in the index differs between men and women."
+  "The interaction test is inconclusive about a difference between gender slopes."
 }
 oa_joint_inequality_text <- paste0(
   if (effects$lower[effects$model == "joint" & effects$gender == "Male"] > 1) {
-    "With joint cue level held constant, the model associates more gender-atypical cue profiles with greater expected personal votes within male candidacies. This conditional association describes an appearance-associated advantage in the unequal distribution of personal votes."
+    "Holding joint cue level constant, the estimated gradient favors more gender-atypical profiles within male candidacies."
   } else if (effects$upper[effects$model == "joint" & effects$gender == "Male"] < 1) {
-    "With joint cue level held constant, the model associates more gender-atypical cue profiles with fewer expected personal votes within male candidacies. This conditional association describes an appearance-associated disadvantage in the distribution of personal votes."
+    "Holding joint cue level constant, the estimated gradient disfavors more gender-atypical profiles within male candidacies."
   } else {
-    "With joint cue level held constant, the cue association within male candidacies remains imprecisely estimated. This uncertainty does not establish an absence of appearance-associated inequality in the distribution of personal votes."
+    "The male appearance association is inconclusive after adjustment for joint cue level."
   },
   if (all(S_effects$lower <= 1 & S_effects$upper >= 1)) {
-    " The joint cue level intervals include zero for both gender categories, leaving their separate associations imprecisely estimated. This uncertainty does not establish that expected personal votes are distributed equally along joint cue level."
+    " The separate joint-level associations are inconclusive in both gender groups."
   } else {
-    " At least one joint cue level interval excludes zero, providing evidence of an appearance-associated difference in expected personal votes within that gender category."
+    " The joint-level interval excludes zero in at least one gender group."
   })
 oa_office_inequality_text <- paste0(
   if (effects$lower[effects$model == "experience" & effects$gender == "Male"] <= 1 &&
       effects$upper[effects$model == "experience" & effects$gender == "Male"] >= 1) {
-    paste0("With prior office included, the cue association within male candidacies is imprecisely estimated. ",
+    paste0("The male appearance association is inconclusive after prior-office adjustment. ",
       if (male_primary$lower > 1 || male_primary$upper < 1)
-        "The evidence for the baseline appearance-associated inequality is therefore sensitive to this conditioning choice."
-      else "This result leaves the adjusted appearance-associated association unresolved.")
+        "Evidence for the baseline gradient is sensitive to this conditioning choice."
+      else "Both baseline and office-adjusted gradients are inconclusive.")
   } else if (effects$lower[effects$model == "experience" & effects$gender == "Male"] > 1) {
-    "With prior office included, more gender-atypical cue profiles are associated with greater expected personal votes within male candidacies. The adjusted association describes an appearance-associated advantage conditional on the expanded controls."
+    "With prior office included, more gender-atypical male profiles are associated with greater expected personal votes."
   } else {
-    "With prior office included, more gender-atypical cue profiles are associated with fewer expected personal votes within male candidacies. The adjusted association describes an appearance-associated disadvantage conditional on the expanded controls."
+    "With prior office included, more gender-atypical male profiles are associated with fewer expected personal votes."
   },
   if (abs(effects$log_ratio[effects$model == "experience" & effects$gender == "Male"]) <
       abs(male_primary$log_ratio)) {
@@ -1422,27 +1412,22 @@ oa_office_inequality_text <- paste0(
     " Its point estimate lies farther from zero than in the baseline model."
   } else {
     " Its point estimate has the same magnitude as in the baseline model."
-  },
-  " The adjustment does not identify a causal role for prior office.",
-  if (effects$lower[effects$model == "experience" & effects$gender == "Male"] <= 1 &&
-      effects$upper[effects$model == "experience" & effects$gender == "Male"] >= 1)
-    " The imprecise adjusted association does not establish an absence of inequality within male candidacies."
-  else "")
+  })
 oa_quadratic_trim_p <- nonlinear_tests$p[
   nonlinear_tests$model %in% c("surface_trim", "surface_trim5")]
 stopifnot(length(oa_quadratic_trim_p) == 2L)
 oa_quadratic_inequality_text <- if (nonlinear_p < 1 - paper_values$confidence_level) {
-  paste0("The full-sample joint test supports additional quadratic or interaction structure relative to the joint-level-adjusted linear specification. This omnibus result concerns the added terms jointly. It does not establish nonlinearity in both gender groups. ",
+  paste0("The full-sample joint test supports added quadratic or interaction terms. ",
     if (all(oa_quadratic_trim_p >= 1 - paper_values$confidence_level)) {
-      "The evidence is not retained under either upper-tail exclusion, making support for nonlinear structure sensitive to the candidate population represented by the estimate. "
+      "The joint test is inconclusive under both upper-tail exclusions. "
     } else if (all(oa_quadratic_trim_p < 1 - paper_values$confidence_level)) {
-      "The corresponding joint tests retain this evidence under both upper-tail exclusions. "
+      "This result survives both upper-tail exclusions. "
     } else {
-      "The corresponding joint tests retain this evidence under only one upper-tail exclusion, indicating sensitivity to the estimation sample. "
+      "Only one upper-tail comparison retains a significant joint test. "
     },
-    "The fitted surface therefore describes conditional differences in expected personal votes whose shape must be assessed alongside these sample comparisons.")
+    "This omnibus test concerns the added terms jointly across genders.")
 } else {
-  "The full-sample joint test does not provide sufficient evidence of additional quadratic or interaction structure at the reported significance level. The fitted surface describes model-implied differences in expected personal votes, but its shapes do not establish nonlinear appearance-associated inequality within gender categories. This qualification concerns the shape of the conditional cue association. It does not establish an absence of inequality."
+  "The full-sample test is inconclusive about added quadratic or interaction terms, so the fitted surface remains a descriptive summary of the conditional model."
 }
 paper_values$n_saved <- nrow(dat_source)
 paper_values$n_main <- n_main
@@ -1561,30 +1546,30 @@ attractiveness_point_text <- function(g, specification) {
   paste0(fmt(100 * (r$ratio - 1)), "\\%")
 }
 attractiveness_male_adjustment_text <- paste0(
-  "Among men, the estimated change in expected personal votes for a one-standard-deviation increase in the index is ",
+  "Among men, the one-standard-deviation cue contrasts are ",
   attractiveness_point_text("Male", "omitted"), " without attractiveness adjustment, ",
   attractiveness_point_text("Male", "linear"), " with the baseline adjustment, and ",
-  attractiveness_point_text("Male", "flexible"), " under nonlinear attractiveness adjustment that varies by gender.")
+  attractiveness_point_text("Male", "flexible"), " under gender-specific nonlinear attractiveness adjustment.")
 attractiveness_male_flexible <- attractiveness_effects[
   attractiveness_effects$gender == "Male" & attractiveness_effects$model == "flexible", ]
 attractiveness_adjustment_interpretation <- if (attractiveness_male_flexible$lower > 1) {
-  "The male cue association is positive under nonlinear attractiveness adjustment that varies by gender, with its confidence interval entirely above zero. Appearance-associated electoral inequality among men is therefore evident even under the flexible attractiveness specification. Together with the weak relationship between the two ratings among men, this result weighs against treating the gender-atypical index as a proxy for measured attractiveness."
+  "Flexible attractiveness adjustment supports an appearance-associated advantage for more gender-atypical male profiles. This pattern is consistent with a cue association distinct from measured attractiveness."
 } else if (attractiveness_male_flexible$upper < 1) {
-  "The confidence interval remains entirely below zero under the flexible adjustment. A more gender-atypical appearance among men is therefore associated with fewer expected votes after allowing the attractiveness association to vary by gender and take a nonlinear form. This result describes electoral inequality within male candidacies conditional on the measured attractiveness adjustment."
+  "Under flexible attractiveness adjustment, the male association favors more gender-typical cue profiles."
 } else {
-  "The confidence interval includes zero under the flexible adjustment. The baseline appearance-associated difference in support among men is therefore sensitive to how attractiveness is modeled. The evidence does not establish whether that difference remains after this adjustment, and this uncertainty does not establish an absence of inequality among men."
+  "The male cue association is inconclusive under flexible attractiveness adjustment."
 }
 attractiveness_female_flexible <- attractiveness_effects[
   attractiveness_effects$gender == "Female" & attractiveness_effects$model == "flexible", ]
 attractiveness_female_adjustment_text <- paste0(
-  "Among women, the estimated change is ",
+  "Among women, the corresponding contrasts are ",
   attractiveness_point_text("Female", "omitted"), " without attractiveness adjustment and ",
-  attractiveness_point_text("Female", "linear"), " with the baseline adjustment. With the flexible adjustment, it is ",
+  attractiveness_point_text("Female", "linear"), " with the baseline adjustment. The flexible estimate is ",
   attractiveness_effect_text("Female", "flexible"), ". ",
   if (attractiveness_female_flexible$lower <= 1 && attractiveness_female_flexible$upper >= 1) {
-    "The confidence interval includes both an advantage and a disadvantage in expected votes. Because women rated as more feminine relative to masculine are also commonly rated as more attractive, the data provide less separation between these appearance dimensions among women. The direction of the adjusted difference in support remains uncertain. That uncertainty does not establish an equal distribution of electoral support among female candidates."
+    "The adjusted female association is inconclusive."
   } else {
-    "The confidence interval excludes zero. The estimate describes electoral inequality within female candidacies after the flexible adjustment. The close relationship between feminine appearance and attractiveness among women nevertheless limits how sharply the data can distinguish their separate associations with votes."
+    "The flexible estimate locates a conditional cue association within female candidacies."
   })
 paper_values$attractiveness_correlations <- attractiveness_correlations
 paper_values$attractiveness_effects <- attractiveness_effects
@@ -1896,14 +1881,14 @@ write.csv(oa_quadratic_effects, file.path(project_dir, "results", "oa_quadratic_
 submission_highlights <- c(
   "An original dataset links separate human appearance ratings to personal votes.",
   "Natural-experiment classification assumes external variation in gendered appearance.",
-  primary_abstract_short_male,
+  paste(primary_abstract_short_male, primary_abstract_short_female),
   if (party_slope_test$p[party_slope_test$test == "All genders"] <
       1 - paper_values$confidence_level) {
     "Appearance-associated vote inequality varies across parties within gender."
   } else {
     "Party comparisons examine the context of appearance-associated vote inequality."
   },
-  "The assignment assumption does not establish exchangeability or causal effects."
+  "The analysis examines unequal appearance returns within gender categories."
 )
 writeLines(paste0("- ", submission_highlights), file.path(project_dir, "Highlights.txt"))
 

@@ -1,5 +1,5 @@
 - An original dataset links separate human appearance ratings to personal votes.
 - Natural-experiment classification assumes external variation in gendered appearance.
-- Appearance-associated vote inequality favors more gender-atypical male profiles.
+- Appearance-associated vote inequality favors more gender-atypical male profiles. The female association is inconclusive.
 - Appearance-associated vote inequality varies across parties within gender.
-- The assignment assumption does not establish exchangeability or causal effects.
+- The analysis examines unequal appearance returns within gender categories.
