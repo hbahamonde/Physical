@@ -1,0 +1,18 @@
+{
+  "score_formula": "atypicality ~ age_c + attractiveness + coelevation + incumbent_councillor + national_mp + factor(party) + log_city_ballots",
+  "exact": "gender",
+  "score_sd_caliper": 0.2,
+  "allocation_probability_bounds": [0.45, 0.55],
+  "min_dose_gap": 0.5,
+  "max_dose_gap": 1.5,
+  "age_caliper": 10,
+  "attractiveness_caliper": 0.5,
+  "joint_cue_caliper": 0.75,
+  "electoral_market_ratio_caliper": 1.5,
+  "max_abs_smd": 0.1,
+  "scopes": {
+    "overlap": {},
+    "central": [1.75, 3.25]
+  },
+  "seed": 20261014
+}

@@ -1,0 +1,5 @@
+"scope","gender","n_pairs","same_city","same_party","same_incumbency","maximum_ballot_ratio","allocation_probability_min","allocation_probability_max"
+"overlap","Male",263,23,87,199,1.49515170472318,0.46050621443969,0.539534361631873
+"overlap","Female",116,15,26,87,1.49066837840007,0.450545689154304,0.549272014151396
+"central","Male",63,7,14,53,1.49607220457964,0.477278006533446,0.526461966639579
+"central","Female",18,1,4,14,1.48481166464156,0.45647787258111,0.549272014151396

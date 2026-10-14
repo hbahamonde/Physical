@@ -1,0 +1,16 @@
+{
+  "min_dose_gap": 0.5,
+  "max_dose_gap": 1.5,
+  "age_caliper": 10,
+  "attractiveness_caliper": 0.5,
+  "joint_cue_caliper": 0.75,
+  "max_abs_smd": 0.1,
+  "exact": ["gender", "city", "party", "incumbent_councillor", "national_mp"],
+  "bootstrap_repetitions": 4999,
+  "seed": 20261014,
+  "scopes": {
+    "primary": {},
+    "central_wide": [1.75, 3.25],
+    "central_tight": [2, 3]
+  }
+}

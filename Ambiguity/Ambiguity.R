@@ -1011,18 +1011,51 @@ ggsave(file.path(project_dir, "figures", "party_predicted_votes.png"), party_vot
        width = 8.8, height = 10.7, dpi = 300, bg = "white")
 
 ## ---- support-figures
+cue_illustrations <- scale_constants[, c("gender", "F_mean", "F_sd", "M_mean", "M_sd", "A0_sd")]
+cue_illustrations$gender <- factor(cue_illustrations$gender, levels = levels(d$gender))
+cue_illustrations$example_F <- with(cue_illustrations, F_mean + (gender == "Male") * F_sd)
+cue_illustrations$example_M <- with(cue_illustrations, M_mean + (gender == "Female") * M_sd)
+cue_illustrations$example_A <- 1 / (2 * cue_illustrations$A0_sd)
+# Overlay the raw ratings and illustrations in one square panel. Keep this
+# figure's pink color local so the palettes of every other figure are unchanged.
+cue_support_palette <- c(Male = "#245B78", Female = "#D27A9E")
+cue_support_labels <- setNames(vapply(levels(d$gender), function(g) {
+  paste0(gender_names[g], " (N = ", sum(d$gender == g), ")")
+}, character(1)), levels(d$gender))
 support_plot <- ggplot(d, aes(femininity, masculinity, color = gender)) +
-  geom_abline(slope = 1, intercept = 0, color = "grey55", linetype = 2, linewidth = .4) +
-  geom_point(alpha = .32, size = .8) +
-  facet_wrap(~ gender, labeller = as_labeller(gender_names)) +
+  geom_abline(slope = 1, intercept = 0, color = "grey55", linetype = 2, linewidth = .45) +
+  geom_point(alpha = .32, size = 1) +
+  geom_segment(data = cue_illustrations,
+    aes(x = F_mean, y = M_mean, xend = example_F, yend = example_M),
+    inherit.aes = FALSE, color = "grey15", linewidth = .6,
+    arrow = grid::arrow(length = grid::unit(.10, "inches")), show.legend = FALSE) +
+  geom_point(data = cue_illustrations, aes(x = F_mean, y = M_mean),
+    inherit.aes = FALSE, color = "grey15", shape = 3, size = 3.3, stroke = .9,
+    show.legend = FALSE) +
+  geom_point(data = cue_illustrations, aes(x = example_F, y = example_M),
+    inherit.aes = FALSE, color = "grey15", fill = "white", shape = 23,
+    size = 3.1, stroke = .9, show.legend = FALSE) +
+  scale_x_continuous(breaks = seq(paper_values$scale_min, paper_values$scale_max)) +
+  scale_y_continuous(breaks = seq(paper_values$scale_min, paper_values$scale_max)) +
   coord_equal(xlim = c(paper_values$scale_min, paper_values$scale_max),
                ylim = c(paper_values$scale_min, paper_values$scale_max)) +
-  scale_color_manual(values = palette, guide = "none") +
+  scale_color_manual(values = cue_support_palette, labels = cue_support_labels, drop = FALSE) +
   labs(x = paste0("Perceived femininity (", paper_values$scale_min, "-", paper_values$scale_max, ")"),
-       y = paste0("Perceived masculinity (", paper_values$scale_min, "-", paper_values$scale_max, ")")) +
-  square_panel_theme()
-ggsave(file.path(project_dir, "figures", "cue_support.pdf"), support_plot, width = 6.8, height = 4.0)
-ggsave(file.path(project_dir, "figures", "cue_support.png"), support_plot, width = 6.8, height = 4.0, dpi = 300)
+       y = paste0("Perceived masculinity (", paper_values$scale_min, "-", paper_values$scale_max, ")"),
+       color = NULL) +
+  square_panel_theme(12) +
+  theme(axis.text = element_text(color = "grey20", size = 11),
+        axis.title.x = element_text(margin = margin(t = 10)),
+        axis.title.y = element_text(margin = margin(r = 10)),
+        legend.position = "top", legend.justification = "left",
+        legend.text = element_text(size = 11),
+        legend.margin = margin(0, 0, 8, 0),
+        plot.margin = margin(12, 14, 12, 12)) +
+  guides(color = guide_legend(override.aes = list(alpha = 1, size = 2.8)))
+ggsave(file.path(project_dir, "figures", "cue_support.pdf"), support_plot,
+       width = 6.5, height = 6.35, bg = "white")
+ggsave(file.path(project_dir, "figures", "cue_support.png"), support_plot,
+       width = 6.5, height = 6.35, dpi = 300, bg = "white")
 # Online Appendix quadratic surface: show only nearby empirical support under the shared
 # local-count/radius settings. Predictions relative to group mean cues at the SAME
 # reference controls; ratios cancel nuisance FE. This is a model-based association surface.
@@ -1186,7 +1219,7 @@ paper_values$candidate_universe <- 33618L
 paper_values$photos_selected <- 1500L
 paper_values$n_invited <- 26500L
 paper_values$recognition_exclusions <- 4L
-cue_example_A <- setNames(1 / (2 * scale_constants$A0_sd), scale_constants$gender)
+cue_example_A <- setNames(cue_illustrations$example_A, as.character(cue_illustrations$gender))
 paper_values$cue_example_A <- cue_example_A
 format_effect_text <- function(r) {
   stopifnot(nrow(r) == 1L)
@@ -1651,7 +1684,7 @@ main_contrast_table_tex <- latex_tabular(
   main_contrast_table,
   c("Cue", "Men (\\%)", "Women (\\%)"), "lcc")
 
-# Coefficients of the exact baseline PPML model used for Figure 1.
+# Coefficients of the exact baseline Poisson model used for the main expected-vote figure.
 # Report substantive terms; summarize the nuisance fixed effects as inclusion rows.
 oa_baseline_labels <- c(
   "\\texttt{Atypicality}" = "atypicality",

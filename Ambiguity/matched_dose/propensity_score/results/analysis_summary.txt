@@ -1,0 +1,101 @@
+PROPENSITY-SCORE MATCHED CONTINUOUS-DOSE ANALYSIS
+
+   scope gender starting_n eligible_n initial_pairs retained_pairs
+ overlap   Male        810        588           266            263
+ overlap Female        574        267           116            116
+ central   Male        366        178            73             63
+ central Female        245         75            32             18
+
+   scope gender                 outcome n_pairs n_candidates n_cities
+ overlap   Male               raw_votes     263          526      152
+ overlap   Male               log_votes     263          526      152
+ overlap   Male votes_per_10000_ballots     263          526      152
+ overlap Female               raw_votes     116          232      107
+ overlap Female               log_votes     116          232      107
+ overlap Female votes_per_10000_ballots     116          232      107
+ central   Male               raw_votes      63          126       68
+ central   Male               log_votes      63          126       68
+ central   Male votes_per_10000_ballots      63          126       68
+ central Female               raw_votes      18           36       30
+ central Female               log_votes      18           36       30
+ central Female votes_per_10000_ballots      18           36       30
+ mean_dose_gap mean_votes_high mean_votes_low     estimate standard_error
+     0.9289210        83.00760       62.39163  21.50029945    11.33161550
+     0.9289210        83.00760       62.39163   0.10942569     0.09831206
+     0.9289210        83.00760       62.39163  -3.79619901     6.53443024
+     0.7757515        83.28448       87.36207  -4.98030742    23.81212770
+     0.7757515        83.28448       87.36207  -0.02079146     0.16542628
+     0.7757515        83.28448       87.36207  -7.70336106    11.43677783
+     0.8333676        89.22222       60.19048  34.61796492    22.10852209
+     0.8333676        89.22222       60.19048   0.31368384     0.23288094
+     0.8333676        89.22222       60.19048  19.64108058    14.85361113
+     0.6768678        29.22222       41.22222 -18.27875715    21.30228228
+     0.6768678        29.22222       41.22222  -0.63969233     0.55406500
+     0.6768678        29.22222       41.22222 -44.56659810    40.53647658
+         lower      upper
+   -0.70925882 43.7098577
+   -0.08326241  0.3021138
+  -16.60344694  9.0110489
+  -51.65122010 41.6906053
+   -0.34502100  0.3034381
+  -30.11903371 14.7123116
+   -8.71394214 77.9498720
+   -0.14275441  0.7701221
+   -9.47146228 48.7536234
+  -60.03046321 23.4729489
+   -1.72563978  0.4462551
+ -124.01663225 34.8834361
+
+ gamma_per_SD n_pairs n_nonzero n_zero doubled_positive_rank_sum
+         1.00     263       261      2                     36170
+         1.25     263       261      2                     36170
+         1.50     263       261      2                     36170
+         2.00     263       261      2                     36170
+         1.00     116       115      1                      6505
+         1.25     116       115      1                      6505
+         1.50     116       115      1                      6505
+         2.00     116       115      1                      6505
+ doubled_total_rank_sum p_greater_upper_bound p_less_upper_bound
+                  68382             0.2260191          0.7741041
+                  68382             0.7560761          0.9861266
+                  68382             0.9688368          0.9996338
+                  68382             0.9998805          0.9999999
+                  13340             0.5820617          0.4184820
+                  13340             0.8469113          0.7289483
+                  13340             0.9541950          0.8982676
+                  13340             0.9967520          0.9893356
+ p_two_sided_upper_bound exact_equal_tailed_p_conditional_on_supplied_q   scope
+               0.4520381                                           TRUE overlap
+               1.0000000                                          FALSE overlap
+               1.0000000                                          FALSE overlap
+               1.0000000                                          FALSE overlap
+               0.8369641                                           TRUE overlap
+               1.0000000                                          FALSE overlap
+               1.0000000                                          FALSE overlap
+               1.0000000                                          FALSE overlap
+ gender   outcome
+   Male raw_votes
+   Male raw_votes
+   Male raw_votes
+   Male raw_votes
+ Female raw_votes
+ Female raw_votes
+ Female raw_votes
+ Female raw_votes
+
+The fixed corrected dataset is used. The manuscript and its figures are unchanged.
+The Gaussian conditional dose mean is a balancing score only under its working assignment model.
+This is disjoint nonbipartite propensity-score pairing, not the CausalGPS exposure-grid ERF estimator.
+Neither matching nor measured covariate balance establishes as-if random assignment.
+The target is a dose-gap-weighted local average finite contrast for retained candidates.
+This is not an instrumental-variable LATE and does not identify a universal one-SD intervention.
+Neyman intervals condition on the selected matches and estimated assignment scores.
+They are not municipality-clustered and do not incorporate score-estimation or selection uncertainty.
+Cross-city matches balance observed ballot volume but cannot remove unmeasured municipal/list differences.
+Ballot volume is realized election context, not a strictly preexposure population measurement.
+Appearance controls define similar beauty and joint-level profiles, not automatically a total facial effect.
+Candidate appearance must correspond to a sufficiently well-defined intervention for a causal reading.
+Competition and interference remain additional identification concerns.
+Sensitivity results are exact conditional on known fitted allocation probabilities and independent swaps.
+The fitted probabilities are estimated, so this is model-based sensitivity, not an actual randomized experiment.
+The raw-vote, log-vote, and ballot-normalized outcomes have different estimands.

@@ -5,6 +5,23 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern,microtype,amsmath,amssymb,graphicx,booktabs}
+\usepackage{xcolor}
+\definecolor{coverblue}{HTML}{004B76}
+\definecolor{coverlight}{HTML}{EAF3F8}
+\definecolor{covergray}{HTML}{53616A}
+\newcommand{\LatestPaperURL}{https://github.com/hbahamonde/Physical/raw/refs/heads/main/Ambiguity/Ambiguity.pdf}
+\newcommand{\CoverMeta}[2]{%
+  \begingroup
+  \setlength{\fboxsep}{6pt}%
+  \setlength{\fboxrule}{0.4pt}%
+  \fcolorbox{coverblue!25}{coverlight}{%
+    \begin{minipage}[c][0.90cm][c]{\dimexpr0.30\linewidth-2\fboxsep-2\fboxrule\relax}
+    \centering
+    {\sffamily\scriptsize\color{covergray}#1\par}
+    \vspace{3pt}
+    {\normalsize\bfseries\color{coverblue}#2\par}
+    \end{minipage}}%
+  \endgroup}
 \usepackage[bottom]{footmisc}
 \usepackage{placeins}
 \usepackage[hidelinks]{hyperref}
@@ -58,7 +75,16 @@
   \end{tabular}}
 \newcommand{\ManuscriptWordCount}{AMBIGUITYMANUSCRIPTWORDCOUNT}
 \newcommand{\AbstractWordCount}{AMBIGUITYABSTRACTWORDCOUNT}
-\date{\today\\[0.4em]{\small {\bf \ManuscriptWordCount{} words}\\\footnotesize Excluding references and Online Appendix}}
+\newcommand{\CoverDetails}{\begin{minipage}{0.90\textwidth}
+  \noindent\CoverMeta{VERSION DATE}{{\small\today}}\hfill
+  \CoverMeta{MANUSCRIPT}{\ManuscriptWordCount{} words}\hfill
+  \CoverMeta{ABSTRACT}{\AbstractWordCount{} words}\par
+  \vspace{5pt}
+  {\centering\footnotesize\color{covergray}Manuscript count excludes references and Online Appendix.\par}
+  \vspace{8pt}
+  {\centering\small\sffamily\href{\LatestPaperURL}{\textcolor{coverblue}{\bfseries Download the latest version}}\par}
+  \end{minipage}}
+\date{\CoverDetails}
 
 <<bootstrap, include=FALSE>>=
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache = FALSE)
@@ -113,16 +139,15 @@ knitr::read_chunk(file.path(Sys.getenv("AMBIGUITY_DIR"), "Ambiguity.R"))
 \makeatletter
 \renewcommand{\@makefntext}[1]{\noindent #1}
 \makeatother
-\footnotetext{This research was supported by the INVEST Research Flagship Centre and funded by the Research Council of Finland (decision number 345546) and Sarpila's Academy of Finland project (decision number 325813).}
+\footnotetext{Both authors contributed equally to this paper. This research was supported by the INVEST Research Flagship Centre and funded by the Research Council of Finland (decision number 345546) and Sarpila's Academy of Finland project (decision number 325813).}
 \endgroup
-\vspace{1em}
+\vspace{0.2em}
 \begin{abstract}
 % AMBIGUITY_ABSTRACT_START
 Does departure from gender stereotypes carry an electoral penalty, and does that penalty depend on political context? We exploit an observational natural experiment to examine electoral inequality within gender categories. This classification rests on the assumption that naturally arising facial variation introduces a probabilistic component into gendered appearance beyond candidates' precise control. It does not establish exchangeability or causal identification. We built an original dataset linking separate femininity, masculinity, and attractiveness ratings to official personal-vote counts in Finland's \Sexpr{paper_values$election_year} open-list municipal elections. Exploiting complete records for \Sexpr{n_main} candidates, we estimate Poisson conditional-mean models with municipality and party fixed effects, adjusting for age and attractiveness. A gender-relative cue contrast increases with femininity relative to masculinity among men and the reverse among women. A one-standard-deviation increase is associated with differences in expected votes of \Sexpr{effect_text("Male")} for men and \Sexpr{effect_text("Female")} for women. \Sexpr{primary_abstract_short_text} \Sexpr{party_abstract_context_text} Many individual party contrasts remain imprecise. These findings connect infracategorical inequality to the distribution of personal support across gendered appearance profiles and political contexts, without identifying the causal processes producing those differences.
 % AMBIGUITY_ABSTRACT_END
 \end{abstract}
-\begin{center}\small {\bf Abstract word count}: \AbstractWordCount{}\end{center}
-\vspace{0.7em}
+\vspace{0.4em}
 \begin{center}
 \begin{minipage}{0.9\textwidth}
 \small\noindent\textbf{Keywords} electoral inequality, gender typicality, natural experiment, candidate appearance, personal votes, Finland.
@@ -206,9 +231,18 @@ We construct the \emph{gender-atypical cue contrast} in \autoref{eq:axes} from f
 \end{equation}
 Higher $A$ therefore captures a more feminine-relative-to-masculine appearance among men and a more masculine-relative-to-feminine appearance among women. Scaling the contrast by the within-gender standard deviation of $z^F-z^M$ expresses these departures in a common unit, with one unit of $A$ corresponding to one standard deviation within either gender category.
 
-For illustration, a man whose masculinity rating is average among men and whose femininity rating is one standard deviation above the male average has $A=\Sexpr{fmt(paper_values$cue_example_A["Male"],2)}$ in \autoref{eq:axes}. A woman whose femininity rating is average among women and whose masculinity rating is one standard deviation above the female average has $A=\Sexpr{fmt(paper_values$cue_example_A["Female"],2)}$. The positive values capture the relatively feminine male profile and the relatively masculine female profile as departures from their respective gender groups' appearance expectations.
+Figure~\ref{fig:cue-support} displays the separate ratings underlying the index in a single panel. Each point places a candidate according to perceived femininity on the horizontal axis and perceived masculinity on the vertical axis. Blue points represent men and pink points represent women, allowing the two distributions and the variation within each gender category to be inspected together. The overlay preserves the same-age and same-gender reference of the survey questions, so the index continues to locate each candidate within their gender category.
 
-Because the ratings are gender-referenced, $A=0$ denotes an average relative contrast within the candidate's gender category. It does not mark a boundary at which observers become uncertain about gender. The index thus measures one aspect of perceived appearance rather than gender identity or categorization difficulty.\footnote{Figure~\ref{fig:oa-support} in the Online Appendix shows the underlying femininity and masculinity ratings. We also estimate balance between the raw ratings, controlling for their mean intensity. \autoref{sec:oa-balance} provides this alternative measure's definition and estimates.}
+For illustration, a man whose masculinity rating is average among men and whose femininity rating is one standard deviation above the male average has $A=\Sexpr{fmt(paper_values$cue_example_A["Male"],2)}$ in \autoref{eq:axes}. A woman whose femininity rating is average among women and whose masculinity rating is one standard deviation above the female average has $A=\Sexpr{fmt(paper_values$cue_example_A["Female"],2)}$. In the combined panel of Figure~\ref{fig:cue-support}, the crosses locate each gender group's mean profile, and the arrows lead from those means to the hypothetical profiles marked by hollow diamonds. The male example shifts rightward at fixed masculinity, while the female example shifts upward at fixed femininity. These hypothetical profiles both yield positive index values, capturing the relatively feminine male appearance and the relatively masculine female appearance as departures from their respective gender groups' appearance expectations.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.78\linewidth]{figures/cue_support.pdf}
+\caption{Perceived femininity and masculinity by candidate gender in a combined panel. Blue points show mean ratings for \Sexpr{n_male} men and pink points show mean ratings for \Sexpr{n_female} women. Ratings were elicited relative to others of the same age and gender. Crosses mark gender-group average ratings, and arrows lead to the two hypothetical profiles marked by hollow diamonds. The dashed diagonal marks equal raw ratings on the \Sexpr{paper_values$scale_min}--\Sexpr{paper_values$scale_max} scales. The gender-atypical contrast is standardized within gender using \autoref{eq:axes}.}
+\label{fig:cue-support}
+\end{figure}
+
+Because the ratings are gender-referenced, $A=0$ denotes an average relative contrast within the candidate's gender category. This reference point is determined by the gender-specific centering and scaling in \autoref{eq:axes}, whereas the diagonal in Figure~\ref{fig:cue-support} compares the two raw ratings. Zero on the index does not mark a boundary at which observers become uncertain about gender. The index thus measures one aspect of perceived appearance rather than gender identity or categorization difficulty.\footnote{We also estimate balance between the raw ratings, controlling for their mean intensity. \autoref{sec:oa-balance} of the Online Appendix provides this alternative measure's definition and estimates.}
 
 Because the contrast locates candidates within their gender category, Table~\ref{tab:summary} reports the outcome, appearance measures, and covariates separately for men and women in the sample that we exploit below. This organization shows the variation within each category on which the subsequent comparison of electoral inequality rests.
 
@@ -527,18 +561,7 @@ The fitted model retains the descriptive conditional mean in \autoref{eq:model}.
 
 Variation conditional on the observed controls identifies the regression's appearance association under its conditional-mean specification. It does not convert \autoref{eq:ne-observational-mean} into an interventional expectation or separate the biological component from presentation choices. The natural-experiment classification concerns the proposed source of probabilistic appearance variation. The figures and contrasts continue to describe unequal expected personal support within the selected candidate population, without estimating causal effects of changing appearance.
 
-\section{Appearance measurement}
-\label{sec:oa-measurement}
-The primary contrast is constructed from separate femininity and masculinity ratings. Figure~\ref{fig:oa-support} displays their candidate averages by recorded gender, showing the cue profiles from which that contrast is derived.
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.92\linewidth]{figures/cue_support.pdf}
-\caption{Joint distribution of perceived femininity and masculinity. Each point is a candidate's mean rating. The diagonal marks equal raw ratings. Rating anchors run from \Sexpr{paper_values$scale_min} to \Sexpr{paper_values$scale_max}.}
-\label{fig:oa-support}
-\end{figure}
-
-\subsection{Balance between raw ratings}
+\section{Balance between raw ratings}
 \label{sec:oa-balance}
 An alternative specification assesses whether balance between the raw femininity and masculinity ratings is associated with electoral support. It replaces the directional contrast of within-gender standardized ratings with raw cue balance and raw cue intensity, defined in \autoref{eq:raw-balance}.
 \begin{equation}
@@ -597,7 +620,7 @@ The joint-level adjustment permits the directional contrast and combined rating 
 \end{aligned}
 \label{eq:quadratic}
 \end{equation}
-All coefficients of the joint-level-adjusted linear predictor are re-estimated, so the added terms describe curvature and interaction conditional on the same controls. Table~\ref{tab:oa-quadratic} reports these nonlinear coefficients by gender. A joint Wald test evaluates whether the \Sexpr{nonlinear_df} added terms equal zero. It gives $F=\Sexpr{fmt(nonlinear_wald/nonlinear_df,2)}$ with \Sexpr{nonlinear_df} and \Sexpr{attr(vcovs$surface,"df")} degrees of freedom ($p=\Sexpr{fmt(nonlinear_p,3)}$). Table~\ref{tab:oa-nonlinear-tests} applies the same test after upper-tail exclusions, connecting the assessment of nonlinearity to dependence on high-vote candidates. Figure~\ref{fig:oa-surface} shows the fitted cue surface only where nearby candidate profiles provide empirical support. Figure~\ref{fig:oa-support} shows the underlying raw ratings. \Sexpr{oa_quadratic_inequality_text}
+All coefficients of the joint-level-adjusted linear predictor are re-estimated, so the added terms describe curvature and interaction conditional on the same controls. Table~\ref{tab:oa-quadratic} reports these nonlinear coefficients by gender. A joint Wald test evaluates whether the \Sexpr{nonlinear_df} added terms equal zero. It gives $F=\Sexpr{fmt(nonlinear_wald/nonlinear_df,2)}$ with \Sexpr{nonlinear_df} and \Sexpr{attr(vcovs$surface,"df")} degrees of freedom ($p=\Sexpr{fmt(nonlinear_p,3)}$). Table~\ref{tab:oa-nonlinear-tests} applies the same test after upper-tail exclusions, connecting the assessment of nonlinearity to dependence on high-vote candidates. Figure~\ref{fig:oa-surface} shows the fitted cue surface only where nearby candidate profiles provide empirical support. Figure~\ref{fig:cue-support} shows the underlying raw ratings. \Sexpr{oa_quadratic_inequality_text}
 
 \begin{table}[!htbp]
 \centering

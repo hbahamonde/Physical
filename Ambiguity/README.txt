@@ -90,7 +90,9 @@ Initial findings and provenance (updated after full national audit)
   Official archive: https://tulospalvelu.vaalit.fi/KV-2017/fi/ladattavat_tiedostot.html
 
 Prediction curves
-  Main Figure 1 shows expected personal-vote counts from the A-only baseline-controls model,
+  Main Figure 1 displays separate femininity and masculinity ratings by gender and
+  illustrates the direction of the constructed atypicality examples in the data section.
+  Main Figure 2 shows expected personal-vote counts from the A-only baseline-controls model,
   without a legend. The curves
   vary A over its gender-specific percentile range and average over observed controls,
   municipalities and parties. They use one-dimensional support in A and do not hold S=0.
@@ -107,12 +109,12 @@ Prediction curves
   Main figures use individual ggplot2 fitted panels, aligned with separate observation-rug
   strips through gridExtra. Central-range x limits keep outlying rug values from widening
   the fitted display. Rugs show only candidates in the displayed window; headings report
-  full-group sample sizes. Figure 1 retains its conditional-mean confidence band.
-  Main Figure 2 uses the secondary gender-by-atypicality-by-party PPML specification.
+  full-group sample sizes. Figure 2 retains its conditional-mean confidence band.
+  Main Figure 3 uses the secondary gender-by-atypicality-by-party PPML specification.
   It includes parties meeting the minimum per-gender support requirement, preserves the
   primary sample's A scaling, and averages predictions within each party-by-gender cell.
   The panels show observed-candidate rugs and cell counts, with separate vertical scales
-  and a common cue axis. Figure 2 shows substantive point-estimate patterns without bands;
+  and a common cue axis. Figure 3 shows substantive point-estimate patterns without bands;
   the dynamic note reports how many one-SD contrasts are not statistically significant.
   Full uncertainty and joint heterogeneity tests remain in the Online Appendix.
   Party curves are evaluated continuously over each gender-by-party cell's 10th--90th
@@ -160,8 +162,8 @@ Publication structure
   counterevidence from Wang, Merolla and Manganiello (2023). These motivate hypotheses
   about trait inferences; the observational data do not measure or identify those mechanisms.
 
-Attractiveness comparison (Figure 3)
-  Figure 3 compares actual paired candidate ratings by gender. Signed balance B=A for men
+Attractiveness comparison (Figure 4)
+  Figure 4 compares actual paired candidate ratings by gender. Signed balance B=A for men
   and B=-A for women, so higher B is more feminine relative to masculine cues in both groups.
   Marginal quantile diagnostics remain available as separate analysis outputs.
   The separate attractiveness_models object retains all other primary controls and the same
@@ -171,3 +173,12 @@ Attractiveness comparison (Figure 3)
   Numerical diagnostics are exported as attractiveness_effects.csv, attractiveness_correlations.csv,
   attractiveness_pairs.csv, attractiveness_qq.csv, and attractiveness_diagnostics.csv in results/.
   The new manuscript section is 5.2; its Table 3 and interpretation update dynamically.
+
+Cover page
+  The version date and dynamic manuscript/abstract counts use the ERC blue palette.
+  CoverDetails and CoverMeta in Ambiguity.rnw control their layout. The metadata and
+  latest-version link are outside both counted text regions.
+  LatestPaperURL points to the current PDF on the main branch, without a commit-specific
+  address or an expiring access token. The direct GitHub download route is
+  https://github.com/hbahamonde/Physical/raw/refs/heads/main/Ambiguity/Ambiguity.pdf
+  Repository access restrictions still apply. Public readership requires a public PDF location.

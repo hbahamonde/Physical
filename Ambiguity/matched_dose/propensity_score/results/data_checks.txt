@@ -1,0 +1,2 @@
+Fixed analysis CSV and official outcome crosswalk agree for all 1384 candidates.
+MD5 510b22dcc952cb047528245c91321459

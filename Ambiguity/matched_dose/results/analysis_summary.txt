@@ -1,0 +1,69 @@
+MATCHED-DOSE ANALYSIS
+
+Corrected official personal votes are used for the photographed candidates.
+Matching is separate by recorded gender and never uses vote outcomes.
+A retains the main analysis sample's within-gender standard-deviation scale.
+
+Design
+         scope gender starting_n initial_pairs retained_pairs
+       primary   Male        810            57             56
+       primary Female        574            25             16
+  central_wide   Male        366            14             14
+  central_wide Female        245             6              0
+ central_tight   Male        178             4              3
+ central_tight Female        131             3              0
+
+Primary continuous-dose estimates
+   scope gender outcome n_pairs n_candidates n_cities mean_dose_gap
+ primary   Male     raw      56          112       30     0.9610216
+ primary   Male     log      56          112       30     0.9610216
+ primary Female     raw      16           32       11     0.8439578
+ primary Female     log      16           32       11     0.8439578
+ mean_votes_high mean_votes_low mean_vote_difference     estimate
+          65.875       77.39286            -11.51786 -11.98501429
+          65.875       77.39286            -11.51786   0.07644601
+          81.625      156.68750            -75.06250 -88.94105945
+          81.625      156.68750            -75.06250  -0.48474363
+ standard_error neyman_lower neyman_upper city_bootstrap_lower
+     18.6821838  -48.6014216   24.6313931           -57.752716
+      0.1667004   -0.2502808    0.4031728            -0.283272
+     75.9352792 -237.7714718   59.8893529          -209.801109
+      0.3982512   -1.2653015    0.2958143            -1.306727
+ city_bootstrap_upper
+           27.5948240
+            0.4654952
+           21.3553828
+            0.4015268
+
+Primary exact, dose-aware sensitivity bounds
+ gender gamma n_pairs p_two_sided_upper_bound
+   Male  1.00      56               0.8925661
+   Male  1.25      56               1.0000000
+   Male  1.50      56               1.0000000
+   Male  2.00      56               1.0000000
+ Female  1.00      16               0.2114258
+ Female  1.25      16               0.3632173
+ Female  1.50      16               0.5252662
+ Female  2.00      16               0.8308397
+
+Interpretation
+The estimator sum(vote differences)/sum(dose gaps) is a dose-normalized local
+average finite-contrast effect under conditional as-if random dose assignment.
+It targets only retained candidates over their observed dose gaps, not all candidates
+or a point-specific derivative at raw F=M=2.5. No IV/complier LATE is estimated.
+Neyman intervals are conservative, approximate, and conditional on fixed selected matches.
+City-cluster bootstrap intervals are saved separately and also condition on fixed matches.
+A causal interpretation additionally requires a sufficiently well-defined profile intervention
+and an explicit model of electoral competition/interference. Matching does not establish these.
+Attractiveness matching defines a profile comparison at similar measured beauty, not an
+automatically identified direct effect independent of a beauty pathway.
+The continuous-dose Gaussian balancing score is a working assignment model with constant variance.
+The exact signed-rank test is a sharp-null dose-swap test, not a test of zero average slope.
+For primary sensitivity, Gamma is per one SD of A and pair j has odds bound Gamma^gap_j.
+This mapping assumes an exponential-tilt/additive-Gaussian hidden assignment model.
+The common-pair sensitivitymv Huber M test is a distinct, approximate supplemental test.
+The log-vote estimate describes a geometric dose contrast and can differ from the arithmetic
+vote-count estimate. It is not the manuscript's Poisson expected-vote ratio.
+
+The strict central windows retain few matched men and no women after the prespecified
+balance selection. That describes this two-stage design, not global infeasibility of every match.

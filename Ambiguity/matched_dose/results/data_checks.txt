@@ -1,0 +1,4 @@
+Source /Users/hectorbahamonde/research/Physical/Ambiguity/Ambiguity_analysis.csv
+Source MD5 510b22dcc952cb047528245c91321459
+Rows 1384
+Every vote count equals the fixed file and official ID crosswalk.
