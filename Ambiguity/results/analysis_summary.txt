@@ -21,5 +21,5 @@ No causal interpretation. Uncertainty conditions on saved mean ratings.
 Primary specification uses atypicality only, with the existing baseline controls. Joint cue level is an appendix adjustment.
 A is relative gendered appearance atypicality. S is joint cue level. Neither is gender identity.
 The interval for men lies entirely above zero. The interval for women includes zero.
-The estimated appearance-associated advantage indicates an unequal distribution of expected personal votes within male candidacies. These estimates do not support a uniform electoral penalty for a gender-atypical cue balance.
+The baseline comparison locates an appearance-associated advantage within male candidacies. Gender atypicality can therefore coincide with electoral advantage within a shared category.
 Raw high-high support: 1 man and 1 woman . F and M >= 3

@@ -1123,6 +1123,483 @@ ggsave(file.path(project_dir, "figures", "attractiveness_cue_pairs.pdf"),
 ggsave(file.path(project_dir, "figures", "attractiveness_cue_pairs.png"),
        attractiveness_candidate_plot, width = 7.6, height = 4.4, dpi = 300, bg = "white")
 
+## ---- class-analysis
+# Secondary analysis retains the primary sample's cue scaling and corrected votes.
+# Occupational class is joined by candidate id into a separate analysis frame.
+class_analysis <- local({
+  j <- match(d$id, dat_fixed$id)
+  stopifnot(!anyNA(j), !anyDuplicated(dat_fixed$id),
+            all(d$turnout == dat_fixed$official_votes[j]))
+  z <- d
+  z$social_class <- as.character(dat_fixed$esec.r[j])
+  keep_class <- !is.na(z$social_class) & nzchar(z$social_class)
+  z <- droplevels(z[keep_class, ])
+  z$social_class <- factor(z$social_class, levels = c("Upper", "Middle", "Working"))
+  stopifnot(!anyNA(z$social_class),
+            all(table(z$gender, z$social_class) >= paper_values$support_min_candidates),
+            identical(z$zF, d$zF[keep_class]), identical(z$zM, d$zM[keep_class]))
+  verify_official_votes(z)
+  data_by_gender <- setNames(lapply(levels(z$gender), function(g) {
+    droplevels(z[z$gender == g, ])
+  }), levels(z$gender))
+  formula_baseline <- turnout ~ social_class * (zF + zM) +
+    age_c + attractiveness + party + city
+  model_formulas <- list(baseline = formula_baseline,
+    prior_office = update(formula_baseline, . ~ . + incumbent_councillor + national_mp))
+  model_list <- lapply(model_formulas, function(formula) {
+    lapply(data_by_gender, function(u) {
+      m <- fit_ppml(formula, u)
+      stopifnot(!anyNA(coef(m)), identical(
+        as.numeric(model.response(model.frame(m))), as.numeric(u$turnout)))
+      m
+    })
+  })
+  covariance_list <- lapply(model_list, function(spec_models) {
+    setNames(lapply(names(spec_models), function(g) {
+      robust_vcov(spec_models[[g]], data_by_gender[[g]]$city)
+    }), names(spec_models))
+  })
+  design_matrix <- function(nd, spec = "baseline", gender = NULL) {
+    nd_gender <- unique(as.character(nd$gender))
+    if (is.null(gender)) gender <- nd_gender
+    stopifnot(length(gender) == 1L, identical(nd_gender, gender),
+              gender %in% names(data_by_gender), spec %in% names(model_list))
+    m <- model_list[[spec]][[gender]]
+    model.matrix(delete.response(terms(m)), nd, contrasts.arg = m$contrasts,
+                 xlev = m$xlevels)[, colnames(covariance_list[[spec]][[gender]]), drop = FALSE]
+  }
+  reference_data <- function(gender, social_class, all_rows = TRUE) {
+    nd <- data_by_gender[[gender]]
+    if (!all_rows) nd <- nd[1L, , drop = FALSE]
+    nd$social_class <- factor(rep(social_class, nrow(nd)), levels = levels(z$social_class))
+    nd$zF <- nd$zM <- paper_values$zero_cue
+    nd
+  }
+  cue_weights <- function(gender, social_class, cue, spec = "baseline") {
+    stopifnot(cue %in% c("zF", "zM"))
+    nd <- reference_data(gender, social_class, FALSE)
+    X0 <- design_matrix(nd, spec)
+    nd[[cue]] <- nd[[cue]] + paper_values$effect_sd
+    L <- as.numeric(design_matrix(nd, spec) - X0)
+    setNames(L, colnames(covariance_list[[spec]][[gender]]))
+  }
+  class_restrictions <- function(gender, cue, spec = "baseline") {
+    rbind(cue_weights(gender, "Middle", cue, spec) - cue_weights(gender, "Upper", cue, spec),
+          cue_weights(gender, "Working", cue, spec) - cue_weights(gender, "Upper", cue, spec))
+  }
+  test_restrictions <- function(L, test_id, label, spec, gender,
+                                cue = NA_character_) {
+    m <- model_list[[spec]][[gender]]; V <- covariance_list[[spec]][[gender]]
+    e <- as.numeric(L %*% coef(m)[colnames(V)])
+    q <- nrow(L)
+    stopifnot(qr(L)$rank == q)
+    W <- as.numeric(t(e) %*% solve(L %*% V %*% t(L), e))
+    data.frame(model = spec, test_id = test_id, test = label, gender = gender, cue = cue,
+               df1 = q, df2 = attr(V, "df"), F = W / q,
+               p = pf(W / q, q, attr(V, "df"), lower.tail = FALSE),
+               n = nobs(m), cities = attr(V, "clusters"))
+  }
+  counts <- do.call(rbind, lapply(levels(z$gender), function(g) {
+    do.call(rbind, lapply(levels(z$social_class), function(cl) {
+      u <- z[z$gender == g & z$social_class == cl, ]
+      data.frame(gender = g, social_class = cl, n = nrow(u),
+        municipalities = length(unique(u$city)),
+        city_party_lists = length(unique(paste(u$city, u$party))),
+        femininity_min = min(u$femininity), femininity_max = max(u$femininity),
+        masculinity_min = min(u$masculinity), masculinity_max = max(u$masculinity),
+        zF_min = min(u$zF), zF_max = max(u$zF), zM_min = min(u$zM), zM_max = max(u$zM),
+        correlation_F_M = cor(u$zF, u$zM),
+        correlation_F_attractiveness = cor(u$zF, u$attractiveness),
+        correlation_M_attractiveness = cor(u$zM, u$attractiveness))
+    }))
+  }))
+  contrasts <- tests <- list()
+  for (spec in names(model_list)) {
+    for (g in levels(z$gender)) {
+      m <- model_list[[spec]][[g]]; V <- covariance_list[[spec]][[g]]
+      for (cl in levels(z$social_class)) for (cue in c("zF", "zM")) {
+        r <- linear_contrast(m, V, cue_weights(g, cl, cue, spec), paste(g, cl, cue))
+        cell <- counts[counts$gender == g & counts$social_class == cl, ]
+        contrasts[[paste(spec, g, cl, cue)]] <- data.frame(
+          model = spec, gender = g, social_class = cl, cue = cue, r,
+          percent = 100 * (r$ratio - 1), lower_percent = 100 * (r$lower - 1),
+          upper_percent = 100 * (r$upper - 1), n = nobs(m), n_cell = cell$n,
+          cities = attr(V, "clusters"), cell_cities = cell$municipalities)
+      }
+      for (cue in c("zF", "zM")) {
+        id <- paste(g, cue, sep = "_")
+        tests[[paste(spec, id)]] <- test_restrictions(class_restrictions(g, cue, spec), id,
+          paste(gender_names[g], if (cue == "zF") "femininity" else "masculinity"), spec, g, cue)
+      }
+      L_joint <- rbind(class_restrictions(g, "zF", spec), class_restrictions(g, "zM", spec))
+      tests[[paste(spec, g, "joint")]] <- test_restrictions(L_joint, paste(g, "joint", sep = "_"),
+        paste(gender_names[g], "both cues jointly"), spec, g)
+    }
+  }
+  contrasts <- do.call(rbind, contrasts); rownames(contrasts) <- NULL
+  tests <- do.call(rbind, tests); rownames(tests) <- NULL
+  spec_values <- function(gender, spec) {
+    tt <- tests[tests$model == spec & tests$gender == gender, ]
+    pp <- setNames(tt$p, tt$test_id)
+    V <- covariance_list[[spec]][[gender]]
+    list(p_femininity = unname(pp[paste(gender, "zF", sep = "_")]),
+         p_masculinity = unname(pp[paste(gender, "zM", sep = "_")]),
+         p_joint = unname(pp[paste(gender, "joint", sep = "_")]),
+         df_moderation = 2L, df_joint = 4L, df_residual = attr(V, "df"),
+         n = nobs(model_list[[spec]][[gender]]), cities = attr(V, "clusters"))
+  }
+  values <- list(n = nrow(z), cities = length(unique(z$city)),
+                  n_male = sum(z$gender == "Male"), n_female = sum(z$gender == "Female"),
+                  n_dropped = nrow(d) - nrow(z), n_primary = nrow(d),
+                  class_levels = levels(z$social_class), reference_class = "Upper",
+                  confidence_level = paper_values$confidence_level,
+                  confidence_pct = paper_values$confidence_pct,
+                  prediction_percentiles = paper_values$prediction_percentiles,
+                  support_percentiles = paper_values$prediction_percentiles,
+                  support_radius = paper_values$support_radius,
+                  support_min_candidates = paper_values$support_min_candidates,
+                  support_min_neighbors = paper_values$support_min_candidates,
+                  support_grid_points = 801L, prediction_grid_points = 81L,
+                  other_cue_fixed = paper_values$zero_cue,
+                  effect_sd = paper_values$effect_sd,
+                  formula = paste(deparse(formula_baseline), collapse = " "),
+                  fit_scope = "separate_gender", df_moderation = 2L, df_joint = 4L)
+  values$by_gender <- setNames(lapply(levels(z$gender), function(g) {
+    setNames(lapply(names(model_list), function(spec) spec_values(g, spec)), names(model_list))
+  }), levels(z$gender))
+  for (g in levels(z$gender)) for (cue in c("femininity", "masculinity")) {
+    values[[paste0("p_", tolower(g), "_", cue)]] <-
+      values$by_gender[[g]]$baseline[[paste0("p_", cue)]]
+  }
+  list(data = z, data_by_gender = data_by_gender,
+       models = model_list, vcovs = covariance_list, counts = counts,
+       unit_contrasts = contrasts, tests = tests, values = values,
+       design_matrix = design_matrix, reference_data = reference_data, cue_weights = cue_weights)
+})
+d_class <- class_analysis$data
+class_data_by_gender <- class_analysis$data_by_gender
+class_models <- class_analysis$models
+class_vcovs <- class_analysis$vcovs
+class_counts <- class_analysis$counts
+class_unit_contrasts <- class_analysis$unit_contrasts
+class_tests <- class_analysis$tests
+class_values <- class_analysis$values
+
+## ---- class-figure
+# Each panel uses a common jointly supported cue range across the three classes.
+class_figure_data <- local({
+  inside_hull <- function(x, y, hx, hy) {
+    h <- chull(hx, hy); hx <- hx[c(h, h[1L])]; hy <- hy[c(h, h[1L])]
+    cross <- diff(hx) * (y - head(hy, -1L)) - diff(hy) * (x - head(hx, -1L))
+    all(cross >= -1e-10) || all(cross <= 1e-10)
+  }
+  predictions <- rugs <- support <- list()
+  for (g in levels(d_class$gender)) for (cue in c("zF", "zM")) {
+    m <- class_models$baseline[[g]]; V <- class_vcovs$baseline[[g]]
+    b <- coef(m)[colnames(V)]
+    critical <- qt(paper_values$ci_quantile, attr(V, "df"))
+    ranges <- lapply(levels(d_class$social_class), function(cl) {
+      u <- d_class[d_class$gender == g & d_class$social_class == cl, ]
+      q <- quantile(u[[cue]], paper_values$prediction_quantiles, names = FALSE)
+      grid <- seq(q[1L], q[2L], length.out = class_values$support_grid_points)
+      ok <- vapply(grid, function(v) {
+        F <- if (cue == "zF") v else paper_values$zero_cue
+        M <- if (cue == "zM") v else paper_values$zero_cue
+        inside_hull(F, M, u$zF, u$zM) &&
+          sum((u$zF - F)^2 + (u$zM - M)^2 <= paper_values$support_radius^2) >=
+            paper_values$support_min_candidates
+      }, logical(1))
+      stopifnot(any(ok))
+      runs <- split(seq_along(grid), cumsum(c(TRUE, diff(ok) != 0)))
+      runs <- runs[vapply(runs, function(ii) ok[ii[1L]], logical(1))]
+      zero_run <- which(vapply(runs, function(ii) {
+        min(grid[ii]) <= paper_values$zero_cue && max(grid[ii]) >= paper_values$zero_cue
+      }, logical(1)))
+      ii <- if (length(zero_run)) runs[[zero_run[1L]]] else runs[[which.max(lengths(runs))]]
+      range(grid[ii])
+    })
+    limits <- c(max(vapply(ranges, function(x) x[1L], numeric(1))),
+                min(vapply(ranges, function(x) x[2L], numeric(1))))
+    stopifnot(limits[1L] < limits[2L])
+    grid <- seq(limits[1L], limits[2L], length.out = class_values$prediction_grid_points)
+    for (cl in levels(d_class$social_class)) {
+      X <- class_analysis$design_matrix(class_analysis$reference_data(g, cl))
+      mu <- as.numeric(exp(X %*% b)); base <- mean(mu)
+      grad0 <- colSums(X * mu) / sum(mu)
+      L <- class_analysis$cue_weights(g, cl, cue) / paper_values$effect_sd
+      grad <- outer(grid - paper_values$zero_cue, L) +
+        matrix(grad0, nrow = length(grid), ncol = length(b), byrow = TRUE)
+      se <- sqrt(pmax(0, rowSums((grad %*% V) * grad)))
+      y <- base * exp((grid - paper_values$zero_cue) * sum(L * b))
+      key <- paste(g, cl, cue)
+      predictions[[key]] <- data.frame(gender = g, social_class = cl, cue = cue, x = grid,
+        expected_votes = y, lower = exp(log(y) - critical * se), upper = exp(log(y) + critical * se))
+      u <- d_class[d_class$gender == g & d_class$social_class == cl, ]
+      F <- if (cue == "zF") grid else rep(paper_values$zero_cue, length(grid))
+      M <- if (cue == "zM") grid else rep(paper_values$zero_cue, length(grid))
+      n_local <- vapply(seq_along(grid), function(i) {
+        sum((u$zF - F[i])^2 + (u$zM - M[i])^2 <= paper_values$support_radius^2)
+      }, integer(1))
+      hull_supported <- vapply(seq_along(grid), function(i) {
+        inside_hull(F[i], M[i], u$zF, u$zM)
+      }, logical(1))
+      stopifnot(all(n_local >= paper_values$support_min_candidates), all(hull_supported))
+      support[[key]] <- data.frame(gender = g, social_class = cl, cue = cue,
+        min = limits[1L], max = limits[2L], minimum_local_count = min(n_local))
+      u <- u[u[[cue]] >= limits[1L] & u[[cue]] <= limits[2L], ]
+      rugs[[key]] <- data.frame(gender = g, social_class = cl, cue = cue, x = u[[cue]])
+    }
+  }
+  list(predictions = do.call(rbind, predictions), rugs = do.call(rbind, rugs),
+       support = do.call(rbind, support))
+})
+class_predictions <- class_figure_data$predictions
+class_rugs <- class_figure_data$rugs
+class_support <- class_figure_data$support
+class_panel_name <- function(g, cue) {
+  u <- class_counts[class_counts$gender == g, ]
+  paste0(if (cue == "zF") "Femininity" else "Masculinity", " | ",
+         unname(gender_names[g]), " (N = ", sum(u$n), ")\n",
+         paste(paste(u$social_class, u$n), collapse = "  |  "))
+}
+class_panel_levels <- unlist(lapply(c("zF", "zM"), function(cue) {
+  vapply(levels(d_class$gender), function(g) class_panel_name(g, cue), character(1))
+}))
+class_decorate <- function(z) {
+  z$panel <- factor(mapply(class_panel_name, z$gender, z$cue), levels = class_panel_levels)
+  z$social_class <- factor(z$social_class, levels = c("Upper", "Middle", "Working"))
+  z$key <- paste(z$gender, z$social_class, sep = ".")
+  # Display original rating units while retaining standardized coordinates for inference.
+  sc <- scale_constants[match(z$gender, scale_constants$gender), ]
+  stopifnot(!anyNA(sc$gender))
+  z$x_raw <- ifelse(z$cue == "zF", sc$F_mean + z$x * sc$F_sd,
+                    sc$M_mean + z$x * sc$M_sd)
+  stopifnot(all(is.finite(z$x_raw)), all(z$x_raw >= paper_values$scale_min),
+            all(z$x_raw <= paper_values$scale_max))
+  z
+}
+class_predictions <- class_decorate(class_predictions)
+class_rugs <- class_decorate(class_rugs)
+class_palette <- c(Male.Upper = "#163D59", Male.Middle = "#467E9C", Male.Working = "#82AFC4",
+                   Female.Upper = "#9E3664", Female.Middle = "#CD7399", Female.Working = "#E2A8BF")
+class_line_types <- c(Upper = "solid", Middle = "longdash", Working = "dotted")
+class_plot <- ggplot(class_predictions,
+  aes(x_raw, expected_votes, color = key, fill = key, linetype = social_class)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = .09, linewidth = 0,
+              linetype = 0, show.legend = FALSE) +
+  geom_line(linewidth = .9) +
+  geom_rug(data = class_rugs, aes(x = x_raw, color = key), inherit.aes = FALSE, sides = "b",
+           length = grid::unit(.025, "npc"), alpha = .35, linewidth = .18, show.legend = FALSE) +
+  facet_wrap(~ panel, ncol = 2, scales = "free") +
+  scale_color_manual(values = class_palette, guide = "none") +
+  scale_fill_manual(values = class_palette, guide = "none") +
+  scale_linetype_manual(values = class_line_types, name = "Occupational class") +
+  scale_y_continuous(limits = c(0, NA), expand = expansion(mult = c(.02, .05))) +
+  scale_x_continuous(breaks = scales::breaks_pretty(n = 4),
+                     labels = scales::label_number(accuracy = .1)) +
+  labs(x = paste0("Focal rating (original ", paper_values$scale_min, "-",
+                  paper_values$scale_max, " scale)"),
+       y = "Predicted expected personal votes") +
+  guides(linetype = guide_legend(keywidth = grid::unit(2, "cm"),
+    override.aes = list(color = "grey20", linewidth = .9))) +
+  theme_classic(base_size = 12) +
+  theme(aspect.ratio = 1, panel.border = element_rect(color = "grey30", fill = NA, linewidth = .45),
+        axis.line = element_blank(), strip.background = element_blank(),
+        strip.text = element_text(size = 10.5, lineheight = 1.2, margin = margin(7, 0, 7, 0)),
+        legend.position = "bottom", legend.title = element_text(size = 11),
+        panel.spacing = grid::unit(1.3, "lines"), plot.margin = margin(12, 15, 10, 12))
+ggsave(file.path(project_dir, "figures", "class_gender_votes.pdf"), class_plot,
+       width = 10.1, height = 10.4, bg = "white")
+ggsave(file.path(project_dir, "figures", "class_gender_votes.png"), class_plot,
+       width = 10.1, height = 10.4, dpi = 220, bg = "white")
+
+## ---- class-range-contrasts
+# Report changes across the supported interval actually displayed in each panel.
+# Endpoints are selected from cue distributions, shared across classes within a
+# gender-cue panel, and held identical for baseline and prior-office models.
+# Unit-slope weights above remain unchanged for model tests and curve construction.
+class_contrast_ranges <- local({
+  ranges <- unique(class_support[, c("gender", "cue", "min", "max")])
+  rownames(ranges) <- NULL
+  stopifnot(!anyDuplicated(paste(ranges$gender, ranges$cue)),
+            nrow(ranges) == length(levels(d_class$gender)) * 2L)
+  ranges$span_sd <- ranges$max - ranges$min
+  ranges$raw_mean <- ranges$raw_sd <- NA_real_
+  for (i in seq_len(nrow(ranges))) {
+    sc <- scale_constants[scale_constants$gender == ranges$gender[i], ]
+    stopifnot(nrow(sc) == 1L)
+    trait <- if (ranges$cue[i] == "zF") "F" else "M"
+    ranges$raw_mean[i] <- sc[[paste0(trait, "_mean")]]
+    ranges$raw_sd[i] <- sc[[paste0(trait, "_sd")]]
+  }
+  ranges$min_raw <- ranges$raw_mean + ranges$min * ranges$raw_sd
+  ranges$max_raw <- ranges$raw_mean + ranges$max * ranges$raw_sd
+  stopifnot(all(is.finite(as.matrix(ranges[, c("span_sd", "min_raw", "max_raw")]))),
+            all(ranges$span_sd > 0), all(ranges$min_raw >= paper_values$scale_min),
+            all(ranges$max_raw <= paper_values$scale_max))
+  ranges
+})
+class_contrasts <- local({
+  rows <- list()
+  for (spec in names(class_models)) {
+    for (g in levels(d_class$gender)) for (cl in levels(d_class$social_class)) {
+      m <- class_models[[spec]][[g]]; V <- class_vcovs[[spec]][[g]]
+      b <- coef(m)[colnames(V)]
+      X0 <- class_analysis$design_matrix(class_analysis$reference_data(g, cl), spec)
+      mean_at_zero <- mean(exp(as.numeric(X0 %*% b)))
+      for (cue in c("zF", "zM")) {
+        limits <- class_contrast_ranges[class_contrast_ranges$gender == g &
+                                         class_contrast_ranges$cue == cue, ]
+        stopifnot(nrow(limits) == 1L)
+        unit_weights <- class_analysis$cue_weights(g, cl, cue, spec) / paper_values$effect_sd
+        L <- unit_weights * limits$span_sd
+        r <- linear_contrast(m, V, L, paste(g, cl, cue, "supported low to high"))
+        cell <- class_counts[class_counts$gender == g & class_counts$social_class == cl, ]
+        slope <- sum(unit_weights * b)
+        expected_low <- mean_at_zero * exp((limits$min - paper_values$zero_cue) * slope)
+        expected_high <- mean_at_zero * exp((limits$max - paper_values$zero_cue) * slope)
+        stopifnot(isTRUE(all.equal(r$ratio, expected_high / expected_low, tolerance = 1e-10)))
+        rows[[paste(spec, g, cl, cue)]] <- data.frame(
+          model = spec, gender = g, social_class = cl, cue = cue, r,
+          contrast = "supported_low_to_high", low_sd = limits$min, high_sd = limits$max,
+          span_sd = limits$span_sd, low_raw = limits$min_raw, high_raw = limits$max_raw,
+          expected_low = expected_low, expected_high = expected_high,
+          percent = 100 * (r$ratio - 1), lower_percent = 100 * (r$lower - 1),
+          upper_percent = 100 * (r$upper - 1), n = nobs(m), n_cell = cell$n,
+          cities = attr(V, "clusters"), cell_cities = cell$municipalities)
+      }
+    }
+  }
+  out <- do.call(rbind, rows); rownames(out) <- NULL
+  out
+})
+class_values$contrast_type <- "supported_low_to_high"
+class_values$contrast_ranges <- class_contrast_ranges
+class_values$test_reference <- "standardized_cue_slopes"
+class_analysis$contrasts <- class_contrasts
+class_analysis$contrast_ranges <- class_contrast_ranges
+class_analysis$values <- class_values
+
+## ---- class-reporting
+# Self-contained reporting helpers keep the secondary analysis out of baseline objects.
+class_reporting <- local({
+  cue_key <- function(cue) {
+    aliases <- c(Femininity = "zF", Masculinity = "zM", femininity = "zF", masculinity = "zM",
+                 zF = "zF", zM = "zM")
+    stopifnot(length(cue) == 1L, cue %in% names(aliases))
+    unname(aliases[cue])
+  }
+  gender_key <- function(gender) {
+    aliases <- c(Male = "Male", Female = "Female", Men = "Male", Women = "Female")
+    stopifnot(length(gender) == 1L, gender %in% names(aliases))
+    unname(aliases[gender])
+  }
+  number <- function(x, digits = 1L) formatC(x, digits = digits, format = "f")
+  p_text <- function(p) if (p < .001) "$<0.001$" else number(p, 3L)
+  contrast_row <- function(gender, class, cue, spec) {
+    r <- class_contrasts[class_contrasts$model == spec &
+      class_contrasts$gender == gender_key(gender) & class_contrasts$social_class == class &
+      class_contrasts$cue == cue_key(cue), ]
+    stopifnot(nrow(r) == 1L)
+    r
+  }
+  effect_cell <- function(r) paste0(number(r$percent), " [", number(r$lower_percent),
+                                     ", ", number(r$upper_percent), "]")
+  tabular <- function(rows, headings, alignment) {
+    lines <- apply(rows, 1L, function(x) paste(x, collapse = " & "))
+    paste(c(paste0("\\begin{tabular}{", alignment, "}"), "\\toprule",
+            paste0(paste(headings, collapse = " & "), " \\\\"), "\\midrule",
+            paste0(lines, " \\\\"), "\\bottomrule", "\\end{tabular}"), collapse = "\n")
+  }
+  contrast_table <- do.call(rbind, lapply(levels(d_class$gender), function(g) {
+    do.call(rbind, lapply(levels(d_class$social_class), function(cl) {
+      do.call(rbind, lapply(c("zF", "zM"), function(cue) {
+        rb <- contrast_row(g, cl, cue, "baseline")
+        ro <- contrast_row(g, cl, cue, "prior_office")
+        data.frame(gender = unname(gender_names[g]), social_class = cl, n = as.character(rb$n_cell),
+                   cue = if (cue == "zF") "Femininity" else "Masculinity",
+                   baseline = effect_cell(rb), prior_office = effect_cell(ro))
+      }))
+    }))
+  }))
+  contrasts_tex <- tabular(contrast_table,
+    c("Gender", "Class", "$N$", "Cue", "Baseline (\\%)", "+ Prior office (\\%)"),
+    "llrlp{0.26\\linewidth}p{0.26\\linewidth}")
+  baseline_tests <- class_tests[class_tests$model == "baseline", ]
+  test_table <- do.call(rbind, lapply(seq_len(nrow(baseline_tests)), function(i) {
+    rb <- baseline_tests[i, ]
+    ro <- class_tests[class_tests$model == "prior_office" & class_tests$test_id == rb$test_id, ]
+    stopifnot(nrow(ro) == 1L, rb$df2 == ro$df2)
+    data.frame(test = rb$test, df1 = as.character(rb$df1), df2 = as.character(rb$df2),
+               baseline_F = number(rb$F, 2L),
+               baseline_p = p_text(rb$p), prior_office_F = number(ro$F, 2L),
+               prior_office_p = p_text(ro$p))
+  }))
+  tests_tex <- tabular(test_table,
+    c("Test", "$df_1$", "$df_2$", "Baseline $F$", "$p$", "+ Prior office $F$", "$p$"),
+    "p{0.30\\linewidth}rrrrrr")
+  list(contrasts_tex = contrasts_tex, tests_tex = tests_tex,
+       contrast_table = contrast_table, test_table = test_table,
+       p_text = function(gender = "Male", cue = "Femininity", spec = "baseline") {
+         r <- class_tests[class_tests$model == spec &
+           class_tests$gender %in% gender_key(gender) & class_tests$cue %in% cue_key(cue), ]
+         stopifnot(nrow(r) == 1L)
+         digits <- if (r$p > 0) max(3L, as.integer(ceiling(-log10(r$p)) + 1L)) else 3L
+         number(r$p, digits)
+       },
+       effect_text = function(gender, class, cue, spec = "baseline") {
+         r <- contrast_row(gender, class, cue, spec)
+         paste0(number(r$percent), "\\% (", number(100 * class_values$confidence_level, 0L),
+                "\\% CI ", number(r$lower_percent), " to ", number(r$upper_percent), "\\%)")
+       },
+       point_text = function(gender, class, cue, spec = "baseline") {
+         r <- contrast_row(gender, class, cue, spec)
+         paste0(if (r$percent > 0) "+" else "", number(r$percent), "\\%")
+       },
+       range_text = function(gender, cue, digits = 2L) {
+         r <- class_contrast_ranges[class_contrast_ranges$gender == gender_key(gender) &
+                                     class_contrast_ranges$cue == cue_key(cue), ]
+         stopifnot(nrow(r) == 1L)
+         paste0(number(r$min_raw, digits), "--", number(r$max_raw, digits))
+       },
+       df_text = function(gender, spec = "baseline") {
+         g <- gender_key(gender)
+         stopifnot(spec %in% names(class_values$by_gender[[g]]))
+         as.character(class_values$by_gender[[g]][[spec]]$df_residual)
+       },
+       count = function(gender, class) {
+         r <- class_counts[class_counts$gender == gender_key(gender) &
+                             class_counts$social_class == class, ]
+         stopifnot(nrow(r) == 1L)
+         r$n
+       })
+})
+class_p_text <- class_reporting$p_text
+class_effect_text <- class_reporting$effect_text
+class_point_text <- class_reporting$point_text
+class_count <- class_reporting$count
+class_range_text <- class_reporting$range_text
+class_df_text <- class_reporting$df_text
+class_contrasts_table_tex <- class_reporting$contrasts_tex
+class_tests_table_tex <- class_reporting$tests_tex
+print_class_contrasts_table <- function() cat(class_contrasts_table_tex, "\n", sep = "")
+print_class_tests_table <- function() cat(class_tests_table_tex, "\n", sep = "")
+write.csv(class_counts, file.path(project_dir, "results", "class_sample_counts.csv"), row.names = FALSE)
+write.csv(class_contrasts, file.path(project_dir, "results", "class_contrasts.csv"), row.names = FALSE)
+write.csv(class_contrast_ranges, file.path(project_dir, "results", "class_contrast_ranges.csv"), row.names = FALSE)
+write.csv(class_tests, file.path(project_dir, "results", "class_tests.csv"), row.names = FALSE)
+write.csv(class_predictions, file.path(project_dir, "results", "class_predictions.csv"), row.names = FALSE)
+write.csv(class_support, file.path(project_dir, "results", "class_support.csv"), row.names = FALSE)
+writeLines(class_contrasts_table_tex, file.path(project_dir, "results", "class_contrasts_table.tex"))
+writeLines(class_tests_table_tex, file.path(project_dir, "results", "class_tests_table.tex"))
+saveRDS(list(models = class_models, vcov_city = class_vcovs, data = d_class,
+             data_by_gender = class_data_by_gender,
+             contrasts = class_contrasts, contrast_ranges = class_contrast_ranges,
+             unit_contrasts = class_unit_contrasts, tests = class_tests, counts = class_counts,
+             predictions = class_predictions, support = class_support,
+             values = class_values, contrasts_table = class_contrasts_table_tex,
+             tests_table = class_tests_table_tex), file.path(project_dir, "results", "class_models.rds"))
+
 ## ---- paper-values
 # Values consumed by the Rnw; they update automatically when the analysis is rerun.
 primary <- effects[effects$model == "main", ]

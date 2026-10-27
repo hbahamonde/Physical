@@ -1,0 +1,13 @@
+"model","test_id","test","gender","cue","df1","df2","F","p","n","cities"
+"baseline","Male_zF","Men femininity","Male","zF",2,190,4.35147540526947,0.0141965237950927,800,191
+"baseline","Male_zM","Men masculinity","Male","zM",2,190,1.00421052593337,0.368269577180026,800,191
+"baseline","Male_joint","Men both cues jointly","Male",NA,4,190,2.74788515849277,0.0296319467583528,800,191
+"baseline","Female_zF","Women femininity","Female","zF",2,176,6.89316746035752,0.00131159616953087,567,177
+"baseline","Female_zM","Women masculinity","Female","zM",2,176,1.82699097693259,0.163935186432096,567,177
+"baseline","Female_joint","Women both cues jointly","Female",NA,4,176,3.9293163863857,0.0044208029627426,567,177
+"prior_office","Male_zF","Men femininity","Male","zF",2,190,0.575281793316183,0.563523098138387,800,191
+"prior_office","Male_zM","Men masculinity","Male","zM",2,190,0.517393010857383,0.596909850139741,800,191
+"prior_office","Male_joint","Men both cues jointly","Male",NA,4,190,0.862900089147634,0.48728284200293,800,191
+"prior_office","Female_zF","Women femininity","Female","zF",2,176,4.1108375964918,0.0179941267723108,567,177
+"prior_office","Female_zM","Women masculinity","Female","zM",2,176,1.31838001225987,0.270197572402906,567,177
+"prior_office","Female_joint","Women both cues jointly","Female",NA,4,176,2.11115285806905,0.0813561086524955,567,177
